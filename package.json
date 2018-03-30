@@ -1,0 +1,35 @@
+{
+  "name": "pairity",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --driver-package=cultofcoders:mocha --port 3100",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/runtime": "^7.0.0-beta.36",
+    "bcrypt": "^1.0.3",
+    "eslint-config-airbnb": "^16.1.0",
+    "meteor-node-stubs": "^0.3.3",
+    "moment": "^2.20.1",
+    "simpl-schema": "^1.4.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-preset-meteor": "^7.0.0-beta.40-1",
+    "chai": "^4.1.2",
+    "eslint": "^4.18.1",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-meteor": "^4.2.1",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-underscore": "0.0.10",
+    "faker": "^4.1.0",
+    "sinon": "^4.4.10",
+    "sinon-chai": "^2.14.0"
+  }
+}
