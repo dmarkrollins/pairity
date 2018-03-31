@@ -2,13 +2,23 @@
 
 ## What is Pairity
 
-Pairity is an pair management tool. Unlike other tools we've used to manage pair rotations, Pairity extends the concept of team-based pairing to include cross-team pair management and active pair-matching where sought after roles are matched with user role profiles and tech stacks are matched to technologies users indicate they have competence or would like to gain competence in.
+Pairity is an pair management tool.
+
+If you don't know what pairing is read [this](https://content.pivotal.io/blog/pair-programming-considered-extremely-beneficial).
+
+Unlike other tools we've used to manage pair rotations, Pairity extends the concept of team-based pairing to include:
+
+- Same team pair management/rotation
+- Cross-team pair management
+- Active cross team pair-matching based on needed role and technology competency
+- Include roles other than just engineering
+- Cross role pairing (engineering/product, product/design, design/engineering)
 
 ## Core Features
 
-- Pair Matching within same team
-- Role matching across teams
-- Tech stack matching across teams
+- Same team paring
+- Cross team pairing
+- Cross role pairing
 - Team management and inter/intra team pairing metrics
 
 ## How can you help
