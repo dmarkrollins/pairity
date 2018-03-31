@@ -2,10 +2,14 @@
 
 ## What is Pairity
 
-Pairity is an pair management tool. Unlike other tools we've used to manage pair rotations, Pairity extends the concept of team-based pairing to include cross-team pair management and active pair-matching where sought after roles are matched with user role profiles and tech stacks are matched to technologies user indicate they have competence or would like to gain competence in.
+Pairity is an pair management tool. Unlike other tools we've used to manage pair rotations, Pairity extends the concept of team-based pairing to include cross-team pair management and active pair-matching where sought after roles are matched with user role profiles and tech stacks are matched to technologies users indicate they have competence or would like to gain competence in.
 
 ## Core Features
 
+- Pair Matching within same team
+- Role matching across teams
+- Tech stack matching across teams
+- Team management and inter/intra team pairing metrics
 
 ## How can you help
 
