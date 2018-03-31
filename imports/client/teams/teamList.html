@@ -1,5 +1,27 @@
 <template name="teamList">
 
-    
+    {{> header title="Teams" showSearch="true" }}
+
+    {{#if Template.subscriptionsReady}}
+        {{#if hasTeams}}
+            
+            {{#each team}}
+                {{> teamListItem}}
+            {{/each}}
+
+            {{#if hasMoreTeams}}
+                <div class="pure-u-1">
+                    <a id="btnMore" class="button-default pure-button" alt="">Get More...</a>
+                </div>
+            {{/if}}
+        
+        {{else}}
+            <div class="empty-list">
+                No Teams found!
+            </div>
+        {{/if}}
+    {{else}}
+        {{>spinner}}
+    {{/if}}
 
 </template>

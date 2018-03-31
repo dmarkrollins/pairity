@@ -1,8 +1,23 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
+import { Session } from 'meteor/session'
+import { FlowRouter } from 'meteor/kadira:flow-router'
+import { _ } from 'meteor/underscore'
+
+import { Pairity } from '../../lib/pairity'
 
 Template.header.helpers({
-    userName() {
-        return Meteor.user().username
+    search() {
+        return _.isUndefined(this.showSearch) ? true : this.showSearch
+    }
+})
+
+Template.header.events({
+    'click #btnLogout': function (event, instance) {
+        Meteor.logout((err) => {
+            if (!err) {
+                FlowRouter.go('/')
+            }
+        })
     }
 })

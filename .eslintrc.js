@@ -66,6 +66,8 @@ module.exports = {
         "no-return-assign": "off",
         "no-restricted-syntax": "off",
         "no-lonely-if": "off",
+        "react/no-unused-state": "warn",
+        "react/no-unused-prop-types": "warn",
         "react/jsx-indent": "4",
         "react/jsx-indent-props": "4",
         "react/forbid-prop-types": "off",

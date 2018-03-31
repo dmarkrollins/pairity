@@ -1,3 +1,7 @@
+body {
+    color: #444;
+}
+
 .fullPage {
     position: absolute;
     top: 0;
@@ -36,7 +40,7 @@
     color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    margin-left: 7px;
+    margin: 0px 0px 0px 7px !important;
 }
 
 .button-default {
@@ -69,7 +73,7 @@
 .button-error:hover,
 .button-warning:hover,
 .button-secondary:hover {
-    filter: brightness(95%);
+    filter: brightness(90%);
 }
 
 .button-xsmall {
@@ -105,10 +109,6 @@
     width: 100%;
 }
 
-input {
-    background-color: #f1f1f1;
-}
-
 .pull-right {
     float: right;
 }
@@ -120,4 +120,113 @@ input {
 .container {
     margin-left: 21px;
     margin-right: 21px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #fff;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: -100px;
+    top: 35px;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #fff;
+}
+
+.errorMessage {
+    color: #990000;
+    font-size: .9em;
+    text-align: center;
+}
+
+.pure-form label {
+    width: 100%;
+}
+
+form.pure-form {
+    max-width: 500px;
+    width: -webkit-calc(100% - 10px);
+    width: -moz-calc(100% - 10px);
+    border: 0px #ccc solid;
+    margin: auto;
+}
+
+form.pure-form label {
+    margin-left: 7px !important;
+    margin-top: 21px;
+    color: #444;
+}
+
+form.pure-form input {
+    width: 95%;
+    margin-left: 7px !important;
+}
+form.pure-form textarea {
+    width: 95%;
+    margin-left: 7px;
+}
+
+div.form-buttons {
+    float: right;
+    white-space: nowrap;
+    margin: 0px 21px 0px 12px;
+}
+
+input.dark {
+    background-color: #f1f1f1;
+}
+
+a {
+    color:  #394F66; 
+    text-decoration: underline;
+}
+
+.empty-list {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle; 
+    max-width: 100%; 
+    font-weight: bold; 
+    color: #dcdcdc;
+    font-size: 4em;
 }

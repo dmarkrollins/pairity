@@ -6,6 +6,7 @@ import { Schemas } from './schemas'
 const Pairity = {
     defaultConfirmMsg: 'Are you sure?',
     defaultLimit: 10,
+    PageTitleKey: 'page-title',
     Components: {}
 }
 
@@ -19,6 +20,8 @@ const Teams = new Mongo.Collection('teams')
 
 Teams.attachSchema(Schemas.Teams)
 
-const registerComponent = (name, component) => {
-    Kwote.Components[name] = component
+const RegisterComponent = (name, component) => {
+    Pairity.Components[name] = component
 }
+
+module.exports = { Pairity, Teams, RegisterComponent }

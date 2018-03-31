@@ -1,13 +1,23 @@
 <template name="header">
-
-    <div class="pure-g" style="border-bottom: 2px solid #999; padding: 21px 21px 12px 21px; min-width: 400px;">
-        <div class="pure-u-3-5" style="white-space: nowrap;">
-            <img src="/pairity-logo.png" alt="" height="32" /> <span style="font-size: 2.5em; margin-left: 7px; color: #565656;">Teams</span>
+    <div class="pure-g" style="border-bottom: 2px solid #999; padding: 21px 4px 12px 21px; min-width: 300px;">
+        <div class="pure-u-2-5" style="white-space: nowrap; padding-top: 9px;">
+            <img src="/pairity-logo.png" alt="" height="24" /> <div style="display: inline-block; font-size: 1.75em; margin-left: 7px; color: #565656; position: relative; top: -2px">{{title}}</div>
         </div>
-        <div class="pure-u-2-5 pure-form" style="font-size: .9em;">
-            <img src="/options.png" alt="" height="24" class="pull-right" style="margin-right: 7px; margin-left: 21px; position: relative; top: 7px;" />
-            <input type="text" class="pull-right" style="min-width: 100px; max-width: 200px; margin-top: 4px;" placeholder="Search">
+        <div class="pure-u-3-5 pure-form" style="font-size: .9em; white-space: nowrap;">
+            <div class="dropdown pull-right" style="margin-top: 7px;">
+                <a href="#" class="dropbtn" style="margin-right: 7px; position: relative; top:4px;"><img id="btnOptions" src="/options.png" height="20" alt=""/></a>
+                <div class="dropdown-content">
+                    <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
+                    <a id="btnPreferences" href="#"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
+                    <a id="btnShare" href="mailto:?subject=Check%20Out%20Pairity!&body=Celebrate%20The%20Power%20of%20Pairing!%20-%20https://pairity.herokuapp.com"><i class="fa fa-share-alt" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Share Pairity</a>
+                    <hr style="width: 80%; border-top: #ddd 1px solid;"/>
+                    <a id="btnLogout" href="#"><i class="fa fa-sign-out" aria-hidden="true" style="color: #990000;"></i>&nbsp;Logout</a>
+                </div>
+            </div>
+            {{#if showSearch}}
+            <input type="text" class="pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="Search">
+            {{/if}}
         </div>
     </div>
-
 </template>
+    

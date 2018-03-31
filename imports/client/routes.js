@@ -37,3 +37,14 @@ FlowRouter.route('/teams', {
     },
     name: 'teams'
 });
+
+FlowRouter.route('/teams/new', {
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'newTeam' });
+        }
+    },
+    name: 'teams'
+});
