@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { Pairity, Teams } from '../lib/pairity'
+import { Pairity, Teams } from '../../../imports/lib/pairity'
 
 Teams._ensureIndex('name', 1)
 

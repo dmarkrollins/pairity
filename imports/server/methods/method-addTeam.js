@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import { Teams } from '../../imports/lib/pairity'
-import { Logger } from '../../imports/lib/logger'
-import { Schemas } from '../../imports/lib/schemas'
+import { Teams } from '../../../imports/lib/pairity'
+import { Logger } from '../../../imports/lib/logger'
+import { Schemas } from '../../../imports/lib/schemas'
 
 Meteor.methods({
     addTeam: function (doc) {

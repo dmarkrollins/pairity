@@ -222,11 +222,10 @@ a {
 }
 
 .empty-list {
-    display: table-cell;
     text-align: center;
-    vertical-align: middle; 
-    max-width: 100%; 
+    max-width: 500px; 
     font-weight: bold; 
     color: #dcdcdc;
-    font-size: 4em;
+    font-size: 2em;
+    margin: 30px auto 0px auto;
 }
