@@ -17,7 +17,7 @@ const should = chai.should();
 chai.use(sinonChai);
 
 if (Meteor.isServer) {
-    import '../../../imports/server/publications/publication-teams'
+    import '../../../imports/server/index'
 
     describe('Add Team Method', function () {
         let userId
@@ -27,7 +27,7 @@ if (Meteor.isServer) {
         beforeEach(function () {
             sandbox = sinon.createSandbox()
             userId = Random.id()
-            subject = Meteor.server.method_handlers.createAuthor;
+            subject = Meteor.server.method_handlers.addTeam;
         });
 
         afterEach(function () {
@@ -48,12 +48,28 @@ if (Meteor.isServer) {
             expect(msg, 'should throw not logged in').to.be.equal('You must be authenticated to perform this action! [not-logged-in]');
         })
 
+        it('should be a valid document', function () {
+            const context = { userId: userId };
+            let msg = '';
+            const fakeTeam = TestData.fakeTeam()
+            const bogusTeam = { key1: 'key1', key2: 'key2' }
+            sandbox.stub(Teams, 'insert')
+
+            try {
+                const resultId = subject.apply(context, [bogusTeam]);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(msg, 'should bod schema').to.be.equal('Document provided is invalid! [invalid-document]');
+        })
+
         it('checks for dups', function () {
             const context = { userId: userId };
             let msg = '';
             const fakeTeam = TestData.fakeTeam()
-            // console.log(fakeTeam)
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
+            sandbox.stub(Teams, 'insert')
 
             try {
                 const resultId = subject.apply(context, [fakeTeam]);
@@ -61,7 +77,7 @@ if (Meteor.isServer) {
                 msg = error.message;
             }
 
-            expect(msg, 'should throw dup error').to.be.equal('Team name is not available! [duplicate-found]');
+            expect(msg, 'should throw dup error').to.be.equal('Team name not available! [duplicate-found]');
         })
 
         it('inserts new author correctly - stubbed', function () {
@@ -84,10 +100,6 @@ if (Meteor.isServer) {
             const params = Teams.insert.args[0][0]
             expect(params.name).to.equal(fakeTeam.name)
             expect(params.description).to.equal(fakeTeam.description)
-            expect(params.birthDate).to.equal(fakeTeam.birthDate)
-            expect(params.deathDate).to.equal(fakeTeam.deathDate)
-            expect(params.comments).to.equal(fakeTeam.comments)
-            expect(params.createdBy).to.equal(fakeTeam.createdBy)
         })
 
         it('handles insert error correctly', function () {
@@ -107,7 +119,7 @@ if (Meteor.isServer) {
             }
 
             expect(Logger.log).to.have.been.called
-            expect(msg).to.equal('Author not created - please try again later!')
+            expect(msg).to.equal('Team not created - please try again later!')
         })
     })
 }

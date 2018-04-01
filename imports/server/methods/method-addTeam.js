@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
+import { SimpleSchema } from 'simpl-schema'
 import { Teams } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
@@ -10,20 +11,23 @@ Meteor.methods({
             throw new Meteor.Error('not-logged-in', 'You must be authenticated to perform this action!')
         }
 
-        if (!check(doc, Schemas.Teams)) {
+        const context = Schemas.Teams.newContext()
+
+        if (!context.validate(doc)) {
             throw new Meteor.Error('invalid-document', 'Document provided is invalid!')
         }
 
-        const t = Teams.find({ name: doc.name })
+        const t = Teams.findOne({ name: doc.name })
 
         if (t) {
-            throw new Meteor.Error('duplicate-found', 'This team name is not available!')
+            throw new Meteor.Error('duplicate-found', 'Team name not available!')
         }
 
         try {
             const id = Teams.insert(
                 {
-                    doc
+                    name: doc.name,
+                    description: doc.description
                 },
                 {
                     extendAutoValueContext:

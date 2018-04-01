@@ -63,15 +63,15 @@ Schemas.Teams = new SimpleSchema({
     description: {
         type: String,
         max: 8192
-    },
-    location: {
-        type: String,
-        optional: true
-    },
-    admins: [String],
-    technologies: [String],
-    rolesNeeded: [String],
-    members: [String]
+    }
+    // location: {
+    //     type: String,
+    //     optional: true
+    // },
+    // admins: [String],
+    // technologies: [String],
+    // rolesNeeded: [String],
+    // members: [String]
 })
 
 module.exports = { Schemas }

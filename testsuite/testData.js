@@ -17,10 +17,20 @@ TestData.fakeTeam = (parameters) => {
 
     const team = {}
 
-    team.name = parms.name || faker.company.name
+    team.name = parms.name || faker.company.companyName()
     team.description = parms.description || faker.lorem.sentences(3)
 
     return team
+}
+
+TestData.fakeError = (message) => {
+    const err = {}
+
+    err.error = 'error-occurred'
+    err.reason = message || 'fake reason'
+    err.details = 'fake details'
+
+    return err
 }
 
 module.exports = { TestData }

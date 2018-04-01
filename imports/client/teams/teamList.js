@@ -16,6 +16,8 @@ Template.teamList.onCreated(function () {
             self.loaded.set(Teams.find().count())
         }
     })
+
+    self.getSearch = () => ({ limit: 10, name: '' })
 })
 
 Template.teamList.helpers({

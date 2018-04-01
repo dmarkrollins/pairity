@@ -3,7 +3,7 @@ import { Pairity, Teams } from '../../../imports/lib/pairity'
 
 Teams._ensureIndex('name', 1)
 
-Meteor.publish('allteams', function (search) {
+Meteor.publish('allTeams', function (search) {
     if (!Meteor.userId()) {
         return null
     }

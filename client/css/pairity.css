@@ -1,5 +1,5 @@
 body {
-    color: #444;
+    color: #565656;
 }
 
 .fullPage {
@@ -217,8 +217,12 @@ input.dark {
 }
 
 a {
-    color:  #394F66; 
+    color: #3C86A8;
     text-decoration: underline;
+}
+
+a:hover {
+    filter: brightness(70%);   
 }
 
 .empty-list {
@@ -228,4 +232,13 @@ a {
     color: #dcdcdc;
     font-size: 2em;
     margin: 30px auto 0px auto;
+}
+
+.auto-margin {
+    margin: 0px auto 0px auto;
+    padding: 12px;
+}
+
+.pre {
+    white-space: pre;
 }
