@@ -1,7 +1,7 @@
 <template name="header">
     <div class="pure-g" style="border-bottom: 2px solid #999; padding: 21px 4px 12px 4px; min-width: 300px;">
         <div class="pure-u-2-5" style="white-space: nowrap; padding-top: 9px;">
-            <img src="/pairity-logo.png" alt="" height="24" /> <div style="display: inline-block; font-size: 1.75em; margin-left: 7px; color: #565656; position: relative; top: -2px">{{title}}</div>
+            <img src="/pairity-logo.png" alt="" height="24" /> <div id="title" style="display: inline-block; font-size: 1.75em; margin-left: 7px; color: #565656; position: relative; top: -2px">{{title}}</div>
         </div>
         <div class="pure-u-3-5 pure-form" style="font-size: .9em; white-space: nowrap;">
             <div class="dropdown pull-right" style="margin-top: 7px;">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             {{#if showSearch}}
-            <input type="text" class="pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="Search">
+                <input id="searchBox" type="text" class="pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="Search">
             {{/if}}
         </div>
     </div>

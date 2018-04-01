@@ -102,6 +102,12 @@ if (Meteor.isClient) {
         it('calls create account when it has the info it needs', function () {
             sandbox.stub(Accounts, 'createUser')
 
+            const options = {
+                username: 'testuser',
+                email: 'test@gmail.com',
+                password: 'Fakepw12345'
+            }
+
             withRenderedTemplate('newAccount', null, (el) => {
                 $(el).find('#userName').val('testuser')
                 $(el).find('#emailAddress').val('test@gmail.com')
@@ -117,7 +123,8 @@ if (Meteor.isClient) {
                 expect($(el).find('#errorMessage')[0].innerText, 'error message is not set').to.equal('')
                 expect(Accounts.createUser).to.have.been.called
 
-                // TODO - need to confirm params are correct into create user call
+                const parms = Accounts.createUser.args[0]
+                expect(parms[0]).to.deep.equal(options)
             });
         })
     })

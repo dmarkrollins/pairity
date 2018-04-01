@@ -63,9 +63,10 @@ Template.newAccount.events({
         const options = {
             username: doc.userName,
             email: doc.email,
-            password: doc.password,
-            preferences: { agreeToTerms: doc.agreeToTerms }
+            password: doc.password
         }
+
+        // preferences: { agreeToTerms: doc.agreeToTerms }
 
         $('#signUpForm').prop('disabled', true);
 
