@@ -24,7 +24,7 @@ Unlike other tools we've used to manage pair rotations, Pairity extends the conc
 
 Glad you asked. We're always looking for contributions.
 
-Read our [Contributor Guide](/contributor.md) to get started.
+Read our [Contributor Guide](https://github.com/dmarkrollins/pairity/wiki/Contributor-Guide) to get started.
 
 You'll want to install [Meteor](https://www.meteor.com) if you don't already have it installed.
 
