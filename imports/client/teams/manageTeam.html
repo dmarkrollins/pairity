@@ -1,0 +1,25 @@
+<template name="newTeam">
+
+    {{> header title="Create Team"}}
+
+    <div class="pure-g">
+        <div class="pure-u-lg-1-2 pure-u-1">
+
+            {{>React component=teamItem
+                handleSave=saveHandler
+                handleCancel=cancelHandler
+            }}
+
+        </div>
+    </div>
+
+    <div class="pure-g">
+        <div class="pure-u-lg-1-2 pure-u-1">
+
+            <label>Pairing Roles</label><br/>
+            <label>Tech Stack</label>
+
+        </div>
+    </div>
+
+</template>

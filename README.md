@@ -24,10 +24,12 @@ Unlike other tools we've used to manage pair rotations, Pairity extends the conc
 
 Glad you asked. We're always looking for contributions.
 
-Read our [Contributor Guide](https://github.com/dmarkrollins/pairity/wiki/Contributor-Guide) to get started.
+- Read our [Contributor Guide](https://github.com/dmarkrollins/pairity/wiki/Contributor-Guide) to get started.
 
-You'll want to install [Meteor](https://www.meteor.com) if you don't already have it installed.
+- You'll want to install [Meteor](https://www.meteor.com) if you don't already have it installed.
 
-Pull the code, npm install and you should be good to go.
+- Pull the code, npm install and you should be good to go.
 
-To run the app run `npm run start` from the application root folder.
+- To run the app run `npm run start` from the application root folder.
+
+- To run tests use `npm run test' from the application root folder.
