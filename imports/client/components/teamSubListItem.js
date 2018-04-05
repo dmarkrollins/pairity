@@ -2,18 +2,27 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-class TeamSubItemListItem extends React.Component {
+class TeamSubListItem extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { selectedItem: '' }
         this.itemSelect = this.itemSelect.bind(this)
     }
 
     itemSelect(event) {
+        let { selectedItem } = this.state
+        selectedItem = this.props.value
+        this.setState(selectedItem)
         this.props.handleSelected()
     }
 
     itemStyle() {
+        const style = { backgroundColor: '#fff' }
+        if (this.state.selectedItem === this.props.value) {
+            style.backgroundColor = '#3E94B4'
+        }
 
+        return style
     }
 
     render() {
@@ -28,10 +37,10 @@ class TeamSubItemListItem extends React.Component {
     }
 }
 
-TeamSubItemListItem.propTypes = {
+TeamSubListItem.propTypes = {
     handleSelected: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
 }
 
-module.exports = TeamSubItemListItem
+module.exports = TeamSubListItem

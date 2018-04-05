@@ -10,19 +10,12 @@ class TeamSubItem extends React.Component {
         this.state = {
             list: Object.assign({}, this.props.list)
         };
-        this.saveClick = this.saveClick.bind(this)
-        this.cancelClick = this.cancelClick.bind(this)
-        this.handleItemSave = this.handleItemAdd.bind(this)
-        this.handleItemCancel = this.handleItemCancel.bind(this)
+        this.handleItemSave = this.handleItemSave.bind(this)
         this.handleItemRemove = this.handleItemRemove.bind(this)
     }
 
     handleItemSave(event) {
         this.props.handleSave()
-    }
-
-    handleItemCancel(event) {
-        this.props.handleCancel()
     }
 
     handleItemRemove(event) {
@@ -32,7 +25,7 @@ class TeamSubItem extends React.Component {
     subItems() {
         const items = []
         this.props.list.forEach((item) => {
-            const newItem = (<Pairity.Components.TeamSubItemListItem
+            const newItem = (<Pairity.Components.TeamSubListItem
                 label={item.label}
                 value={item.value}
             />)
@@ -51,16 +44,16 @@ class TeamSubItem extends React.Component {
                         </div>
                         <div className="pure-u-1-4">
                             <a href="#" onClick={this.handleItemSave}>
-                                <i id="btnAdd" className="fa fa-plus-circle" style={{ color: '#659BB9', marginRight: '7px' }} />
+                                <i id="btnAdd" className="fa fa-plus-circle" style={{ fontSize: '1.5em', color: '#659BB9', marginRight: '21px' }} />
                             </a>
                             <a href="#" onClick={this.handleItemRemove}>
-                                <i id="btnRemove" className="fa fa-minus-circle" style={{ color: '#ccc' }} />
+                                <i id="btnRemove" className="fa fa-minus-circle" style={{ fontSize: '1.5em', color: '#ccc' }} />
                             </a>
                         </div>
                     </div>
                     <div className="pure-g">
-                        <div className="pure-u-1">
-                            <select id="itemList" size="5">
+                        <div className="pure-u-3-4">
+                            <select id="itemList" size="5" style={{ width: '100%', borderRadius: '4px' }}>
                                 {this.subItems}
                             </select>
                         </div>
@@ -74,7 +67,6 @@ class TeamSubItem extends React.Component {
 TeamSubItem.propTypes = {
     handleSave: PropTypes.func.isRequired,
     handleRemove: PropTypes.func.isRequired,
-    handleCancel: PropTypes.func.isRequired,
     list: PropTypes.array.isRequired,
     label: PropTypes.string.isRequired
 }

@@ -36,7 +36,7 @@ FlowRouter.route('/teams', {
         }
     },
     name: 'teams'
-});
+})
 
 FlowRouter.route('/teams/new', {
     action: function () {
@@ -46,5 +46,19 @@ FlowRouter.route('/teams/new', {
             BlazeLayout.render('workLayout', { content: 'newTeam' });
         }
     },
-    name: 'teams'
-});
+    name: 'createteam'
+})
+
+FlowRouter.route('/teams/manage/:id', {
+    subscriptions: function (params) {
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'manageTeam' });
+        }
+    },
+    name: 'manageteam'
+})
