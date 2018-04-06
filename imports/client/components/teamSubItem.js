@@ -8,7 +8,7 @@ class TeamSubItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: Object.assign({}, this.props.list)
+            list: Object.assign({}, this.props.list) // eslint-disable-line
         };
         this.handleItemSave = this.handleItemSave.bind(this)
         this.handleItemRemove = this.handleItemRemove.bind(this)
@@ -38,11 +38,14 @@ class TeamSubItem extends React.Component {
         return (
             <div className="pure-g">
                 <div className="pure-u-1">
-                    <div className="pure-g">
-                        <div className="pure-u-3-4">
-                            <label>{this.props.label}</label>
-                        </div>
-                        <div className="pure-u-1-4">
+                    <div style={{ width: '100%', maxWidth: '500px' }}>
+                        <label>{this.props.label}</label>
+                        <div style={{
+                            display: 'inline-block',
+                            float: 'right',
+                            marginRight: '7px',
+                            height: '32px'
+                        }}>
                             <a href="#" onClick={this.handleItemSave}>
                                 <i id="btnAdd" className="fa fa-plus-circle" style={{ fontSize: '1.5em', color: '#659BB9', marginRight: '21px' }} />
                             </a>
@@ -51,12 +54,10 @@ class TeamSubItem extends React.Component {
                             </a>
                         </div>
                     </div>
-                    <div className="pure-g">
-                        <div className="pure-u-3-4">
-                            <select id="itemList" size="5" style={{ width: '100%', borderRadius: '4px' }}>
-                                {this.subItems}
-                            </select>
-                        </div>
+                    <div>
+                        <select id="itemList" size="7" className="item-box">
+                            {this.subItems}
+                        </select>
                     </div>
                 </div>
             </div>

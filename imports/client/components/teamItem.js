@@ -58,7 +58,7 @@ class TeamItem extends React.Component {
                     <textarea
                         id="teamDesc"
                         placeholder="Share what your team is all about?"
-                        rows="7"
+                        rows={this.props.rows}
                         onChange={this.handleDescChange}
                         value={this.state.team.description}
                     />
@@ -76,14 +76,16 @@ class TeamItem extends React.Component {
 TeamItem.propTypes = {
     handleSave: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
-    team: PropTypes.object
+    team: PropTypes.object,
+    rows: PropTypes.number
 }
 
 TeamItem.defaultProps = {
     team: {
         name: '',
         description: ''
-    }
+    },
+    rows: 7
 }
 
 module.exports = TeamItem

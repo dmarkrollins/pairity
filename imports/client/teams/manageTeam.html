@@ -6,37 +6,43 @@
 
         {{> teamMenu selectedItem=itemManage }}
 
-        <div class="pure-g">
-            <div class="pure-u-md-1-2 pure-u-1">
+        <div class="pure-g" >
+
+                <div class="pure-u-lg-1-12"></div>
+                <div class="pure-u-md-1-2 pure-u-lg-5-12 pure-u-1">
+
+                    <div style="margin: auto; max-width: 480px; padding: 5px;">
+
+                        <div style="margin-top: 18px;">
+                            {{>React component=teamSubItem
+                                handleSave=roleSaveHandler
+                                handleRemove=roleRemoveHandler
+                                list=rolesList
+                                label="Candidate Pairing Roles"
+                            }}                    
+                        </div>
+        
+                        <div style="margin-top: 28px; margin-bottom: 21px;">
+                            {{>React component=teamSubItem
+                                handleSave=techSaveHandler
+                                handleRemove=techRemoveHandler
+                                list=stackList
+                                label="Team Tech Stack"
+                            }}                    
+                        </div>
+                    </div>
+        
+                </div>
+        
+            <div class="pure-u-md-1-2 pure-u-lg-5-12 pure-u-1" style="margin-bottom: 21px;">
 
                 {{>React component=teamItem
                     handleSave=saveHandler
                     handleCancel=cancelHandler
                     team=selectedTeam
+                    rows=13
                 }}
 
-            </div>
-
-            <div class="pure-u-md-1-2 pure-u-1">
-
-                <div>
-                    {{>React component=teamSubItem
-                        handleSave=roleSaveHandler
-                        handleRemove=roleRemoveHandler
-                        list=rolesList
-                        label="Candidate Pairing Roles"
-                    }}                    
-                </div>
-
-                <div>
-                    {{>React component=teamSubItem
-                        handleSave=techSaveHandler
-                        handleRemove=techRemoveHandler
-                        list=stackList
-                        label="Team Tech Stack"
-                    }}                    
-                </div>
-    
             </div>
         </div>
     {{else}}

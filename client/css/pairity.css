@@ -256,4 +256,17 @@ a:hover {
 label, label.pure-form, label.pure-form-horizontal {
     font-weight: bold !important;
     color: #999 !important;
+    vertical-align: bottom;
+    height: 24px;
+}
+
+.item-box {
+    -moz-box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset;
+    box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset; 
+    max-width: 500px;
+    margin: auto;
+    width: -webkit-calc(100% - 10px);
+    width: -moz-calc(100% - 10px);
+    border: 1px #ccc solid;
+    border-radius: 4px;
 }

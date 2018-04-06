@@ -9,19 +9,19 @@ Template.manageTeam.onCreated(function () {
     const self = this
 
     self.SaveTeam = (team) => {
-        Toast.showWarning('Team information saved successfully!')
+        Toast.showSuccess('Team information saved successfully!')
     }
     self.SaveRole = (team) => {
-        Toast.showWarning('Role information saved successfully!')
+        Toast.showSuccess('Role information saved successfully!')
     }
     self.SaveTech = (team) => {
-        Toast.showWarning('Tech information saved successfully!')
+        Toast.showSuccess('Tech information saved successfully!')
     }
     self.RemoveRole = (team) => {
-        Toast.showWarning('Role information removed successfully!')
+        Toast.showError('Role information removed successfully!')
     }
     self.RemoveTech = (team) => {
-        Toast.showWarning('Tech information removed successfully!')
+        Toast.showError('Tech information removed successfully!')
     }
 })
 
