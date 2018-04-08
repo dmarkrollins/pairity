@@ -52,6 +52,8 @@ FlowRouter.route('/teams/new', {
 FlowRouter.route('/teams/manage/:id', {
     subscriptions: function (params) {
         this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teamroles', Meteor.subscribe('teamRoles', params.id))
+        this.register('teamtech', Meteor.subscribe('teamTech', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {

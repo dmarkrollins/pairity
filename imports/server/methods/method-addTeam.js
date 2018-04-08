@@ -45,7 +45,7 @@ Meteor.methods({
             if (err.sanitizedError) {
                 throw new Meteor.Error('insert-failed', err.sanitizedError.reason)
             } else {
-                Logger.log('Author insert failed', this.userId, err)
+                Logger.log('Team insert failed', this.userId, err)
                 throw new Meteor.Error('insert-failed', 'Team not created - please try again later!')
             }
         }

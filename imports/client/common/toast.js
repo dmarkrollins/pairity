@@ -3,7 +3,7 @@ import { Pairity } from '../../../imports/lib/pairity'
 
 import './toast.html'
 
-const showToast = (toasttype, message) => {
+const showToast = (toasttype, message, timeOut) => {
     $('#toast').html(message);
     $('#toast').addClass(toasttype);
     $('#toast').addClass('show');
@@ -11,21 +11,21 @@ const showToast = (toasttype, message) => {
     setTimeout(function () {
         $('#toast').removeClass(toasttype);
         $('#toast').removeClass('show');
-    }, Pairity.ToastTimeOut)
+    }, timeOut || Pairity.ToastTimeOut)
 }
 
 const Toast = {}
 
-Toast.showError = (message) => {
-    showToast('error', message)
+Toast.showError = (message, timeOut) => {
+    showToast('error', message, timeOut)
 }
 
-Toast.showWarning = (message) => {
-    showToast('warning', message)
+Toast.showWarning = (message, timeOut) => {
+    showToast('warning', message, timeOut)
 }
 
-Toast.showSuccess = (message) => {
-    showToast('success', message)
+Toast.showSuccess = (message, timeOut) => {
+    showToast('success', message, timeOut)
 }
 
 module.exports = { Toast }

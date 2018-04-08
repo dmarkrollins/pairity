@@ -5,34 +5,27 @@ import PropTypes from 'prop-types'
 class TeamSubListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { selectedItem: '' }
+        this.state = { isSelected: false }
         this.itemSelect = this.itemSelect.bind(this)
     }
 
     itemSelect(event) {
-        let { selectedItem } = this.state
-        selectedItem = this.props.value
-        this.setState(selectedItem)
-        this.props.handleSelected()
-    }
-
-    itemStyle() {
-        const style = { backgroundColor: '#fff' }
-        if (this.state.selectedItem === this.props.value) {
-            style.backgroundColor = '#3E94B4'
-        }
-
-        return style
+        let { isSelected } = this.state
+        isSelected = !isSelected
+        this.setState({ isSelected })
+        this.props.handleSelected(this.props.value, isSelected)
     }
 
     render() {
         return (
-            <li
-                style={this.itemStyle}
+            <option
                 onClick={this.itemSelect}
-                option={this.props.label}
+                className={this.props.className}
                 value={this.props.value}
-            />
+                selected={this.props.selected}
+            >
+                {this.props.label}
+            </option>
         )
     }
 }
@@ -40,7 +33,14 @@ class TeamSubListItem extends React.Component {
 TeamSubListItem.propTypes = {
     handleSelected: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    selected: PropTypes.bool
+}
+
+TeamSubListItem.defaultProps = {
+    className: 'unselected-item',
+    selected: false
 }
 
 module.exports = TeamSubListItem

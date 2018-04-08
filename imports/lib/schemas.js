@@ -74,4 +74,38 @@ Schemas.Teams = new SimpleSchema({
     // members: [String]
 })
 
+Schemas.TeamTech = new SimpleSchema({
+    _id: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    teamId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        denyUpdate: true
+    },
+    name: {
+        type: String,
+        max: 60
+    }
+})
+
+Schemas.TeamRoles = new SimpleSchema({
+    _id: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    teamId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        denyUpdate: true
+    },
+    name: {
+        type: String,
+        max: 60
+    }
+})
+
 module.exports = { Schemas }

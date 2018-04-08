@@ -269,4 +269,26 @@ label, label.pure-form, label.pure-form-horizontal {
     width: -moz-calc(100% - 10px);
     border: 1px #ccc solid;
     border-radius: 4px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 150px;
+    padding: 3px;
+
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none;
+}
+
+option {
+    line-height: 32px;
+    padding-top: 6px;
+}
+
+.selected-item {
+    border-radius: 3px;
 }

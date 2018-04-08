@@ -24,11 +24,6 @@ if (Meteor.isClient) {
         let isCancelled
         let sandbox
 
-        const fakeKwote = {
-            title: 'fake title',
-            body: 'fake-body'
-        }
-
         before(function () {
             sandbox = sinon.createSandbox()
         })
@@ -68,7 +63,15 @@ if (Meteor.isClient) {
         })
 
         it('when save is tapped the correct callback is invoked correctly', function () {
-            const fakeTeam = TestData.fakeTeam({ name: 'fake team name', description: 'fake team desc' })
+            const createdDate = new Date()
+
+            const fakeTeam = TestData.fakeTeam({
+                name: 'fake team name',
+                description: 'fake team desc',
+                _id: 'fake-id',
+                createdAt: createdDate,
+                createdBy: 'fake-user'
+            })
 
             const wrapper = mount(<Pairity.Components.TeamItem
                 handleSave={isSaved}
@@ -79,8 +82,11 @@ if (Meteor.isClient) {
             wrapper.find('button.button-primary').simulate('click')
 
             expect(isSaved).to.have.been.calledWith({
-                name: 'fake team name',
+                _id: 'fake-id',
+                createdAt: createdDate,
+                createdBy: 'fake-user',
                 description: 'fake team desc',
+                name: 'fake team name'
             })
         })
 

@@ -1,3 +1,4 @@
+
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 import { Meteor } from 'meteor/meteor';
@@ -19,7 +20,7 @@ chai.use(sinonChai);
 if (Meteor.isServer) {
     import '../../../imports/server/index'
 
-    describe('Add Team Method', function () {
+    describe('Update Team Method', function () {
         let userId
         let sandbox
         let subject
@@ -27,7 +28,7 @@ if (Meteor.isServer) {
         beforeEach(function () {
             sandbox = sinon.createSandbox()
             userId = Random.id()
-            subject = Meteor.server.method_handlers.addTeam;
+            subject = Meteor.server.method_handlers.updateTeam;
         });
 
         afterEach(function () {
@@ -42,10 +43,10 @@ if (Meteor.isServer) {
             try {
                 const resultId = subject.apply(context, TestData.fakeTeam());
             } catch (error) {
-                msg = error.message;
+                msg = error.reason;
             }
 
-            expect(msg, 'should throw not logged in').to.be.equal('You must be authenticated to perform this action! [not-logged-in]');
+            expect(msg, 'should throw not logged in').to.be.equal('You must be logged in to perform this action!');
         })
 
         it('should be a valid document', function () {
@@ -58,36 +59,36 @@ if (Meteor.isServer) {
             try {
                 const resultId = subject.apply(context, [bogusTeam]);
             } catch (error) {
-                msg = error.message;
+                msg = error.reason;
             }
 
-            expect(msg, 'should bod schema').to.be.equal('Document provided is invalid! [invalid-document]');
+            expect(msg, 'should be valid schema').to.be.equal('The format of the Team document provided is invalid!');
         })
 
-        it('checks for dups', function () {
+        it('checks that team exists', function () {
             const context = { userId: userId };
             let msg = '';
             const fakeTeam = TestData.fakeTeam()
-            sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(Teams, 'insert')
+            sandbox.stub(Teams, 'findOne').returns(null)
 
             try {
                 const resultId = subject.apply(context, [fakeTeam]);
             } catch (error) {
-                msg = error.message;
+                msg = error.reason;
             }
 
-            expect(msg, 'should throw dup error').to.be.equal('Team name not available! [duplicate-found]');
+            expect(msg, 'should throw not found').to.be.equal('Team not found!');
         })
 
-        it('inserts new team correctly - stubbed', function () {
+        it('updates team correctly - stubbed', function () {
             const context = { userId: userId };
             let msg = '';
             const newId = Random.id()
             let resultId = ''
             const fakeTeam = TestData.fakeTeam()
-            sandbox.stub(Teams, 'findOne').returns(null)
-            sandbox.stub(Teams, 'insert').returns(newId)
+            fakeTeam.createdBy = userId
+            sandbox.stub(Teams, 'findOne').returns(fakeTeam)
+            sandbox.stub(Teams, 'update').returns({ nModified: 1 })
 
             try {
                 resultId = subject.apply(context, [fakeTeam]);
@@ -95,21 +96,24 @@ if (Meteor.isServer) {
                 msg = error.message;
             }
 
-            expect(resultId).to.equal(newId)
+            expect(msg).to.be.equal('')
 
-            const params = Teams.insert.args[0][0]
-            expect(params.name).to.equal(fakeTeam.name)
-            expect(params.description).to.equal(fakeTeam.description)
+            expect(resultId).to.equal(1)
+
+            const params = Teams.update.args[0][1]
+            expect(params.$set.name).to.equal(fakeTeam.name)
+            expect(params.$set.description).to.equal(fakeTeam.description)
         })
 
-        it('handles insert error correctly', function () {
+        it('handles update error correctly', function () {
             const context = { userId: userId };
             let msg = '';
             const newId = Random.id()
             let resultId = ''
             const fakeTeam = TestData.fakeTeam()
-            sandbox.stub(Teams, 'findOne').returns(null)
-            sandbox.stub(Teams, 'insert').throws(TestData.fakeError())
+            fakeTeam.createdBy = userId
+            sandbox.stub(Teams, 'findOne').returns(fakeTeam)
+            sandbox.stub(Teams, 'update').throws(TestData.fakeError())
             sandbox.stub(Logger, 'log')
 
             try {
@@ -117,9 +121,8 @@ if (Meteor.isServer) {
             } catch (error) {
                 msg = error.reason;
             }
-
             expect(Logger.log).to.have.been.called
-            expect(msg).to.equal('Team not created - please try again later!')
+            expect(msg).to.equal('Team update failed. Please try again later!')
         })
     })
 }

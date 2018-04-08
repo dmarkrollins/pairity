@@ -2,26 +2,48 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 
-import { Pairity, Teams } from '../../../imports/lib/pairity'
+import { Pairity, Teams, TeamRoles, TeamTech } from '../../../imports/lib/pairity'
 import { Toast } from '../../../imports/client/common/toast'
 
 Template.manageTeam.onCreated(function () {
     const self = this
 
     self.SaveTeam = (team) => {
-        Toast.showSuccess('Team information saved successfully!')
+        Meteor.call('updateTeam', team, function (err, response) {
+            if (err) {
+                Toast.showError(err.reason)
+            } else {
+                Toast.showSuccess('Team information saved successfully!')
+            }
+        })
     }
-    self.SaveRole = (team) => {
-        Toast.showSuccess('Role information saved successfully!')
+    self.SaveRole = (teamId, roleName) => {
+        Meteor.call('addTeamRole', teamId, roleName, function (err, response) {
+            if (err) {
+                Toast.showError(err.reason, 5000)
+            }
+        })
     }
-    self.SaveTech = (team) => {
-        Toast.showSuccess('Tech information saved successfully!')
+    self.SaveTech = (teamId, techName) => {
+        Meteor.call('addTeamTech', teamId, techName, function (err, response) {
+            if (err) {
+                Toast.showError(err.reason)
+            }
+        })
     }
-    self.RemoveRole = (team) => {
-        Toast.showError('Role information removed successfully!')
+    self.RemoveRole = (teamId, roleId) => {
+        Meteor.call('removeTeamRole', teamId, roleId, function (err, response) {
+            if (err) {
+                Toast.showError(err.reason)
+            }
+        })
     }
-    self.RemoveTech = (team) => {
-        Toast.showError('Tech information removed successfully!')
+    self.RemoveTech = (teamId, techId) => {
+        Meteor.call('removeTeamTech', teamId, techId, function (err, response) {
+            if (err) {
+                Toast.showError(err.reason)
+            }
+        })
     }
 })
 
@@ -37,6 +59,8 @@ Template.manageTeam.helpers({
     },
     saveHandler() {
         const instance = Template.instance();
+        const t = Teams.findOne()
+        if (!t) return
         return function (team) {
             instance.SaveTeam(team)
         }
@@ -47,27 +71,34 @@ Template.manageTeam.helpers({
         }
     },
     roleSaveHandler() {
-        const instance = Template.instance();
+        const instance = Template.instance()
+        const t = Teams.findOne()
+        if (!t) return
         return function (item) {
-            instance.SaveRole(item)
+            instance.SaveRole(t._id, item)
         }
     },
     roleRemoveHandler() {
         const instance = Template.instance();
+        const t = Teams.findOne()
+        if (!t) return
         return function (item) {
-            instance.RemoveRole(item)
+            instance.RemoveRole(t._id, item)
         }
     },
     techSaveHandler() {
         const instance = Template.instance();
+        const t = Teams.findOne()
+        if (!t) return
         return function (item) {
-            instance.SaveTech(item)
+            instance.SaveTech(t._id, item)
         }
     },
     techRemoveHandler() {
         const instance = Template.instance();
+        const t = Teams.findOne()
         return function (item) {
-            instance.RemoveTech(item)
+            instance.RemoveTech(t._id, item)
         }
     },
 
@@ -87,10 +118,26 @@ Template.manageTeam.helpers({
         return FlowRouter.subsReady()
     },
     rolesList() {
-        return []
+        const t = Teams.findOne()
+        if (!t) return []
+        const roles = TeamRoles.find({ teamId: t._id }).fetch()
+        const roleArray = []
+
+        roles.forEach((item) => {
+            roleArray.push({ label: item.name, value: item._id })
+        })
+        return roleArray
     },
     stackList() {
-        return []
+        const t = Teams.findOne()
+        if (!t) return []
+        const tech = TeamTech.find({ teamId: t._id }).fetch()
+        const techArray = []
+
+        tech.forEach((item) => {
+            techArray.push({ label: item.name, value: item._id })
+        })
+        return techArray
     }
 })
 
