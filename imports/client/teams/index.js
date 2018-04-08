@@ -4,4 +4,8 @@ import './newTeam.html'
 import './newTeam.js'
 import './teamListItem.html'
 import './teamListItem.js'
+import './teamMenu.html'
+import './teamMenu.js'
+import './manageTeam.html'
+import './manageTeam.js'
 

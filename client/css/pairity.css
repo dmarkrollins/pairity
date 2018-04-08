@@ -242,3 +242,53 @@ a:hover {
     vertical-align: middle;
     margin: 7px 0px 7px 7px;
 }
+
+.bolded-link {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1em;
+}
+
+.bolded-link:hover {
+    font-size: 1.25em;
+}
+
+label, label.pure-form, label.pure-form-horizontal {
+    font-weight: bold !important;
+    color: #999 !important;
+    vertical-align: bottom;
+    height: 24px;
+}
+
+.item-box {
+    -moz-box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset;
+    box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset; 
+    max-width: 500px;
+    margin: auto;
+    width: -webkit-calc(100% - 10px);
+    width: -moz-calc(100% - 10px);
+    border: 1px #ccc solid;
+    border-radius: 4px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 150px;
+    padding: 3px;
+
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none;
+}
+
+option {
+    line-height: 32px;
+    padding-top: 6px;
+}
+
+.selected-item {
+    border-radius: 3px;
+}
