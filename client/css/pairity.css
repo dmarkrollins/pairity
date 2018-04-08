@@ -210,13 +210,8 @@ input.dark {
     background-color: #f1f1f1;
 }
 
-a {
-    color: #3C86A8;
-    text-decoration: underline;
-}
-
 a:hover {
-    filter: brightness(70%);   
+    color:  rgb(50, 103, 128)
 }
 
 .empty-list {
@@ -246,11 +241,7 @@ a:hover {
 .bolded-link {
     font-weight: bold;
     text-decoration: underline;
-    font-size: 1em;
-}
-
-.bolded-link:hover {
-    font-size: 1.25em;
+    font-size: 1.05em;
 }
 
 label, label.pure-form, label.pure-form-horizontal {
@@ -291,4 +282,21 @@ option {
 
 .selected-item {
     border-radius: 3px;
+}
+
+.team-menu {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    line-height: 32px;
+}
+
+a {
+    color: #3C86A8;
+}
+
+.team-menu a {
+    padding: 12px;
+    display: inline;
+    color: #3C86A8;
+    text-decoration: underline;
 }
