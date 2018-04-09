@@ -120,22 +120,20 @@ Template.manageTeam.helpers({
     rolesList() {
         const t = Teams.findOne()
         if (!t) return []
-        const roles = TeamRoles.find({ teamId: t._id }).fetch()
         const roleArray = []
 
-        roles.forEach((item) => {
-            roleArray.push({ label: item.name, value: item._id })
+        t.roles.forEach((role) => {
+            roleArray.push({ label: role, value: role })
         })
         return roleArray
     },
     stackList() {
         const t = Teams.findOne()
         if (!t) return []
-        const tech = TeamTech.find({ teamId: t._id }).fetch()
         const techArray = []
 
-        tech.forEach((item) => {
-            techArray.push({ label: item.name, value: item._id })
+        t.technologies.forEach((tech) => {
+            techArray.push({ label: tech, value: tech })
         })
         return techArray
     }

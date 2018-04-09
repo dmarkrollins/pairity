@@ -1,6 +1,4 @@
 import './publications/publication-teams'
-import './publications/publication-teamTech'
-import './publications/publication-teamRoles'
 
 import './methods/method-addTeamTech'
 import './methods/method-removeTeamTech'

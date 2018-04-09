@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { SimpleSchema } from 'simpl-schema'
+import { _ } from 'meteor/underscore'
+
 import { Pairity, Teams, TeamTech, IsTeamAdmin } from '../../../imports/lib/pairity'
 import { Schemas } from '../../../imports/lib/schemas'
 import { Errors } from '../../../imports/lib/errors'
@@ -21,23 +23,29 @@ Meteor.methods({
             throw Errors.create('not-admin')
         }
 
-        const tech = TeamTech.findOne({ teamname: techName })
-
-        if (tech) {
-            throw Errors.create('duplicate-found', 'Technology')
+        if (t.technologies) {
+            if (_.find(t.roles, item => item.name === techName).length > 0) {
+                throw Errors.create('duplicate-found', 'Technology')
+            }
+        } else {
+            t.technologies = []
         }
 
+        t.technologies.push(techName)
+
         try {
-            const id = TeamTech.insert(
+            const id = Teams.update(
                 {
-                    teamId: teamId,
-                    name: techName
+                    _id: teamId,
+                },
+                {
+                    roles: t.technologies
                 },
                 {
                     extendAutoValueContext:
                     {
-                        isInsert: true,
-                        isUpdate: false,
+                        isInsert: false,
+                        isUpdate: true,
                         isUpsert: false,
                         isFromTrustedCode: true,
                         userId: this.userId
@@ -49,7 +57,7 @@ Meteor.methods({
             if (err.sanitizedError) {
                 throw Errors.create('custom', err.sanitizedError.reason)
             } else {
-                Logger.log('TeamTech insert failed', this.userId, err)
+                Logger.log('Technology insert failed', this.userId, err)
                 throw Errors.create('insert-failed', 'Technology')
             }
         }
