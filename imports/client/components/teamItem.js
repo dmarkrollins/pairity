@@ -42,6 +42,12 @@ class TeamItem extends React.Component {
         this.props.handleCancel()
     }
 
+    cancelButton() {
+        if (this.props.showCancel) {
+            return <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">Cancel</button>
+        }
+    }
+
     render() {
         return (
             <div className="pure-u-xs-1">
@@ -65,7 +71,7 @@ class TeamItem extends React.Component {
                     <p className="errorMessage">{this.state.errorMessage}</p>
                     <div className="form-buttons">
                         <button id="btnSave" type="submit" onClick={this.saveClick} className="button-primary pure-button">Save</button>
-                        <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">Cancel</button>
+                        {this.cancelButton()}
                     </div>
                 </form>
             </div>
@@ -77,7 +83,8 @@ TeamItem.propTypes = {
     handleSave: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
     team: PropTypes.object,
-    rows: PropTypes.number
+    rows: PropTypes.number,
+    showCancel: PropTypes.bool
 }
 
 TeamItem.defaultProps = {
@@ -85,7 +92,8 @@ TeamItem.defaultProps = {
         name: '',
         description: ''
     },
-    rows: 7
+    rows: 7,
+    showCancel: true
 }
 
 module.exports = TeamItem

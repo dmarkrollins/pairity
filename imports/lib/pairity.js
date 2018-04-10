@@ -36,8 +36,6 @@ const TeamTech = new Mongo.Collection('team-tech')
 const TeamRoles = new Mongo.Collection('team-roles')
 
 Teams.attachSchema(Schemas.Teams)
-TeamTech.attachSchema(Schemas.TeamTech)
-TeamRoles.attachSchema(Schemas.TeamRoles)
 
 const IsTeamAdmin = (team, id) => team.createdBy === id
 
@@ -46,5 +44,5 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Teams, RegisterComponent, IsTeamAdmin, TeamTech, TeamRoles
+    Pairity, Teams, RegisterComponent, IsTeamAdmin
 }

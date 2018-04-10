@@ -31,15 +31,15 @@ Template.manageTeam.onCreated(function () {
             }
         })
     }
-    self.RemoveRole = (teamId, roleId) => {
-        Meteor.call('removeTeamRole', teamId, roleId, function (err, response) {
+    self.RemoveRole = (teamId, roleName) => {
+        Meteor.call('removeTeamRole', teamId, roleName, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             }
         })
     }
-    self.RemoveTech = (teamId, techId) => {
-        Meteor.call('removeTeamTech', teamId, techId, function (err, response) {
+    self.RemoveTech = (teamId, techName) => {
+        Meteor.call('removeTeamTech', teamId, techName, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             }
@@ -120,22 +120,28 @@ Template.manageTeam.helpers({
     rolesList() {
         const t = Teams.findOne()
         if (!t) return []
-        const roles = TeamRoles.find({ teamId: t._id }).fetch()
         const roleArray = []
 
-        roles.forEach((item) => {
-            roleArray.push({ label: item.name, value: item._id })
+        if (!t.roles) {
+            return []
+        }
+
+        t.roles.forEach((role) => {
+            roleArray.push({ label: role, value: role })
         })
         return roleArray
     },
     stackList() {
         const t = Teams.findOne()
         if (!t) return []
-        const tech = TeamTech.find({ teamId: t._id }).fetch()
         const techArray = []
 
-        tech.forEach((item) => {
-            techArray.push({ label: item.name, value: item._id })
+        if (!t.technologies) {
+            return []
+        }
+
+        t.technologies.forEach((tech) => {
+            techArray.push({ label: tech, value: tech })
         })
         return techArray
     }

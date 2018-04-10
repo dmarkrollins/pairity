@@ -300,3 +300,25 @@ a {
     color: #3C86A8;
     text-decoration: underline;
 }
+
+div.technology-item {
+    font-size: .8em;
+    padding: 7px;
+    background-color: #659bb9;
+    border: 1px #979797 solid;
+    border-radius: 3px;
+    display: inline-block;
+    color: #fff;
+    margin: 7px 7px 7px 0px;
+}
+
+div.role-item {
+    font-size: .8em;
+    padding: 7px;
+    background-color: #21709c;
+    border: 1px #979797 solid;
+    border-radius: 3px;
+    display: inline-block;
+    color: #fff;
+    margin: 7px 7px 7px 0px;
+}

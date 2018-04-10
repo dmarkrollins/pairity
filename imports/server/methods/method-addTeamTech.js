@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { SimpleSchema } from 'simpl-schema'
+import { _ } from 'meteor/underscore'
+
 import { Pairity, Teams, TeamTech, IsTeamAdmin } from '../../../imports/lib/pairity'
 import { Schemas } from '../../../imports/lib/schemas'
 import { Errors } from '../../../imports/lib/errors'
@@ -21,35 +23,44 @@ Meteor.methods({
             throw Errors.create('not-admin')
         }
 
-        const tech = TeamTech.findOne({ teamname: techName })
-
-        if (tech) {
-            throw Errors.create('duplicate-found', 'Technology')
+        if (t.technologies) {
+            const foundTech = _.find(t.technologies, item => item === techName)
+            if (foundTech) {
+                throw Errors.create('duplicate-found', 'Technology')
+            }
+        } else {
+            t.technologies = []
         }
 
+        t.technologies.push(techName)
+
         try {
-            const id = TeamTech.insert(
+            const result = Teams.update(
                 {
-                    teamId: teamId,
-                    name: techName
+                    _id: teamId,
+                },
+                {
+                    $set: {
+                        technologies: t.technologies
+                    }
                 },
                 {
                     extendAutoValueContext:
                     {
-                        isInsert: true,
-                        isUpdate: false,
+                        isInsert: false,
+                        isUpdate: true,
                         isUpsert: false,
                         isFromTrustedCode: true,
                         userId: this.userId
                     }
                 }
             )
-            return id
+            return result
         } catch (err) {
             if (err.sanitizedError) {
                 throw Errors.create('custom', err.sanitizedError.reason)
             } else {
-                Logger.log('TeamTech insert failed', this.userId, err)
+                Logger.log('Technology insert failed', this.userId, err)
                 throw Errors.create('insert-failed', 'Technology')
             }
         }

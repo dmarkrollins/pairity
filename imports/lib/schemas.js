@@ -1,4 +1,19 @@
-import SimpleSchema from 'simpl-schema'
+// import SimpleSchema from 'simpl-schema'
+import SS from 'simpl-schema'
+
+SS.extendOptions(['autoform']);
+const SimpleSchema = class extends SS {
+    constructor(schema) {
+        Object.keys(schema).forEach((k) => {
+            if (schema[k].type instanceof Array) {
+                const type = schema[k].type[0];
+                schema[k].type = Array;
+                schema[`${k}.$`] = { type }
+            }
+        })
+        super(schema);
+    }
+}
 
 const Schemas = {}
 
@@ -63,14 +78,18 @@ Schemas.Teams = new SimpleSchema({
     description: {
         type: String,
         max: 8192
-    }
-    // location: {
-    //     type: String,
-    //     optional: true
-    // },
+    },
+    technologies: {
+        type: [String],
+        optional: true
+    },
+    // 'technologies.$': String,
+    roles: {
+        type: [String],
+        optional: true
+    },
+    // 'roles.$': String
     // admins: [String],
-    // technologies: [String],
-    // rolesNeeded: [String],
     // members: [String]
 })
 

@@ -10,10 +10,12 @@
                     <a id="btnView" href="/teams/manage/{{_id}}" style="margin-right: 7px;">View</a>
                     <a id="btnJoin" href="#">Join</a>                    
                 </div>
-            </div>
-            <div class="pure-g">
                 <div class="pure-u-1">
                     {{{breaklines description}}}
+                </div>
+                {{> teamSubItems this}}
+                <div class="pure-u-1">
+                    <div style="color: #ccc; font-size: .7em; float: right; font-style: italic;">Last Modified: {{modifiedDate}}</div>
                 </div>
             </div>
         </div>

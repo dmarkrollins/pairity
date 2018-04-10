@@ -8,4 +8,5 @@ import './teamMenu.html'
 import './teamMenu.js'
 import './manageTeam.html'
 import './manageTeam.js'
+import './teamSubItems.html'
 

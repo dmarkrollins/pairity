@@ -80,10 +80,10 @@ if (Meteor.isServer) {
             const context = { userId };
             let msg = '';
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
+            fakeTeam.roles = []
+            fakeTeam.roles.push('fake-Role-name')
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-
-            const fakeTeamRoles = TestData.fakeTeamRoles({ name: 'fake-Role-name' })
-            sandbox.stub(TeamRoles, 'findOne').returns(fakeTeamRoles)
+            sandbox.stub(Teams, 'update')
 
             try {
                 const resultId = subject.apply(context, [Random.id(), 'fake-Role-name']);
@@ -98,20 +98,19 @@ if (Meteor.isServer) {
             const context = { userId };
             let msg = '';
             const id = Random.id()
-            let resultId
+            let result
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(TeamRoles, 'findOne').returns(null)
-            sandbox.stub(TeamRoles, 'insert').returns(id)
+            sandbox.stub(Teams, 'update').returns({ nModified: 1 })
 
             try {
-                resultId = subject.apply(context, [Random.id(), 'fake-Role-name']);
+                result = subject.apply(context, [Random.id(), 'fake-Role-name']);
             } catch (error) {
                 msg = error.reason;
             }
 
-            expect(msg, 'should throw dup error').to.be.equal('')
-            expect(resultId).to.equal(id)
+            expect(msg, 'no error should be thrown').to.be.equal('')
+            expect(result.nModified).to.equal(1)
         })
 
         it('handles insert error correctly', function () {
@@ -121,8 +120,7 @@ if (Meteor.isServer) {
             let resultId
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(TeamRoles, 'findOne').returns(null)
-            sandbox.stub(TeamRoles, 'insert').throws('fake-error')
+            sandbox.stub(Teams, 'update').throws('fake-error')
             sandbox.stub(Logger, 'log')
             sandbox.spy(Errors, 'create')
 

@@ -82,10 +82,8 @@ if (Meteor.isServer) {
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
 
-            sandbox.stub(TeamRoles, 'findOne').returns(null)
-
             try {
-                const resultId = subject.apply(context, [Random.id(), Random.id()]);
+                const resultId = subject.apply(context, [Random.id(), 'fake-Role-name']);
             } catch (error) {
                 msg = error.reason;
             }
@@ -99,14 +97,14 @@ if (Meteor.isServer) {
             const id = Random.id()
             let resultId
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
-            const fakeRole = TestData.fakeTeamRoles({ teamId: fakeTeam._id })
+            fakeTeam.roles = []
+            fakeTeam.roles.push('fake-Role-name')
 
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(TeamRoles, 'findOne').returns(fakeRole)
-            sandbox.stub(TeamRoles, 'remove').returns({ nModified: 1 })
+            sandbox.stub(Teams, 'update').returns({ nModified: 1 })
 
             try {
-                resultId = subject.apply(context, [Random.id(), Random.id()]);
+                resultId = subject.apply(context, [Random.id(), 'fake-Role-name']);
             } catch (error) {
                 msg = error.reason;
             }
@@ -121,14 +119,14 @@ if (Meteor.isServer) {
             const id = Random.id()
             let resultId
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
+            fakeTeam.roles = []
+            fakeTeam.roles.push('fake-Role-name')
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            const fakeRole = TestData.fakeTeamRoles()
-            sandbox.stub(TeamRoles, 'findOne').returns(fakeRole)
-            sandbox.stub(TeamRoles, 'remove').throws('fake-error')
+            sandbox.stub(Teams, 'update').throws('fake-error')
             sandbox.stub(Logger, 'log')
 
             try {
-                resultId = subject.apply(context, [Random.id(), Random.id()]);
+                resultId = subject.apply(context, [Random.id(), 'fake-Role-name']);
             } catch (error) {
                 msg = error.reason;
             }

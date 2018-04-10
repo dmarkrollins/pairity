@@ -80,10 +80,9 @@ if (Meteor.isServer) {
             const context = { userId };
             let msg = '';
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
+            fakeTeam.technologies = []
+            fakeTeam.technologies.push('fake-tech-name')
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-
-            const fakeTeamTech = TestData.fakeTeamTech({ name: 'fake-tech-name' })
-            sandbox.stub(TeamTech, 'findOne').returns(fakeTeamTech)
 
             try {
                 const resultId = subject.apply(context, [Random.id(), 'fake-tech-name']);
@@ -98,20 +97,19 @@ if (Meteor.isServer) {
             const context = { userId };
             let msg = '';
             const id = Random.id()
-            let resultId
+            let result
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(TeamTech, 'findOne').returns(null)
-            sandbox.stub(TeamTech, 'insert').returns(id)
+            sandbox.stub(Teams, 'update').returns({ nModified: 1 })
 
             try {
-                resultId = subject.apply(context, [Random.id(), 'fake-tech-name']);
+                result = subject.apply(context, [Random.id(), 'fake-tech-name']);
             } catch (error) {
                 msg = error.reason;
             }
 
             expect(msg, 'should throw dup error').to.be.equal('')
-            expect(resultId).to.equal(id)
+            expect(result.nModified).to.equal(1)
         })
 
         it('handles insert error correctly', function () {
@@ -121,8 +119,7 @@ if (Meteor.isServer) {
             let resultId
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
-            sandbox.stub(TeamTech, 'findOne').returns(null)
-            sandbox.stub(TeamTech, 'insert').throws('fake-error')
+            sandbox.stub(Teams, 'update').throws('fake-error')
             sandbox.stub(Logger, 'log')
             sandbox.spy(Errors, 'create')
 

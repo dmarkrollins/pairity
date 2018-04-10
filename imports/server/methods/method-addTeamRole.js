@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { SimpleSchema } from 'simpl-schema'
+import { _ } from 'meteor/underscore'
+
 import { Pairity, Teams, TeamRoles, IsTeamAdmin } from '../../../imports/lib/pairity'
 import { Schemas } from '../../../imports/lib/schemas'
 import { Errors } from '../../../imports/lib/errors'
@@ -21,23 +23,33 @@ Meteor.methods({
             throw Errors.create('not-admin')
         }
 
-        const tech = TeamRoles.findOne({ name: roleName })
+        if (t.roles) {
+            const foundRoles = _.find(t.roles, item => item === roleName)
 
-        if (tech) {
-            throw Errors.create('duplicate-found', 'Role')
+            if (foundRoles) {
+                throw Errors.create('duplicate-found', 'Role')
+            }
+        } else {
+            t.roles = []
         }
 
+        t.roles.push(roleName)
+
         try {
-            const id = TeamRoles.insert(
+            const id = Teams.update(
                 {
-                    teamId: teamId,
-                    name: roleName
+                    _id: teamId,
+                },
+                {
+                    $set: {
+                        roles: t.roles
+                    }
                 },
                 {
                     extendAutoValueContext:
                     {
-                        isInsert: true,
-                        isUpdate: false,
+                        isInsert: false,
+                        isUpdate: true,
                         isUpsert: false,
                         isFromTrustedCode: true,
                         userId: this.userId
