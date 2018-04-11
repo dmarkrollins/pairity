@@ -1,6 +1,6 @@
 <template name="teamList">
 
-    {{> header title="Teams" showSearch="true" }}
+    {{> header title="Teams" showSearch="true" searchValue=searchVal}}
 
     {{#if Template.subscriptionsReady}}
         {{#if hasTeams}}

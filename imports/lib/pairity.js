@@ -8,6 +8,7 @@ const Pairity = {
     defaultConfirmMsg: 'Are you sure?',
     defaultLimit: 10,
     PageTitleKey: 'page-title',
+    TeamSearchKey: 'team-search',
     ToastTimeOut: 1750,
     Components: {}
 }

@@ -33,8 +33,9 @@ class TeamItem extends React.Component {
             let { errorMessage } = this.state
             errorMessage = 'Team name and description required!'
             this.setState({ errorMessage })
+        } else {
+            this.props.handleSave(this.state.team)
         }
-        this.props.handleSave(this.state.team)
     }
 
     cancelClick(event) {
