@@ -50,8 +50,9 @@ if (Meteor.isClient) {
             expect(wrapper.find('div.pure-u-1 a'), '2 buttons').to.have.length(2)
             expect(wrapper.find('div.pure-u-1 a#btnAdd'), 'add button found').to.have.length(1)
             expect(wrapper.find('div.pure-u-1 a#btnRemove'), 'remove button found').to.have.length(1)
-            expect(wrapper.find('div.pure-u-1 select'), 'list box').to.have.length(1)
-            expect(wrapper.find('div.pure-u-1 select option'), 'no sub items').to.have.length(0)
+            expect(wrapper.find('div.pure-u-1 div.item-box'), 'list box').to.have.length(1)
+            expect(wrapper.find('div.pure-u-1 div.item-box div.unselected-item'), 'no sub items').to.have.length(0)
+            expect(wrapper.find('div.pure-u-1 div.item-box div.selected-item'), 'no sub items').to.have.length(0)
         })
 
         it('displays correctly with 3 items passed in', function () {
@@ -64,20 +65,20 @@ if (Meteor.isClient) {
                 label="Fake Stuff"
             />)
 
-            expect(wrapper.find('div.pure-u-1 select option'), 'should have sub items').to.have.length(3)
+            expect(wrapper.find('div.pure-u-1 div.item-box div.unselected-item'), 'should have sub items').to.have.length(3)
         })
 
         it('handles single remove with correct information', function () {
             const subItems = TestData.fakeSubItems()
 
             const wrapper = mount(<Pairity.Components.TeamSubItem
-                handleAdd={isSaved}
+                handleSave={isSaved}
                 handleRemove={isRemoved}
                 list={subItems}
                 label="Fake Stuff"
             />)
 
-            wrapper.find('div.pure-u-1 select option').first().simulate('click')
+            wrapper.find('div.pure-u-1 div.item-box div.unselected-item').first().simulate('click')
 
             wrapper.find('div.pure-u-1 a#btnRemove').simulate('click')
 
