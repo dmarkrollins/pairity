@@ -255,31 +255,38 @@ label, label.pure-form, label.pure-form-horizontal {
     -moz-box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset;
     box-shadow: 1px 1px 3px 0px rgba(230,230,230,1) inset; 
     width: 100%;
-    maxWidth: '500px';
+    max-width: '500px';
+    height: 124px;
+    line-height: 24px;
     margin: auto;
     border: 1px #ccc solid;
     border-radius: 4px;
     overflow-y: scroll;
     overflow-x: hidden;
-    min-height: 150px;
-    padding: 3px;
 }
 
 .disabled {
     cursor: not-allowed;
 }
 
-.hidden {
-    display: none;
-}
-
-option {
-    line-height: 32px;
-    padding-top: 6px;
+.unselected-item {
+    border-radius: 3px;
+    background-color: #fcfcfc;
+    width: 96%;
+    margin: 7px;
+    padding: 3px;
 }
 
 .selected-item {
     border-radius: 3px;
+    background-color: #90c4e0;
+    width: 96%;
+    margin: 7px;
+    padding: 3px;
+}
+
+.hidden {
+    display: none;
 }
 
 .team-menu {

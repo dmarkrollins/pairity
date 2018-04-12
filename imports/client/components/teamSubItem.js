@@ -124,9 +124,9 @@ class TeamSubItem extends React.Component {
                         <div className={this.addItemClass()} style={{ marginBottom: '7px', marginRight: '9px' }} >
                             <input id="newItemInput" onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
                         </div>
-                        <select size="6" className="item-box">
+                        <div className="item-box">
                             {this.subItems()}
-                        </select>
+                        </div>
                     </div>
                 </div>
             </div>

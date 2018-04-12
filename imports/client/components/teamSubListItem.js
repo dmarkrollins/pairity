@@ -16,16 +16,20 @@ class TeamSubListItem extends React.Component {
         this.props.handleSelected(this.props.value, isSelected)
     }
 
+    itemClass() {
+        return this.props.className
+    }
+
     render() {
         return (
-            <option
+            <div
                 onClick={this.itemSelect}
-                className={this.props.className}
+                className={this.itemClass()}
                 value={this.props.value}
                 selected={this.props.selected}
             >
                 {this.props.label}
-            </option>
+            </div>
         )
     }
 }
