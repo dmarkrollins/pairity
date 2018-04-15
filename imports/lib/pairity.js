@@ -9,6 +9,7 @@ const Pairity = {
     defaultLimit: 10,
     PageTitleKey: 'page-title',
     TeamSearchKey: 'team-search',
+    UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
     Components: {}
 }
@@ -35,6 +36,7 @@ if (!String.prototype.format) {
 const Teams = new Mongo.Collection('teams')
 const TeamTech = new Mongo.Collection('team-tech')
 const TeamRoles = new Mongo.Collection('team-roles')
+const UserPreferences = new Meteor.Collection(Pairity.UserPreferences);
 
 Teams.attachSchema(Schemas.Teams)
 
@@ -45,5 +47,5 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Teams, RegisterComponent, IsTeamAdmin
+    Pairity, Teams, UserPreferences, RegisterComponent, IsTeamAdmin
 }

@@ -8,7 +8,7 @@ import { Pairity } from '../../lib/pairity'
 
 Template.header.helpers({
     search() {
-        return _.isUndefined(this.showSearch) ? true : this.showSearch
+        return _.isUndefined(this.showSearch) ? false : this.showSearch
     }
 })
 

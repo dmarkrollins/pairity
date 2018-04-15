@@ -62,3 +62,18 @@ FlowRouter.route('/teams/manage/:id', {
     },
     name: 'manageteam'
 })
+
+FlowRouter.route('/preferences', {
+    subscriptions: function (params) {
+        this.register('preferences', Meteor.subscribe('myPrefs'))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'userPreferences' });
+        }
+    },
+    name: 'userPreferences'
+})
+

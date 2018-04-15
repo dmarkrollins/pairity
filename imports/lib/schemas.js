@@ -127,4 +127,11 @@ Schemas.TeamRoles = new SimpleSchema({
     }
 })
 
-module.exports = { Schemas }
+Schemas.UserPreferences = new SimpleSchema({
+    primaryRole: {
+        type: String,
+        allowedValues: ['Engineer', 'Product', 'Design']
+    }
+})
+
+module.exports = { Schemas };

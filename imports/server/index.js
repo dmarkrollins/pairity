@@ -1,4 +1,5 @@
 import './publications/publication-teams'
+import './publications/publication-userPreferences'
 
 import './methods/method-addTeamTech'
 import './methods/method-removeTeamTech'
@@ -6,3 +7,4 @@ import './methods/method-addTeamRole'
 import './methods/method-removeTeamRole'
 import './methods/method-addTeam'
 import './methods/method-updateTeam'
+import './methods/method-setUserPreferences'
