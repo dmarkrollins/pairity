@@ -32,6 +32,50 @@ Schemas.Location = new SimpleSchema({
     }
 })
 
+Schemas.Organizations = new SimpleSchema({
+    _id: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    createdAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isInsert) {
+                return this.userId;
+            }
+            this.unset()
+        },
+        denyUpdate: true,
+        optional: true
+    },
+    modifiedAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isUpdate) {
+                return new Date();
+            }
+        },
+        denyInsert: true,
+        optional: true
+    },
+    admins: {
+        type: [String],
+        index: true
+    },
+    name: {
+        type: String,
+        index: true,
+        optional: false,
+        max: 60
+    },
+    description: {
+        type: String,
+        optional: true,
+        max: 2048
+    }
+})
+
 Schemas.Teams = new SimpleSchema({
     _id: {
         type: String,
