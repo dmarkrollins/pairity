@@ -42,7 +42,7 @@ Schemas.Organizations = new SimpleSchema({
         type: Date,
         autoValue: function () {
             if (this.isInsert) {
-                return this.userId;
+                return new Date();
             }
             this.unset()
         },
