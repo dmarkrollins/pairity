@@ -137,37 +137,44 @@ Schemas.Teams = new SimpleSchema({
     // members: [String]
 })
 
-Schemas.TeamTech = new SimpleSchema({
+Schemas.TeamMembers = new SimpleSchema({
     _id: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
         optional: true
     },
+    organizationId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id
+    },
     teamId: {
         type: String,
-        regEx: SimpleSchema.RegEx.Id,
-        denyUpdate: true
+        regEx: SimpleSchema.RegEx.Id
     },
-    name: {
+    userId: {
         type: String,
-        max: 60
-    }
-})
-
-Schemas.TeamRoles = new SimpleSchema({
-    _id: {
-        type: String,
-        regEx: SimpleSchema.RegEx.Id,
+        regEx: SimpleSchema.RegEx.Id
+    },
+    createdAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+            this.unset()
+        },
+        denyUpdate: true,
         optional: true
     },
-    teamId: {
-        type: String,
-        regEx: SimpleSchema.RegEx.Id,
-        denyUpdate: true
+    isAdmin: {
+        type: Boolean,
+        optional: true,
+        defaultValue: false
     },
-    name: {
-        type: String,
-        max: 60
+    isPresent: {
+        type: Boolean,
+        optional: true,
+        defaultValue: true
     }
 })
 

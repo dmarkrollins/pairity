@@ -66,6 +66,26 @@ TestData.fakeError = (message) => {
     return err
 }
 
+TestData.fakeTeamMember = (parameters) => {
+    let parms = {}
+
+    if (!_.isUndefined(parameters)) {
+        parms = parameters
+    }
+
+    const member = {}
+
+    member._id = Random.id()
+    member.organizationId = parms.organizationId || Random.id()
+    member.teamId = parms.teamId || Random.id()
+    member.userId = parms.userId || Random.id()
+    member.isAdmin = _.isUndefined(parms.isAdmin) ? false : parms.isAdmin
+    member.isPresent = _.isUndefined(parms.isPresent) ? false : parms.isPresent
+
+    return member
+}
+
+
 TestData.fakeSubItems = (count = 3) => {
     const items = []
 

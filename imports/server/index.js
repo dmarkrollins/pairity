@@ -1,5 +1,6 @@
 import './publications/publication-teams'
 import './publications/publication-userPreferences'
+import './publications/publication-teamMembers'
 
 import './methods/method-addTeamTech'
 import './methods/method-removeTeamTech'

@@ -34,11 +34,13 @@ if (!String.prototype.format) {
 }
 
 const Teams = new Mongo.Collection('teams')
-const TeamTech = new Mongo.Collection('team-tech')
-const TeamRoles = new Mongo.Collection('team-roles')
+const TeamMembers = new Mongo.Collection('teamMembers')
+
+// UserPrefs is a special case
 const UserPreferences = new Meteor.Collection(Pairity.UserPreferences);
 
 Teams.attachSchema(Schemas.Teams)
+TeamMembers.attachSchema(Schemas.TeamMembers)
 
 const IsTeamAdmin = (team, id) => team.createdBy === id
 
@@ -47,5 +49,5 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Teams, UserPreferences, RegisterComponent, IsTeamAdmin
+    Pairity, Teams, TeamMembers, UserPreferences, RegisterComponent, IsTeamAdmin
 }
