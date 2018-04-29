@@ -11,7 +11,8 @@ Errors.types = [
     { key: 'not-admin', message: 'You must be the team administrator to perform this action!' },
     { key: 'insert-failed', message: '{0} insert failed. Please try again later!' },
     { key: 'update-failed', message: '{0} update failed. Please try again later!' },
-    { key: 'delete-failed', message: '{0} delete failed. Please try again later!' }
+    { key: 'delete-failed', message: '{0} delete failed. Please try again later!' },
+    { key: 'duplicate-user-in-org', message: 'User has already been added to {0}!' }
 ]
 
 Errors.create = (key, value = 'Item') => {
