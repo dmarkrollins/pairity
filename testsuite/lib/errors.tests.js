@@ -38,4 +38,9 @@ describe('Errors', function () {
         const error = Errors.create('custom', 'This is a fake message')
         expect(error.reason).to.equal('This is a fake message')
     })
+
+    it('should handle a duplicate user added to an org', () => {
+        const error = Errors.create('duplicate-user-in-org', 'FakeOrg')
+        expect(error.reason).to.equal('User has already been added to FakeOrg!')
+    })
 })

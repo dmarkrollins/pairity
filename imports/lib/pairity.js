@@ -33,6 +33,8 @@ if (!String.prototype.format) {
     };
 }
 
+const Organizations = new Mongo.Collection('organizations')
+const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
 
@@ -41,6 +43,8 @@ const UserPreferences = new Meteor.Collection(Pairity.UserPreferences);
 
 Teams.attachSchema(Schemas.Teams)
 TeamMembers.attachSchema(Schemas.TeamMembers)
+Organizations.attachSchema(Schemas.Organizations)
+OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
 
 const IsTeamAdmin = (team, id) => team.createdBy === id
 
@@ -49,5 +53,5 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Teams, TeamMembers, UserPreferences, RegisterComponent, IsTeamAdmin
+    Pairity, Organizations, OrganizationMembers, Teams, TeamMembers, UserPreferences, RegisterComponent, IsTeamAdmin
 }

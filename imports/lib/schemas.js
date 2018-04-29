@@ -1,4 +1,5 @@
 // import SimpleSchema from 'simpl-schema'
+import { Meteor } from 'meteor/meteor';
 import SS from 'simpl-schema'
 
 SS.extendOptions(['autoform']);
@@ -73,6 +74,26 @@ Schemas.Organizations = new SimpleSchema({
         type: String,
         optional: true,
         max: 2048
+    }
+})
+
+Schemas.OrganizationMembers = new SimpleSchema({
+    _id: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    organizationId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: false,
+        index: true
+    },
+    userId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: false,
+        index: true
     }
 })
 

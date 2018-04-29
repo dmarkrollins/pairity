@@ -1,7 +1,9 @@
 import './publications/publication-teams'
 import './publications/publication-userPreferences'
 import './publications/publication-teamMembers'
+import './publications/publication-organizationMembers'
 
+import './methods/method-addUserToOrg'
 import './methods/method-addTeamTech'
 import './methods/method-removeTeamTech'
 import './methods/method-addTeamRole'

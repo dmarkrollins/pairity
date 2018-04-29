@@ -54,4 +54,21 @@ describe('Schemas', () => {
             expect(orgSchema.description.optional).to.be.true
         })
     })
+
+    describe('OrganizationMembers', () => {
+        const orgSchema = { ...schemas.Schemas.OrganizationMembers._schema }
+        it('should have a valid _id field', () => {
+            runMongoIdExpectations(orgSchema._id)
+        })
+
+        it('should have a valide organizationId field', () => {
+            expect(orgSchema.organizationId.type.definitions[0].type).to.equal(String)
+            expect(orgSchema.organizationId.optional).to.be.false
+            expect(orgSchema.organizationId.index).to.be.true
+        })
+
+        it('should have a valid userId field', () => {
+            expect(orgSchema.userId.index).to.be.true
+        })
+    })
 })

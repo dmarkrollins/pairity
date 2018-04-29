@@ -96,4 +96,22 @@ TestData.fakeSubItems = (count = 3) => {
     return items
 }
 
+TestData.fakeOrganizationMembers = (parameters) => {
+    let parms = {}
+    
+    if (!_.isUndefined(parameters)) {
+        parms = parameters
+    }
+
+    const organizationMembers = [
+        {
+            _id: Random.id(),
+            organizationId: parms.organizationId || Random.id(),
+            userId: parms.userId || Random.id()
+        }
+    ]
+
+    return organizationMembers
+}
+
 module.exports = { TestData }
