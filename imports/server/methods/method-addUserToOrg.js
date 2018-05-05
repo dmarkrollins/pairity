@@ -2,12 +2,11 @@ import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { SimpleSchema } from 'simpl-schema'
 import { OrganizationMembers } from '../../../imports/lib/pairity'
-import { Errors } from '../../../imports/lib/errors'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 
 Meteor.methods({
-    doesUserExistInOrg: (userId, orgId) => {
+    addUserToOrg: (doc) => {
         if (!this.userId) {
             throw new Meteor.Error('not-logged-in', 'You must be authenticated to perform this action!')
         }
@@ -15,7 +14,7 @@ Meteor.methods({
         const context = Schemas.OrganizationMembers.newContext()
 
         // verify user has not already been added to this organization
-        const r = OrganizationMembers.findOne({ organizationId: orgId, userId: userId })
+        const r = OrganizationMembers.findOne({ organizationId: doc.orgId, userId: doc.userId })
 
         if (r) {
             throw Errors.create('', 'Member has already been added to this organization')
@@ -24,8 +23,8 @@ Meteor.methods({
         try {
             OrganizationMembers.insert(
                 {
-                    organizationId: orgId,
-                    userId: userId
+                    organizationId: doc.orgId,
+                    userId: doc.userId
                 },
                 {
                     extendAutoValueContext:

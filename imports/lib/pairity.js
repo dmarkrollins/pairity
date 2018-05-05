@@ -34,7 +34,7 @@ if (!String.prototype.format) {
 }
 
 const Organizations = new Mongo.Collection('organizations')
-const OrganizationMembers = new Mongo.Collection('organization-members')
+const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
 

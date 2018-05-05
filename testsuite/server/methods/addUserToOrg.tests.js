@@ -38,9 +38,9 @@ if (Meteor.isServer) {
         it('must be logged in', function () {
             const context = {};
             let msg = '';
-
+            
             try {
-                const resultId = subject.apply(context, '0', '0');
+                const resultId = subject.apply(context, TestData.fakeOrganizationMembers());
             } catch (error) {
                 msg = error.message;
             }

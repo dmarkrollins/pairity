@@ -68,9 +68,7 @@ describe('Schemas', () => {
         })
 
         it('should have a valid userId field', () => {
-            expect(typeof orgSchema.userId.type.definitions[0].custom).to.equal('function')
             expect(orgSchema.userId.index).to.be.true
-            expect(orgSchema.userId.unique).to.be.true
         })
     })
 })
