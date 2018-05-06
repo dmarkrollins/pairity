@@ -50,6 +50,8 @@ if (Meteor.isClient) {
             expect(wrapper.find('div.pure-u-1 a'), '2 buttons').to.have.length(2)
             expect(wrapper.find('div.pure-u-1 a#btnAdd'), 'add button found').to.have.length(1)
             expect(wrapper.find('div.pure-u-1 a#btnRemove'), 'remove button found').to.have.length(1)
+            expect(wrapper.find('div.pure-u-1 input')).to.have.length(1)
+            expect(wrapper.find('div.pure-u-1 input').prop('placeholder')).to.equal('Enter new item, press enter')
             expect(wrapper.find('div.pure-u-1 div.item-box'), 'list box').to.have.length(1)
             expect(wrapper.find('div.pure-u-1 div.item-box div.unselected-item'), 'no sub items').to.have.length(0)
             expect(wrapper.find('div.pure-u-1 div.item-box div.selected-item'), 'no sub items').to.have.length(0)

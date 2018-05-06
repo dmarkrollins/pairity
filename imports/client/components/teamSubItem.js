@@ -28,6 +28,15 @@ class TeamSubItem extends React.Component {
         showAddItem = !showAddItem
 
         this.setState({ showAddItem })
+
+        if (showAddItem === true) {
+            let input = this.refs.newItemInput
+
+            setTimeout(function () {
+                input.focus()
+            }, 300)
+        }
+
     }
 
     handleItemRemove() {
@@ -83,6 +92,7 @@ class TeamSubItem extends React.Component {
 
     addItemClass() {
         const hidden = this.state.showAddItem ? '' : 'hidden'
+
         return `pure-form pure-form-horizontal ${hidden}`
     }
 
@@ -121,8 +131,8 @@ class TeamSubItem extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <div className={this.addItemClass()} style={{ marginBottom: '7px', marginRight: '9px' }} >
-                            <input id="newItemInput" onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
+                        <div className={this.addItemClass()} style={{ marginBottom: '7px' }} >
+                            <input ref="newItemInput" onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
                         </div>
                         <div className="item-box">
                             {this.subItems()}
