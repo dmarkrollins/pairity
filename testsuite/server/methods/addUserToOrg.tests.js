@@ -76,7 +76,7 @@ if (Meteor.isServer) {
                 msg = error.message;
             }
 
-            expect(msg, 'should throw dup error').to.be.equal('User not added to organization! [duplicate-found]');
+            expect(msg, 'should throw dup error').to.be.equal('Member has already been added to this organization! [duplicate-found]');
         })
 
         it('inserts new user in organization correctly - stubbed', function () {
@@ -106,13 +106,13 @@ if (Meteor.isServer) {
             let msg = '';
             const newId = Random.id()
             let resultId = ''
-            const fakeTeam = TestData.fakeTeam()
+            const fakeEntry = TestData.fakeOrganizationMembers()
             sandbox.stub(OrganizationMembers, 'findOne').returns(null)
             sandbox.stub(OrganizationMembers, 'insert').throws(TestData.fakeError())
             sandbox.stub(Logger, 'log')
 
             try {
-                resultId = subject.apply(context, [fakeTeam]);
+                resultId = subject.apply(context, fakeEntry);
             } catch (error) {
                 msg = error.reason;
             }
