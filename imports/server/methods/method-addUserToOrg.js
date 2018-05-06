@@ -4,17 +4,22 @@ import { SimpleSchema } from 'simpl-schema'
 import { OrganizationMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
+import { Errors } from '../../../imports/lib/errors'
 
 Meteor.methods({
-    addUserToOrg: (doc) => {
+    addUserToOrg: function(doc) {
         if (!this.userId) {
             throw new Meteor.Error('not-logged-in', 'You must be authenticated to perform this action!')
         }
 
         const context = Schemas.OrganizationMembers.newContext()
 
+        if (!context.validate(doc)) {
+            throw new Meteor.Error('invalid-document', 'Document provided is invalid!')
+        }
+
         // verify user has not already been added to this organization
-        const r = OrganizationMembers.findOne({ organizationId: doc.orgId, userId: doc.userId })
+        const r = OrganizationMembers.findOne({ organizationId: doc.organizationId, userId: doc.userId })
 
         if (r) {
             throw Errors.create('', 'Member has already been added to this organization')
@@ -23,7 +28,7 @@ Meteor.methods({
         try {
             OrganizationMembers.insert(
                 {
-                    organizationId: doc.orgId,
+                    organizationId: doc.organizationId,
                     userId: doc.userId
                 },
                 {

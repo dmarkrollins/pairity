@@ -85,11 +85,13 @@ Schemas.OrganizationMembers = new SimpleSchema({
     },
     organizationId: {
         type: String,
+        regEx: SimpleSchema.RegEx.Id,
         optional: false,
         index: true
     },
     userId: {
         type: String,
+        regEx: SimpleSchema.RegEx.Id,
         optional: false,
         index: true
     }

@@ -66,7 +66,7 @@ if (Meteor.isServer) {
         it('checks for dups', function () {
             const context = { userId: userId };
             let msg = '';
-            const fakeEntry = { organizationId: 0, userId: 0 }
+            const fakeEntry = { organizationId: Random.id(), userId: userId }
             sandbox.stub(OrganizationMembers, 'findOne').returns(fakeEntry)
             sandbox.stub(OrganizationMembers, 'insert')
 
@@ -84,7 +84,7 @@ if (Meteor.isServer) {
             let msg = '';
             const newId = Random.id()
             let resultId = ''
-            const fakeEntry = { organizationId: 0, userId: 1 }
+            const fakeEntry = { organizationId: newId, userId: userId }
             sandbox.stub(OrganizationMembers, 'findOne').returns(null)
             sandbox.stub(OrganizationMembers, 'insert').returns(newId)
 
