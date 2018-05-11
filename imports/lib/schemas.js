@@ -156,6 +156,11 @@ Schemas.Teams = new SimpleSchema({
     // 'roles.$': String
     // admins: [String],
     // members: [String]
+    organizationId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        index: true
+    }
 })
 
 Schemas.TeamMembers = new SimpleSchema({

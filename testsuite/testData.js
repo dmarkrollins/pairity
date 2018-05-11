@@ -22,6 +22,7 @@ TestData.fakeTeam = (parameters) => {
     team.description = parms.description || faker.lorem.sentences(3)
     team.createdAt = parms.createdAt || new Date()
     team.createdBy = parms.createdBy || Random.id()
+    team.organizationId = parms.organizationId || Random.id()
 
     return team
 }
@@ -98,7 +99,7 @@ TestData.fakeSubItems = (count = 3) => {
 
 TestData.fakeOrganizationMembers = (parameters) => {
     let parms = {}
-    
+
     if (!_.isUndefined(parameters)) {
         parms = parameters
     }

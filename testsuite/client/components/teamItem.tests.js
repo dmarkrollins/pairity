@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random'
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, shallow, simulate, configure } from 'enzyme';
 import chai, { expect } from 'chai';
@@ -64,13 +65,15 @@ if (Meteor.isClient) {
 
         it('when save is tapped the correct callback is invoked correctly', function () {
             const createdDate = new Date()
+            const fakeOrgId = Random.id()
 
             const fakeTeam = TestData.fakeTeam({
                 name: 'fake team name',
                 description: 'fake team desc',
                 _id: 'fake-id',
                 createdAt: createdDate,
-                createdBy: 'fake-user'
+                createdBy: 'fake-user',
+                organizationId: fakeOrgId
             })
 
             const wrapper = mount(<Pairity.Components.TeamItem
@@ -86,7 +89,8 @@ if (Meteor.isClient) {
                 createdAt: createdDate,
                 createdBy: 'fake-user',
                 description: 'fake team desc',
-                name: 'fake team name'
+                name: 'fake team name',
+                organizationId: fakeOrgId
             })
         })
 
