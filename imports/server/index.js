@@ -11,3 +11,5 @@ import './methods/method-removeTeamRole'
 import './methods/method-addTeam'
 import './methods/method-updateTeam'
 import './methods/method-setUserPreferences'
+
+import './utils/startup'
