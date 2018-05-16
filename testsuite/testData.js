@@ -97,6 +97,27 @@ TestData.fakeSubItems = (count = 3) => {
     return items
 }
 
+TestData.fakeOrganization = (parameters) => {
+    let parms = {}
+
+    if (!_.isUndefined(parameters)) {
+        parms = parameters
+    }
+
+    const org = {}
+
+    org._id = parms._id || Random.id()
+    org.createdAt = parms.createdAt || new Date()
+    if (parms.modifiedAt) {
+        org.modifiedAt = parms.modifiedAt
+    }
+    org.name = parms.name || faker.company.companyName()
+    org.description = parms.description || faker.lorem.sentences(3)
+    org.admins = parms.admins || [Random.id()]
+
+    return org
+}
+
 TestData.fakeOrganizationMembers = (parameters) => {
     let parms = {}
 
