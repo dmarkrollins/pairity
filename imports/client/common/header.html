@@ -7,8 +7,10 @@
             <div class="dropdown pull-right" style="margin-top: 7px;">
                 <a href="#" class="dropbtn" style="margin-right: 0px; position: relative; top:4px;"><img id="btnOptions" src="/options.png" height="20" alt=""/></a>
                 <div class="dropdown-content">
-                    <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
-                    <a id="btnPreferences" href="/preferences"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
+                    {{#if isInRole 'orgmanager'}}
+                        <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
+                    {{/if}}
+                        <a id="btnPreferences" href="/preferences"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
                     <a id="btnShare" href="mailto:?subject=Check%20Out%20Pairity!&body=Celebrate%20The%20Power%20of%20Pairing!%20-%20https://pairity.herokuapp.com"><i class="fa fa-share-alt" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Share Pairity</a>
                     <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     <a id="btnLogout" href="#"><i class="fa fa-sign-out" aria-hidden="true" style="color: #990000;"></i>&nbsp;Logout</a>

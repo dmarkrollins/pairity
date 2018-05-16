@@ -8,6 +8,19 @@ const faker = Meteor.isTest && require('faker') // eslint-disable-line global-re
 
 const TestData = {}
 
+TestData.fakeUsers = () => {
+    return {
+        'Dave-orgMgrRole': {
+            _id: Random.id(),
+            roles: ['orgmanager']
+        },
+        'Don-noRole': {
+            _id: Random.id(),
+            roles: []
+        }
+    }
+}
+
 TestData.fakeTeam = (parameters) => {
     let parms = {}
 

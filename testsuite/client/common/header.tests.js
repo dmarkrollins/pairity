@@ -8,7 +8,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import { withRenderedTemplate } from '../../clientTestHelpers';
 
-import TestData from '../../testData.js'
+import { TestData } from '../../testData.js'
 
 const should = chai.should();
 
@@ -19,6 +19,7 @@ if (Meteor.isClient) {
     describe('Header Template', function () {
         let userId;
         let sandbox
+        let fakeUsers = TestData.fakeUsers()
 
         beforeEach(function () {
             Template.registerHelper('_', key => key);
@@ -26,11 +27,15 @@ if (Meteor.isClient) {
         });
 
         afterEach(function () {
+            Meteor.user = null
             Template.deregisterHelper('_');
             sandbox.restore()
         });
 
         it('displays correctly no search', function () {
+            Meteor.user = function () {
+                return fakeUsers["Dave-orgMgrRole"]
+              }
             withRenderedTemplate('header', { title: 'fake-title' }, (el) => {
                 expect($(el).find('div#title')[0].innerHTML, 'title').to.equal('fake-title')
                 expect($(el).find('div.dropdown'), 'drop down').to.have.length(1)
@@ -43,10 +48,20 @@ if (Meteor.isClient) {
         })
 
         it('displays correctly with search', function () {
+
             withRenderedTemplate('header', { title: 'fake-title', showSearch: true }, (el) => {
                 expect($(el).find('div#title')[0].innerHTML, 'title').to.equal('fake-title')
                 expect($(el).find('#searchBox'), 'search box').to.have.length(1)
             });
+        })
+
+        it('displays "New Team" button for org managers', function() {
+            Meteor.user = function () {
+                return fakeUsers["Don-noRole"]
+              }
+            withRenderedTemplate('header', { title: 'fake-title' }, (el) => {
+                expect($(el).find('#btnNewTeam'), 'drop down').to.have.length(0)
+            })
         })
     })
 }

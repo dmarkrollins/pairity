@@ -12,7 +12,7 @@
     "bcrypt": "^1.0.3",
     "meteor-node-stubs": "^0.3.3",
     "moment": "^2.20.1",
-    "npm": "^6.0.0",
+    "npm": "^6.0.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-props": "0.0.3",
