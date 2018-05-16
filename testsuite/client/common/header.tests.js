@@ -55,7 +55,7 @@ if (Meteor.isClient) {
             });
         })
 
-        it('displays "New Team" button for org managers', function() {
+        it('does not display "New Team" button for non-orgmanagers', function() {
             Meteor.user = function () {
                 return fakeUsers["Don-noRole"]
               }
