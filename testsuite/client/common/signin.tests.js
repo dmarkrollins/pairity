@@ -35,7 +35,7 @@ if (Meteor.isClient) {
                 expect($(el).find('#userName'), 'username').to.have.length(1)
                 expect($(el).find('#password'), 'password').to.have.length(1)
                 expect($(el).find('#btnSignIn'), 'signin btn').to.have.length(1)
-                expect($(el).find('#btnSignUp'), 'signup btn').to.have.length(1)
+                expect($(el).find('#btnSignUp'), 'signup btn').to.have.length(0)
                 expect($(el).find('span#errorMessage'), 'err message span').to.have.length(1)
                 expect($(el).find('span.errorMessage'), 'err message class').to.have.length(1)
                 expect($(el).find('img#logoImage'), 'logo').to.have.length(1)
