@@ -94,6 +94,12 @@ Schemas.OrganizationMembers = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id,
         optional: false,
         index: true
+    },
+    status: {
+        type: String,
+        allowedValues: ['Pending', 'Confirmed'],
+        defaultValue: 'Pending',
+        optional: true
     }
 })
 

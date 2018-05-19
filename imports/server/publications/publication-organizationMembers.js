@@ -1,25 +1,27 @@
 import { Meteor } from 'meteor/meteor'
+import { publishComposite } from 'meteor/reywood:publish-composite'
+
 import { Pairity, OrganizationMembers } from '../../../imports/lib/pairity'
 
 OrganizationMembers._ensureIndex('organizationId', 1)
 OrganizationMembers._ensureIndex('userId', 1)
+OrganizationMembers._ensureIndex('status')
 
 OrganizationMembers._ensureIndex(
     { organizationId: 1, userId: 1 },
     { unique: true }
 )
 
-Meteor.publish('organizationMembers', function (uId) {
-    if (!Meteor.userId()) {
-        return null
-    }
-
-    return OrganizationMembers.find(
-        {
-            userId: uId
+publishComposite('organizationMembers', function (orgId) {
+    return {
+        find() {
+            return OrganizationMembers.find({ organizationId: orgId }, { sort: { score: -1 }, limit: 10 });
         },
-        {
-            sort: { createdAt: 1 }
-        }
-    )
+
+        children: [{
+            find(member) {
+                return Meteor.users.find({ _id: member.userId }, { fields: { username: 1, emails: 1, userPreferences: 1 } });
+            }
+        }]
+    }
 })

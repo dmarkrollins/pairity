@@ -16,16 +16,16 @@ FlowRouter.route('/', {
     name: 'signIn'
 });
 
-FlowRouter.route('/signup', {
-    action: function () {
-        if (Meteor.userId()) {
-            FlowRouter.go('/teams')
-        } else {
-            BlazeLayout.render('landingLayout', { content: 'newAccount' });
-        }
-    },
-    name: 'newAccount'
-});
+// FlowRouter.route('/signup', {
+//     action: function () {
+//         if (Meteor.userId()) {
+//             FlowRouter.go('/teams')
+//         } else {
+//             BlazeLayout.render('landingLayout', { content: 'newAccount' });
+//         }
+//     },
+//     name: 'newAccount'
+// });
 
 FlowRouter.route('/teams', {
     action: function () {
@@ -58,6 +58,20 @@ FlowRouter.route('/teams/manage/:id', {
             FlowRouter.go('/')
         } else {
             BlazeLayout.render('workLayout', { content: 'manageTeam' });
+        }
+    },
+    name: 'manageteam'
+})
+
+FlowRouter.route('/members/invite/:orgId', {
+    subscriptions: function (params) {
+        this.register('organizationMembers', Meteor.subscribe('organizationMembers', params.orgId))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'inviteOrgUsers' });
         }
     },
     name: 'manageteam'

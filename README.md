@@ -20,6 +20,12 @@ Unlike other tools we've used to manage pair rotations, Pairity extends the conc
 - Cross role pairing
 - Team management and inter/intra team pairing metrics
 
+# Required Environment Variables
+
+- MONGO_URL - points to your hosted mongo instance: _mongodb://[username:password@]host1[:port1]_
+- MAIL_URL - points to your smtp provider: _smtp://USERNAME:PASSWORD@HOST:PORT_
+- ROOT_URL - for example: _https://www.pairity-app.com_
+
 ## How can you help
 
 Glad you asked. We're always looking for contributions.

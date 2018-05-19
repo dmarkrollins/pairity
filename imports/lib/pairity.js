@@ -11,6 +11,7 @@ const Pairity = {
     TeamSearchKey: 'team-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
+    OrgManager: Session.get('ORG-MANAGER'),
     Components: {}
 }
 

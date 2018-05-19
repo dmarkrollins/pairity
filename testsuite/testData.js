@@ -129,11 +129,32 @@ TestData.fakeOrganizationMembers = (parameters) => {
         {
             _id: Random.id(),
             organizationId: parms.organizationId || Random.id(),
-            userId: parms.userId || Random.id()
+            userId: parms.userId || Random.id(),
+            status: parms.status || 'Pending'
         }
     ]
 
     return organizationMembers
+}
+
+TestData.fakeOrganizationMember = (parameters) => {
+    let parms = {}
+
+    if (!_.isUndefined(parameters)) {
+        parms = parameters
+    }
+
+    const doc = {}
+
+    if (parms._id) {
+        doc._id = parms._id
+    }
+
+    doc.organizationId = parms.organizationId || Random.id()
+    doc.userId = parms.userId || Random.id()
+    doc.status = parms.status || 'Pending'
+
+    return doc
 }
 
 module.exports = { TestData }
