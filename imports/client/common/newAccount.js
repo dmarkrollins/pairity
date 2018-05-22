@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Accounts } from 'meteor/accounts-base'
+import { Pairity } from '../../lib/pairity'
 import { $ } from 'meteor/jquery'
 
 Template.newAccount.onCreated(function () {
@@ -55,7 +56,7 @@ Template.newAccount.events({
             return
         }
 
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(doc.password)) {
+        if (!Pairity.PasswordRegex.test(doc.password)) {
             instance.setMessage('Invalid password - must be >= 8 chars and contain a mix up upper and lower case letters plus at least 1 number :)')
             return
         }

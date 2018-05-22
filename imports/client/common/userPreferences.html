@@ -19,27 +19,47 @@
                         <legend>Primary Role</legend>
 
                         <div class="pure-u-1" style="white-space: nowrap; padding: 12px;">
-                            <input type="radio" id="engineer" name="role" value="engineer" {{engineerChecked}} style="width: 24px; margin-right: 7px;"> Engineer - technical deliverable focused
-                        </div>
+                            <input type="radio" id="engineer" name="role" value="engineer" {{engineerChecked}} style="width: 24px; margin-right: 7px;"> Engineer - technical deliverable focused</div>
     
                         <div class="pure-u-1" style="white-space: nowrap; padding: 12px;">
-                            <input type="radio" id="product" name="role" value="product" {{productChecked}} style="width: 24px; margin-right: 7px;"> Product - business outcome focused
-                        </div>                    
+                            <input type="radio" id="product" name="role" value="product" {{productChecked}} style="width: 24px; margin-right: 7px;"> Product - business outcome focused</div>                    
     
                         <div class="pure-u-1" style="white-space: nowrap; padding: 12px; margin-bottom: 7px;">
-                            <input type="radio" id="design" name="role" value="design" {{designChecked}} style="width: 24px; margin-right: 7px;"> Design - user experience focused
-                        </div>  
+                            <input type="radio" id="design" name="role" value="design" {{designChecked}} style="width: 24px; margin-right: 7px;"> Design - user experience focused</div>  
 
                         <div class="pure-u-1" style="padding-left: 12px; padding-right: 12px;">
                             <span id="errorMessage" class="errorMessage">{{errorMessage}}</span>
                         </div>
+                        <button id="btnSave" type="submit" class="button-primary pure-button">Save</button>
 
                     </fieldset>
                     
-                    <button id="btnSave" type="submit" class="button-primary pure-button">Save</button>
-                    
                 </form>
 
+                <form id="resetPasswordForm" class="pure-form pure-form-stacked">
+                    <fieldset>
+                        
+                        <legend>Change Password</legend>
+
+                        <div class="pure-u-1" style="white-space: nowrap; padding: 12px;">
+                            <input type="password" id="newPassword" placeholder="New Password" />
+                        </div>
+
+                        <div class="pure-u-1" style="padding-left: 12px; padding-right: 12px;">
+                            <span id="passwordInvalidFormatErrorMessage" class="errorMessage">{{passwordInvalidFormatErrorMessage}}</span>
+                        </div>
+    
+                        <div class="pure-u-1" style="white-space: nowrap; padding: 12px;">
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+                        </div>                    
+    
+                        <div class="pure-u-1" style="padding-left: 12px; padding-right: 12px;">
+                            <span id="passwordResetErrorMessage" class="errorMessage">{{passwordResetErrorMessage}}</span>
+                        </div>
+                        <button id="btnChangePassword" type="submit" class="button-primary pure-button">Change</button>
+
+                    </fieldset>
+                </form>
             </div>
         </div>
 
