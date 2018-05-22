@@ -9,11 +9,15 @@ Template.userPreferences.onCreated(function () {
     const self = this
     self.primaryRole = ''
     self.errorMessage = new ReactiveVar('')
+    self.passwordResetErrorMessage = new ReactiveVar('')
 })
 
 Template.userPreferences.helpers({
     errorMessage() {
         return Template.instance().errorMessage.get()
+    },
+    passwordResetErrorMessage() {
+        return Template.instance().passwordResetErrorMessage.get()
     },
     engineerChecked() {
         const p = UserPreferences.findOne()
@@ -64,5 +68,36 @@ Template.userPreferences.events({
                 Toast.showSuccess('Preferences Saved!')
             }
         })
+    },
+    'submit #resetPasswordForm': function(event, instance){
+        event.preventDefault()
+
+        instance.passwordResetErrorMessage.set('')
+    },
+    'change input:password': function (event, instance) {
+        event.preventDefault()
+
+        instance.passwordResetErrorMessage.set('whats going on here?')
+
+        var resetPasswordForm = $('#resetPasswordForm'),
+            password = resetPasswordForm.find('#newPassword').val(),
+            confirmPassword = resetPasswordForm.find('#confirmPassword').val()
+
+            function isNotEmpty(str){
+                return str !== null && str !== undefined && str !== ""
+            }
+        
+            
+        if (isNotEmpty(password) && isNotEmpty(confirmPassword)) {
+            console.log(password + '=>' + confirmPassword)
+            Meteor.call('resetUserPassword', password, function (err, response){
+                if (err) {
+                    Toast.showError(err.reason)
+                } else {
+                    Toast.showSuccess('Password Reset!')
+                }
+            })
+        }
+        return false
     }
 })
