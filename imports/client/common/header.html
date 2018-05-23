@@ -9,10 +9,13 @@
                 <div class="dropdown-content">
                     <a id="btnPreferences" href="/preferences"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
                     <hr style="width: 80%; border-top: #ddd 1px solid;"/>
-                    <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
-                    <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     {{#if orgManager}}
+                        <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
                         <a id="btnInvite" href="/members/invite{{orgId}}"><i class="fa fa-users-cog" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Invite Members</a>
+                        <hr style="width: 80%; border-top: #ddd 1px solid;"/>
+                    {{/if}}
+                    {{#if isAdmin}}
+                        <a id="btnInvite" href="/organizations"><i class="fa fa-sitemap" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Manage Organizations</a>
                         <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     {{/if}}
                     <a id="btnShare" href="mailto:?subject=Check%20Out%20Pairity!&body=Celebrate%20The%20Power%20of%20Pairing!%20-%20https://pairity.herokuapp.com"><i class="fa fa-share-alt" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Share Pairity</a>

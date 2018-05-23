@@ -4,33 +4,34 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { Pairity } from '../../lib/pairity'
 import { Toast } from '../../../imports/client/common/toast'
 
-Template.newTeam.onCreated(function () {
+Template.newOrganization.onCreated(function () {
     const self = this
 
-    self.CreateTeam = (team) => {
-        Meteor.call('addTeam', team, function (err, response) {
+    self.CreateOrganization = (org) => {
+        Meteor.call('addOrganization', org, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
-                FlowRouter.go('/teams')
+                FlowRouter.go('/organizations')
             }
         })
     }
 })
 
-Template.newTeam.helpers({
+Template.newOrganization.helpers({
     saveHandler() {
         const instance = Template.instance();
-        return function (team) {
-            instance.CreateTeam(team)
+        return function (org) {
+            instance.CreateOrganization(org)
         }
     },
     cancelHandler() {
         return function () {
-            FlowRouter.go('/teams')
+            FlowRouter.go('/organizations')
         }
     },
-    teamItem() {
-        return Pairity.Components.TeamItem
+    orgItem() {
+        return Pairity.Components.OrganizationItem
     }
+
 })

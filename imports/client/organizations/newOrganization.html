@@ -1,0 +1,16 @@
+<template name="newOrganization">
+
+    {{> header title="Create Organization"}}
+
+    <div class="pure-g">
+        <div class="pure-u-1">
+
+            {{>React component=orgItem
+                handleSave=saveHandler
+                handleCancel=cancelHandler
+            }}
+
+        </div>
+    </div>
+
+</template>

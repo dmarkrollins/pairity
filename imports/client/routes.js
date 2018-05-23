@@ -16,16 +16,69 @@ FlowRouter.route('/', {
     name: 'signIn'
 });
 
-// FlowRouter.route('/signup', {
-//     action: function () {
-//         if (Meteor.userId()) {
-//             FlowRouter.go('/teams')
-//         } else {
-//             BlazeLayout.render('landingLayout', { content: 'newAccount' });
-//         }
-//     },
-//     name: 'newAccount'
-// });
+FlowRouter.route('/signup', {
+    action: function () {
+        if (Meteor.userId()) {
+            FlowRouter.go('/teams')
+        } else {
+            BlazeLayout.render('landingLayout', { content: 'newAccount' });
+        }
+    },
+    name: 'newAccount'
+});
+
+FlowRouter.route('/organizations', {
+    subscriptions: function (params) {
+        this.register('organizations', Meteor.subscribe('allOrgs'))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'organizationList' });
+        }
+    },
+    name: 'organizations'
+})
+
+FlowRouter.route('/organizations/new', {
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'newOrganization' });
+        }
+    },
+    name: 'createorganization'
+})
+
+FlowRouter.route('/organizations/edit/:id', {
+    subscriptions: function (params) {
+        this.register('singleorganization', Meteor.subscribe('singleOrg', params.id))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'editOrganization' });
+        }
+    },
+    name: 'createorganization'
+})
+
+FlowRouter.route('/organizations/invite/:id', {
+    subscriptions: function (params) {
+        this.register('singleorganization', Meteor.subscribe('singleOrg', params.id))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'inviteOrgMembers' });
+        }
+    },
+    name: 'inviteorganizationmembers'
+})
 
 FlowRouter.route('/teams', {
     action: function () {
@@ -51,7 +104,7 @@ FlowRouter.route('/teams/new', {
 
 FlowRouter.route('/teams/manage/:id', {
     subscriptions: function (params) {
-        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('singleteam', Meteor.subscribe('singleTeam', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {

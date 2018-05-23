@@ -39,11 +39,10 @@ Template.teamList.helpers({
         if (search) {
             return search.name || ''
         }
+    },
+    orgManager() {
+        return false
     }
-})
-
-Template.teamList.onRendered(function () {
-    const self = this
 })
 
 Template.teamList.events({

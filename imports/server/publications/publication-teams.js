@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { _ } from 'meteor/underscore'
-import { Pairity, Teams, TeamMembers, Organizations } from '../../../imports/lib/pairity'
+import { Pairity, Teams, TeamMembers, Organizations, OrganizationMembers } from '../../../imports/lib/pairity'
 
 Teams._ensureIndex('name', 1)
 
@@ -19,9 +19,9 @@ Meteor.publish('allTeams', function (search) {
 
     const searchLimit = search.limit || Pairity.defaultLimit
 
-    const orgs = Organizations.find({ admins: Meteor.userId() }).fetch()
+    const membership = OrganizationMembers.findOne({ userId: this.userId })
 
-    const orgids = _.pluck(orgs, '_id')
+    const orgid = membership.isAdmin ? membership.organizationId : ''
 
     const teams = TeamMembers.find({ userId: Meteor.userId() }).fetch()
 
@@ -32,7 +32,7 @@ Meteor.publish('allTeams', function (search) {
             name: { $regex: searchVal, $options: 'i' },
             $or: [
                 { _id: { $in: teamids } },
-                { organizationId: { $in: orgids } },
+                { organizationId: orgid },
             ]
         },
         {

@@ -1,0 +1,130 @@
+.modal-overlay {
+    background-color: rgba(0,0,0,0.5);
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 980;
+} 
+
+.modal {
+    background-color: white;
+    border-radius: 6px;
+    /* border: 1px solid #aaa; */
+    visibility: hidden;
+    max-height: calc(100% - 100px);
+    position: fixed;
+    top: 150px;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    z-index: 990;
+    padding: 0px;
+    min-width: 280px;
+    max-width: 600px;
+} 
+
+.modal-header {
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    height: 38px;
+    font-size: 1.2em;
+    color: #efefef;
+    padding: 0px;
+    margin: 0px;
+}
+
+.modal-header-default {
+    background-color: #394F66; 
+}
+
+.modal-header-primary {
+    background-color: #3E94B4; 
+}
+
+.modal-header-warning {
+    background-color: rgb(175, 94, 18);
+}
+
+.modal-header-danger {
+    background-color: rgb(129, 23, 23);
+}
+
+.modal-header .modal-title {
+    margin: 7px 0px 0px 9px;
+    display: inline-block;
+}
+
+.modal-body {
+    height: 100%;
+    overflow: auto;
+    overflow-y: scroll;
+    min-height: 50px;
+    min-width: 300px;
+    text-align: left;
+    padding: 20px;
+    background-color: #fff;
+    line-height: 21px;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+
+.modal-footer {
+    height: 36px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    background-color: #fdfdfd;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    text-align: center;
+    padding: 7px;
+}
+
+.modal-footer a:hover {
+    color: #fff;
+}
+
+.modal-close-x {
+    position: relative;
+    float: right;
+    margin: 9px 9px 0px 0px;
+    color: #dfdfdf;
+}
+
+.modal-close-x:hover {
+    color: #fff;
+}
+
+.overlay-visible {
+    visibility: visible;
+    z-index: 1010;
+}
+
+.modal-animation {
+    visibility: visible;
+    z-index: 1020;
+    -webkit-animation-name: modal-slide;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-delay: .1s;
+    animation-name: modal-slide;
+    animation-duration: .5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+}
+@-webkit-keyframes modal-slide {
+    0%   { top:-50%;}
+    100% { top: 50%;}
+}
+
+@keyframes modal-slide {
+    0%   { top:-50%;}
+    100% { top: 150px;}
+}

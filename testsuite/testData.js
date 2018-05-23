@@ -113,7 +113,6 @@ TestData.fakeOrganization = (parameters) => {
     }
     org.name = parms.name || faker.company.companyName()
     org.description = parms.description || faker.lorem.sentences(3)
-    org.admins = parms.admins || [Random.id()]
 
     return org
 }
@@ -130,7 +129,8 @@ TestData.fakeOrganizationMembers = (parameters) => {
             _id: Random.id(),
             organizationId: parms.organizationId || Random.id(),
             userId: parms.userId || Random.id(),
-            status: parms.status || 'Pending'
+            status: parms.status || 'Pending',
+            isAdmin: !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
         }
     ]
 
@@ -153,6 +153,7 @@ TestData.fakeOrganizationMember = (parameters) => {
     doc.organizationId = parms.organizationId || Random.id()
     doc.userId = parms.userId || Random.id()
     doc.status = parms.status || 'Pending'
+    doc.isAdmin = !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
 
     return doc
 }

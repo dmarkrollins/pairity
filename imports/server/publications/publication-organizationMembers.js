@@ -4,13 +4,10 @@ import { publishComposite } from 'meteor/reywood:publish-composite'
 import { Pairity, OrganizationMembers } from '../../../imports/lib/pairity'
 
 OrganizationMembers._ensureIndex('organizationId', 1)
-OrganizationMembers._ensureIndex('userId', 1)
-OrganizationMembers._ensureIndex('status')
 
-OrganizationMembers._ensureIndex(
-    { organizationId: 1, userId: 1 },
-    { unique: true }
-)
+OrganizationMembers._ensureIndex('userId', 1)
+
+OrganizationMembers._ensureIndex('status', 1)
 
 publishComposite('organizationMembers', function (orgId) {
     return {

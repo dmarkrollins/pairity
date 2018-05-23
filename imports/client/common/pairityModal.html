@@ -1,0 +1,27 @@
+<template name="pairityModal">
+
+    <div class="modal-overlay">
+        <div id="pairity-modal" class="modal">
+            <header class="modal-header">
+                <span class="modal-title" id="modalTitle"></span>
+                <i class="fa fa-close modal-close-x" id="buttonCloseX" onclick="CloseModal()"></i>
+            </header>
+            <div id="modalBody" class="modal-body"></div>
+            <footer class="modal-footer">
+                <a id="modalPrimaryButton" class="button-primary pure-button modal-display-none"></a>
+                <a id="modalCloseButton" onclick="CloseModal()" class="button-default pure-button">Cancel</a>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+    
+        function CloseModal() {
+            $('.modal-overlay').removeClass('overlay-visible')
+            $('.modal').removeClass('modal-animation')
+            $('a#modalPrimaryButton').unbind('click')
+        }
+
+    </script>
+
+</template>

@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
-import { Session } from 'meteor/session'
 import { Schemas } from './schemas'
 import { Errors } from './errors'
 
@@ -11,7 +10,6 @@ const Pairity = {
     TeamSearchKey: 'team-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
-    OrgManager: Session.get('ORG-MANAGER'),
     Components: {}
 }
 
@@ -38,14 +36,14 @@ const Organizations = new Mongo.Collection('organizations')
 const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
-
-// UserPrefs is a special case
-const UserPreferences = new Meteor.Collection(Pairity.UserPreferences);
+const Membership = new Mongo.Collection('membership')
+const UserPreferences = new Meteor.Collection(Pairity.UserPreferences)
 
 Teams.attachSchema(Schemas.Teams)
 TeamMembers.attachSchema(Schemas.TeamMembers)
 Organizations.attachSchema(Schemas.Organizations)
 OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
+Membership.attachSchema(Schemas.Membership)
 
 const IsTeamAdmin = (team, id) => team.createdBy === id
 
@@ -54,5 +52,13 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Organizations, OrganizationMembers, Teams, TeamMembers, UserPreferences, RegisterComponent, IsTeamAdmin
+    Pairity,
+    Organizations,
+    OrganizationMembers,
+    Teams,
+    TeamMembers,
+    UserPreferences,
+    RegisterComponent,
+    IsTeamAdmin,
+    Membership
 }
