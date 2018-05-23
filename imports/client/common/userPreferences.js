@@ -89,7 +89,6 @@ Template.userPreferences.events({
         
             
         if (isNotEmpty(password) && isNotEmpty(confirmPassword)) {
-            console.log(password + '=>' + confirmPassword)
             Meteor.call('resetUserPassword', password, function (err, response){
                 if (err) {
                     Toast.showError(err.reason)
