@@ -36,13 +36,13 @@ Meteor.methods({
             }
         }
     },
-    resetUserPassword: function (newPassword){
-        if (!this.userId){
+    resetUserPassword: function (newPassword) {
+        if (!this.userId) {
             throw Errors.create('not-logged-in')
         }
 
         try {
-            Accounts.setPassword(this.userId, newPassword, {})
+            Accounts.setPassword(this.userId, newPassword, { logout: false })
         } catch (err) {
             if (err.sanitizedError) {
                 throw Errors.create('custom', err.sanitizedError.reason)

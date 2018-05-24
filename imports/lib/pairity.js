@@ -11,7 +11,8 @@ const Pairity = {
     TeamSearchKey: 'team-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
-    Components: {}
+    Components: {},
+    PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 }
 
 if (!String.prototype.toProperCase) {
