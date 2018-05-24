@@ -69,6 +69,7 @@ FlowRouter.route('/organizations/edit/:id', {
 FlowRouter.route('/organizations/invite/:id', {
     subscriptions: function (params) {
         this.register('singleorganization', Meteor.subscribe('singleOrg', params.id))
+        this.register('organizationmembers', Meteor.subscribe('organizationMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {

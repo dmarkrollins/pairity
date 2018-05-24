@@ -17,6 +17,7 @@ Template.organizationMenu.onCreated(function () {
 })
 
 Template.organizationMenu.onRendered(function () {
+    this.$('div.sub-menu a').removeClass('bolded-link')
     this.$(`#${this.data.highlight}`).addClass('bolded-link')
 })
 
@@ -44,5 +45,17 @@ Template.organizationMenu.events({
         PairityModal.show(title, body, okText, (id) => {
             self.removeOrganization(id)
         }, org._id, 'modal-header-danger')
+    },
+    'click #btnManage': function (event, instance) {
+        const org = Organizations.findOne()
+        if (org) {
+            FlowRouter.go(`/organizations/edit/${org._id}`)
+        }
+    },
+    'click #btnInvite': function (event, instance) {
+        const org = Organizations.findOne()
+        if (org) {
+            FlowRouter.go(`/organizations/invite/${org._id}`)
+        }
     }
 })

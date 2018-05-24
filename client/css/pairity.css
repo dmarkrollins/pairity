@@ -222,6 +222,14 @@ a:hover {
     margin: 30px auto 0px auto;
 }
 
+.empty-list-left {
+    max-width: 500px; 
+    font-weight: bold; 
+    color: #dcdcdc;
+    font-size: 2em;
+    margin: 30px auto 0px auto;
+}
+
 .auto-margin {
     margin: 0px auto 0px auto;
     padding: 12px;

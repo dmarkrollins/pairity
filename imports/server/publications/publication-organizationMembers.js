@@ -12,7 +12,7 @@ OrganizationMembers._ensureIndex('status', 1)
 publishComposite('organizationMembers', function (orgId) {
     return {
         find() {
-            return OrganizationMembers.find({ organizationId: orgId }, { sort: { score: -1 }, limit: 10 });
+            return OrganizationMembers.find({ organizationId: orgId }, { limit: 10 });
         },
 
         children: [{
