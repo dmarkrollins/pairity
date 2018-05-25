@@ -16,9 +16,9 @@ Template.inviteOrgMembers.events({
     'keypress #textInvite': function (event, instance) {
         if (event.which === 13) {
             event.stopPropagation()
-            Meteor.call('inviteOrgMember', event.target.value, function (err, response) {
+            Meteor.call('inviteOrganizationMember', event.target.value, function (err, response) {
                 if (err) {
-                    Toast.showError(err.reason)
+                    Toast.showError(err)
                 }
             })
         }

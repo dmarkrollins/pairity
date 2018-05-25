@@ -10,7 +10,6 @@ Template.organizationMenu.onCreated(function () {
     const self = this
 
     self.removeOrganization = (id) => {
-        console.log('hey there', id)
         Toast.showSuccess('Organization successfully removed!')
         FlowRouter.go('/organizations')
     }

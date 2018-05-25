@@ -4,6 +4,7 @@ import { _ } from 'meteor/underscore'
 const Errors = {}
 
 Errors.types = [
+    { key: 'logged-in', message: 'You must not be logged in to perform this action!' },
     { key: 'not-logged-in', message: 'You must be logged in to perform this action!' },
     { key: 'not-found', message: '{0} not found!' },
     { key: 'duplicate-found', message: 'You already have a {0} like this defined!' },

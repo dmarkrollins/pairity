@@ -10,7 +10,12 @@ const Pairity = {
     TeamSearchKey: 'team-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
-    Components: {}
+    Components: {},
+    MemberStatuses: {
+        MEMBER_PENDING: 'Pending',
+        MEMBER_ACTIVE: 'Active',
+        MEMBER_INACTIVE: 'InActive'
+    }
 }
 
 if (!String.prototype.toProperCase) {

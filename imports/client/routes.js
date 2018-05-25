@@ -16,6 +16,16 @@ FlowRouter.route('/', {
     name: 'signIn'
 });
 
+FlowRouter.route('/enroll/:token', {
+    action: function (argument) {
+        if (Meteor.userId()) {
+            FlowRouter.go('/teams');
+        }
+        BlazeLayout.render('landingLayout', { content: 'enrollUser' });
+    },
+    name: 'EnrollUser'
+})
+
 FlowRouter.route('/signup', {
     action: function () {
         if (Meteor.userId()) {

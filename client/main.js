@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 
 import '../imports/client/routes'
+import '../imports/client/uxUtils'
 import '../imports/lib/index'
 import '../imports/client/common/index'
 import '../imports/client/teams/index'

@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { SimpleSchema } from 'simpl-schema'
-import { OrganizationMembers } from '../../../imports/lib/pairity'
+import { _ } from 'meteor/underscore'
+import { Pairity, OrganizationMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 
@@ -9,6 +10,14 @@ Meteor.methods({
     addUserToOrg: function (doc) {
         if (!this.userId) {
             throw new Meteor.Error('not-logged-in', 'You must be authenticated to perform this action!')
+        }
+
+        if (_.isUndefined(doc.status)) {
+            doc.status = Pairity.MemberStatuses.MEMBER_PENDING
+        }
+
+        if (_.isUndefined(doc.isAdmin)) {
+            doc.isAdmin = false
         }
 
         const context = Schemas.OrganizationMembers.newContext()
@@ -28,7 +37,9 @@ Meteor.methods({
             return OrganizationMembers.insert(
                 {
                     organizationId: doc.organizationId,
-                    userId: doc.userId
+                    userId: doc.userId,
+                    status: doc.status,
+                    isAdmin: doc.isAdmin
                 },
                 {
                     extendAutoValueContext:
@@ -42,8 +53,8 @@ Meteor.methods({
                 }
             )
         } catch (err) {
-            console.log(err)
             if (err.sanitizedError) {
+                Logger.log('OrganizationMember insert failed', this.userId, err.sanitizedError.reason)
                 throw new Meteor.Error('insert-failed', err.sanitizedError.reason)
             } else {
                 Logger.log('OrganizationMember insert failed', this.userId, err)

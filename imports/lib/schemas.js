@@ -93,7 +93,7 @@ Schemas.OrganizationMembers = new SimpleSchema({
     },
     status: {
         type: String,
-        allowedValues: ['Pending', 'Confirmed'],
+        allowedValues: ['Pending', 'Active', 'InActive'],
         defaultValue: 'Pending',
         optional: true
     },
