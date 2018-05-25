@@ -81,7 +81,7 @@ Template.userPreferences.events({
     'submit #resetPasswordForm': function (event, instance) {
         event.preventDefault()
 
-        if(!instance.isValidPassword.get()){
+        if (!instance.isValidPassword.get()) {
             instance.passwordResetErrorMessage.set('Please enter a valid password')
             return
         }
@@ -96,11 +96,11 @@ Template.userPreferences.events({
                 Toast.showError(err.reason)
             } else {
                 Toast.showSuccess('Password Reset!')
-                instance.isValidPassword.set(false)
-                passwordField.val('')
-                confirmPasswordField.val('')
             }
         })
+        instance.isValidPassword.set(false)
+        passwordField.val('')
+        confirmPasswordField.val('')
     },
     'change input:password': function (event, instance) {
         instance.passwordResetErrorMessage.set('')

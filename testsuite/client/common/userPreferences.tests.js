@@ -2,7 +2,6 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker'
 import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
@@ -94,13 +93,78 @@ if (Meteor.isClient) {
                 });
             })
 
+            it('displays error when no passwords entered and change button clicked', () => {
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    $(el).find('#btnChangePassword').click()
+
+                    Tracker.flush()
+
+                    expect($(el).find('span#passwordInvalidFormatErrorMessage')[0].innerText, 'reset password format err message span').to.equal('')
+                    expect($(el).find('span#passwordResetErrorMessage')[0].innerText, 'reset password err message span').to.equal('Please enter a valid password')
+                });
+            })
+
             it('displays error with invalid password format', () => {
                 withRenderedTemplate('userPreferences', null, (el) => {
-                    $(el).find('#newPassword').val('123')
-                    Template.userPreferences.fireEvent('change input:password')
+                    $(el).find('#newPassword').val('123').trigger('change')
                     Tracker.flush()
-                    console.log(this)
-                    expect($(el).find('span#passwordResetErrorMessage')[0].innerText, 'reset password err message span').to.equal('Invalid password - must be >= 8 chars and contain a mix up upper and lower case letters plus at least 1 number :)')
+                    expect($(el).find('span#passwordInvalidFormatErrorMessage')[0].innerText, 'reset password format err message span').to.equal('Invalid password - must be >= 8 chars and contain a mix up upper and lower case letters plus at least 1 number :)')
+                });
+            })
+
+            it('does not display error when password is formatted properly', () => {
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    $(el).find('#newPassword').val('Abcdefg123').trigger('change')
+                    Tracker.flush()
+                    expect($(el).find('span#passwordInvalidFormatErrorMessage')[0].innerText, 'reset password format err message span').to.equal('')
+                });
+            })
+
+            it('displays error when new and confirm passwords do not match', () => {
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    $(el).find('#newPassword').val('Abcdefg123').trigger('change')
+                    $(el).find('#confirmPassword').val('Abcdefg12').trigger('change')
+
+                    Tracker.flush()
+
+                    expect($(el).find('span#passwordInvalidFormatErrorMessage')[0].innerText, 'reset password format err message span').to.equal('')
+                    expect($(el).find('span#passwordResetErrorMessage')[0].innerText, 'reset password err message span').to.equal('Passwords do not match!')
+                });
+            })
+
+            it('does not display error when new and confirm passwords match', () => {
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    $(el).find('#newPassword').val('Abcdefg123').trigger('change')
+                    $(el).find('#confirmPassword').val('Abcdefg123').trigger('change')
+
+                    Tracker.flush()
+
+                    expect($(el).find('span#passwordInvalidFormatErrorMessage')[0].innerText, 'reset password format err message span').to.equal('')
+                    expect($(el).find('span#passwordResetErrorMessage')[0].innerText, 'reset password err message span').to.equal('')
+                });
+            })
+
+            it('with valid password inputs calls reset password correctly', function () {
+                sandbox.stub(Meteor, 'call')
+    
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    expect($(el).find('#btnChangePassword'), 'should have change button').to.have.length(1)
+    
+                    $(el).find('#newPassword').val('Abcdefg123').trigger('change')
+                    $(el).find('#confirmPassword').val('Abcdefg123').trigger('change')
+
+                    Tracker.flush()
+    
+                    $(el).find('#btnChangePassword')[0].click()
+                    Tracker.flush()
+    
+                    expect(Meteor.call).to.have.been.called
+    
+                    const parms = Meteor.call.args[0]
+                    expect(parms[1]).to.equal('Abcdefg123')
+
+                    expect($(el).find('#newPassword').val()).to.equal('')
+                    expect($(el).find('#confirmPassword').val()).to.equal('')
                 });
             })
         })

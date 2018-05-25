@@ -2,7 +2,6 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker'
 import { Accounts } from 'meteor/accounts-base'
 import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
