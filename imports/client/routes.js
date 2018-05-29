@@ -127,15 +127,15 @@ FlowRouter.route('/teams/manage/:id', {
     name: 'manageteam'
 })
 
-FlowRouter.route('/members/invite/:orgId', {
+FlowRouter.route('/teams/members/:teamId', {
     subscriptions: function (params) {
-        this.register('organizationMembers', Meteor.subscribe('organizationMembers', params.orgId))
+        this.register('teams', Meteor.subscribe('singleTeam', params.teamId))
     },
     action: function () {
         if (!Meteor.userId()) {
             FlowRouter.go('/')
         } else {
-            BlazeLayout.render('workLayout', { content: 'inviteOrgUsers' });
+            BlazeLayout.render('workLayout', { content: 'teamMembers' });
         }
     },
     name: 'manageteam'
