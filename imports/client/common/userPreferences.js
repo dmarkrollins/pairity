@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
+import { FlowRouter } from 'meteor/kadira:flow-router'
 
 import { Toast } from '../../client/common/toast'
 import { UserPreferences } from '../../../imports/lib/pairity'
@@ -17,7 +18,7 @@ Template.userPreferences.helpers({
     },
     engineerChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'engineer') {
                 return 'checked'
             }
@@ -25,7 +26,7 @@ Template.userPreferences.helpers({
     },
     designChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'design') {
                 return 'checked'
             }
@@ -33,11 +34,14 @@ Template.userPreferences.helpers({
     },
     productChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'product') {
                 return 'checked'
             }
         }
+    },
+    isReady() {
+        return FlowRouter.subsReady()
     }
 })
 

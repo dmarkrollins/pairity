@@ -27,7 +27,8 @@ Meteor.methods({
             const id = Teams.insert(
                 {
                     name: doc.name,
-                    description: doc.description
+                    description: doc.description,
+                    organizationId: doc.organizationId
                 },
                 {
                     extendAutoValueContext:

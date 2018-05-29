@@ -10,7 +10,7 @@ class TeamSubItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: Object.assign({}, this.props.list), // eslint-disable-line
+            list: Object.assign({}, this.props.list),
             selectedItem: '',
             showAddItem: false,
             textValue: ''
@@ -30,13 +30,12 @@ class TeamSubItem extends React.Component {
         this.setState({ showAddItem })
 
         if (showAddItem === true) {
-            let input = this.refs.newItemInput
+            const input = this.refs.newItemInput
 
             setTimeout(function () {
                 input.focus()
             }, 300)
         }
-
     }
 
     handleItemRemove() {

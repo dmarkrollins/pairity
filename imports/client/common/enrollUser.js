@@ -7,7 +7,7 @@ import { $ } from 'meteor/jquery'
 
 import { Pairity } from '../../lib/pairity'
 
-Template.enrolluser.onCreated(function () {
+Template.enrollUser.onCreated(function () {
     const self = this
 
     self.token = FlowRouter.getParam('token')
@@ -24,26 +24,52 @@ Template.enrollUser.events({
     'submit #enrollForm': function (event, instance) {
         event.preventDefault()
 
-        instance.errMessage.set('')
+        instance.errorMessage.set('')
         const name = event.target.userName.value || '';
         const password = event.target.password.value || '';
 
         if (name === '' || password === '') {
-            instance.errMessage.set('User name and password required!')
+            instance.errorMessage.set('User name and password required!')
+            return
+        }
+
+        if (password === 'FakePW99') {
+            instance.errorMessage.set('Try a different password please!')
             return
         }
 
         $('#enrollForm').prop('disabled', true);
 
-        Meteor.call('userEnrollment', instance.token, name, password, function (err, response) {
-            $('#enrollForm').prop('disabled', false);
-            if (err) {
-                Accounts.logout()
-                instance.errMessage.set(err.reason)
-                return
-            }
-            FlowRouter.go(response)
-        })
+        if (!Meteor.userId()) {
+            Accounts.resetPassword(instance.token, password, function (error) {
+                if (error) {
+                    $('#enrollForm').prop('disabled', false);
+                    instance.errorMessage.set(error.reason)
+                    return
+                }
+
+                // is now logged in
+
+                Meteor.call('userEnrollment', name, function (err, response) {
+                    $('#enrollForm').prop('disabled', false);
+                    if (err) {
+                        instance.errorMessage.set(err.reason)
+                        return
+                    }
+                    FlowRouter.go(response)
+                })
+            })
+        } else {
+            // just set user to active
+            Meteor.call('userEnrollment', name, function (err, response) {
+                $('#enrollForm').prop('disabled', false);
+                if (err) {
+                    instance.errorMessage.set(err.reason)
+                    return
+                }
+                FlowRouter.go(response)
+            })
+        }
     }
 
 })

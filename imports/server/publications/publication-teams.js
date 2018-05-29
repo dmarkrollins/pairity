@@ -21,7 +21,11 @@ Meteor.publish('allTeams', function (search) {
 
     const membership = OrganizationMembers.findOne({ userId: this.userId })
 
-    const orgid = membership.isAdmin ? membership.organizationId : ''
+    let orgId = ''
+
+    if (membership) {
+        orgId = membership.isAdmin ? membership.organizationId : ''
+    }
 
     const teams = TeamMembers.find({ userId: Meteor.userId() }).fetch()
 
@@ -32,7 +36,7 @@ Meteor.publish('allTeams', function (search) {
             name: { $regex: searchVal, $options: 'i' },
             $or: [
                 { _id: { $in: teamids } },
-                { organizationId: orgid },
+                { organizationId: orgId },
             ]
         },
         {

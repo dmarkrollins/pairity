@@ -1,6 +1,9 @@
+import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import moment from 'moment'
 import { FlowRouter } from 'meteor/kadira:flow-router'
+import { ReactiveVar } from 'meteor/reactive-var'
+import { $ } from 'meteor/jquery'
 
 import { Toast } from '../../../imports/client/common/toast'
 import { Pairity, Organizations } from '../../lib/pairity'
@@ -16,8 +19,9 @@ Template.organizationMenu.onCreated(function () {
 })
 
 Template.organizationMenu.onRendered(function () {
-    this.$('div.sub-menu a').removeClass('bolded-link')
-    this.$(`#${this.data.highlight}`).addClass('bolded-link')
+    $('div.sub-menu a').removeClass('bolded-link')
+    const itemId = `#${this.data.highlight}`
+    $(itemId).addClass('bolded-link')
 })
 
 Template.organizationMenu.helpers({
@@ -26,11 +30,14 @@ Template.organizationMenu.helpers({
         if (org) {
             return org._id
         }
+    },
+    isAdmin() {
+        return Meteor.user().username === 'admin'
     }
 })
 
 Template.organizationMenu.events({
-    'click #btnRemove': function (event, instance) {
+    'click #menuRemove': function (event, instance) {
         const self = instance
 
         const org = Organizations.findOne()
@@ -45,13 +52,13 @@ Template.organizationMenu.events({
             self.removeOrganization(id)
         }, org._id, 'modal-header-danger')
     },
-    'click #btnManage': function (event, instance) {
+    'click #menuManage': function (event, instance) {
         const org = Organizations.findOne()
         if (org) {
             FlowRouter.go(`/organizations/edit/${org._id}`)
         }
     },
-    'click #btnInvite': function (event, instance) {
+    'click #menuInvite': function (event, instance) {
         const org = Organizations.findOne()
         if (org) {
             FlowRouter.go(`/organizations/invite/${org._id}`)

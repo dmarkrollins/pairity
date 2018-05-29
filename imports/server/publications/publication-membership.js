@@ -13,24 +13,22 @@ Meteor.publish('myMembership', function () {
     const orgMember = OrganizationMembers.findOne({ userId: this.userId })
 
     if (!orgMember) {
-        if (Meteor.isDevelopment) { console.log('membership - not an org member') }
         return null
     }
 
-    const org = Organizations.findOne({ _id: orgMember.organizationId })
-
-    if (!org) {
-        if (Meteor.isDevelopment) { console.log('membership - not part of any org') }
-        return null
-    }
-
-    const membership = {}
-    membership.organizationId = org._id
-    membership.orgName = org.name
-    membership.isOrgAdmin = orgMember.isAdmin
-
-    console.log('adding membership', membership)
-    self.added('myMembership', org._id, membership)
+    const handle = Organizations.find({ _id: orgMember.organizationId }).observeChanges({
+        added: function (id, fields) {
+            const membership = {}
+            membership.organizationId = id
+            membership.orgName = fields.name
+            membership.isOrgAdmin = orgMember.isAdmin
+            self.added('membership', id, membership)
+        }
+    });
 
     self.ready();
+
+    self.onStop(function () {
+        handle.stop()
+    });
 })

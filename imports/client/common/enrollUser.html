@@ -1,4 +1,4 @@
-<template name="signIn">
+<template name="enrollUser">
 
         <div class="fullPage">
             <div class="centerForm">
@@ -9,24 +9,28 @@
                     <div class="pure-u-1" style="margin-top: 0px;">
                         <span id="tagLine" style="color: #1D5A9B; font-weight: bold; font-size: .95em;">Celebrating the Power of Pairing!</span>
                     </div>
+                    <div class="pure-u-1" >
+                        <div style="margin: auto; max-width: 300px;">
+                            <h3>Welcome to Pairity</h3>
+                            <p>
+                                We're excited you're here! 
+                            </p>
+                            <p>
+                                Create a unique username and password to finish setting up your account.  
+                            </p>
+                            <p style="font-size: .8em;">
+                                Note: Passwords must be at least 8 characters long and contain uppercase and lowercase letters, and numbers. So for example <i>FakePW99</i>.
+                            </p>
+                        </div>
+                    </div>
                     <form id="enrollForm" class="pure-form pure-form-stacked" style="margin-top: 12px; max-width: 300px;">
-                        <h3>Welcome to Pairity</h3>
-                        <p>
-                            We're excited you're here! 
-                        </p>
-                        <p>
-                            Enter a unique username and password below to finish setting up your account.  
-                        </p>
-                        <p>
-                            Note: Passwords must be at least 8 characters long and must contain uppercase and lowercase letters, and numbers. So for example <i>FakePW99</i>.
-                        </p>
                         <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px;">
-                            <input id="userName" type='text' class="dark" placeholder='Your User Name' >
+                            <input id="userName" type='text' class="dark" placeholder='Your Pairity User Name' >
                         </div>
                         <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px;">
-                            <input id="password" type='password' class="dark" placeholder='Your Password'>
+                            <input id="password" type='password' class="dark" placeholder='Your Pairity Password'>
                         </div>
-                        <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px;">
+                        <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px; margin-bottom: 7px;">
                             <span id="errorMessage" class="errorMessage">{{errMessage}}</span>
                         </div>
                         <div class="pure-u-1-1">

@@ -61,7 +61,7 @@ if (Meteor.isServer) {
             const collector = new PublicationCollector()
 
             collector.collect('organizationMembers', orgId, (collections) => {
-                console.log('The collections', JSON.stringify(collections, null, 4));
+                // console.log('The collections', JSON.stringify(collections, null, 4));
                 const { organizationMembers, users } = collections
                 try {
                     expect(organizationMembers).to.have.length(5)

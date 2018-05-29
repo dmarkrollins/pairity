@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker'
+import { FlowRouter } from 'meteor/kadira:flow-router'
 import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
@@ -23,6 +24,7 @@ if (Meteor.isClient) {
         beforeEach(function () {
             Template.registerHelper('_', key => key);
             sandbox = sinon.createSandbox()
+            sandbox.stub(FlowRouter, 'subsReady').returns(true)
         });
 
         afterEach(function () {

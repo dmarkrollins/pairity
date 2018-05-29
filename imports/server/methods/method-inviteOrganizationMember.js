@@ -22,21 +22,26 @@ Meteor.methods({
         const user = Accounts.findUserByEmail(email)
 
         if (user) {
-            throw Errors.create('duplicate-found', 'OrganizationMember')
+            const member = OrganizationMembers.findOne({ userId: user._id })
+            if (member) {
+                throw Errors.create('custom', 'User is already a member of an organization!')
+            }
         }
 
         try {
-            const orguserId = Accounts.createUser({ email })
-
-            Accounts.sendEnrollmentEmail(orguserId)
+            let orguserId
+            if (!user) {
+                orguserId = Accounts.createUser({ email })
+            } else {
+                orguserId = user._id
+            }
 
             const retVal = OrganizationMembers.insert(
                 {
-                    orgId: orgId,
+                    organizationId: orgId,
                     userId: orguserId,
                     status: Pairity.MemberStatuses.MEMBER_PENDING,
-                    isAdmin: admin,
-
+                    isAdmin: admin
                 },
                 {
                     extendAutoValueContext:
@@ -49,13 +54,21 @@ Meteor.methods({
                     }
                 }
             )
-            return retVal.nModified
+
+            try {
+                Accounts.sendEnrollmentEmail(orguserId)
+            } catch (err) {
+                Logger.log('Send enrollment email error', err)
+                throw Errors.create('custom', 'Enrollment email could not be sent. Please try again later.')
+            }
+
+            return retVal
         } catch (err) {
-            Logger.log('Enrollment failed', this.userId, err)
+            Logger.log('Invite org member failed', orgId, email, admin, err)
             if (err.sanitizedError) {
                 throw Errors.create('custom', err.sanitizedError.reason)
             } else {
-                throw Errors.create('custom', 'Enrollment failed - please try again later.')
+                throw Errors.create('custom', err.reason)
             }
         }
     }

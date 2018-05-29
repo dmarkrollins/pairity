@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
-import { Pairity } from '../../lib/pairity'
+import { Pairity, Membership } from '../../lib/pairity'
 import { Toast } from '../../../imports/client/common/toast'
 
 Template.newTeam.onCreated(function () {
@@ -32,5 +32,11 @@ Template.newTeam.helpers({
     },
     teamItem() {
         return Pairity.Components.TeamItem
+    },
+    selectedTeam() {
+        const memship = Membership.findOne()
+        if (memship) {
+            return { organizationId: memship.organizationId }
+        }
     }
 })

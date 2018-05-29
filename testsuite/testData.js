@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
 import { _ } from 'meteor/underscore'
+import { Pairity } from '../imports/lib/pairity'
 
 const faker = Meteor.isTest && require('faker') // eslint-disable-line global-require
 
@@ -124,17 +125,38 @@ TestData.fakeOrganizationMembers = (parameters) => {
         parms = parameters
     }
 
-    const organizationMembers = [
+    const retVal = {
+        organizationMembers: [],
+        users: []
+    }
+
+    if (_.isUndefined(parms.count)) {
+        parms.count = 3
+    }
+
+    for (let i = 0; i < parms.count; i += 1) {
+        const memberItem =
         {
             _id: Random.id(),
             organizationId: parms.organizationId || Random.id(),
             userId: parms.userId || Random.id(),
-            status: parms.status || 'Pending',
+            status: parms.status || Pairity.MemberStatuses.MEMBER_PENDING,
             isAdmin: !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
         }
-    ]
+        const userItem = {
+            _id: memberItem.userId,
+            username: `fake-name-${i}`,
+            emails: [
+                {
+                    address: `fakeemail_${i}@fake.com`
+                }
+            ]
+        }
+        retVal.organizationMembers.push(memberItem)
+        retVal.users.push(userItem)
+    }
 
-    return organizationMembers
+    return retVal
 }
 
 TestData.fakeOrganizationMember = (parameters) => {
@@ -152,7 +174,7 @@ TestData.fakeOrganizationMember = (parameters) => {
 
     doc.organizationId = parms.organizationId || Random.id()
     doc.userId = parms.userId || Random.id()
-    doc.status = parms.status || 'Pending'
+    doc.status = parms.status || Pairity.MemberStatuses.MEMBER_PENDING
     doc.isAdmin = !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
 
     return doc

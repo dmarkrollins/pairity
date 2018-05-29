@@ -41,7 +41,8 @@ const Organizations = new Mongo.Collection('organizations')
 const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
-const Membership = new Mongo.Collection('membership')
+const Membership = new Mongo.Collection('membership') // custom collection
+
 const UserPreferences = new Meteor.Collection(Pairity.UserPreferences)
 
 Teams.attachSchema(Schemas.Teams)

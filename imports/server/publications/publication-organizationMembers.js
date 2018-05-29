@@ -10,6 +10,8 @@ OrganizationMembers._ensureIndex('userId', 1)
 OrganizationMembers._ensureIndex('status', 1)
 
 publishComposite('organizationMembers', function (orgId) {
+    // console.log('retrieving members', OrganizationMembers.find({ organizationId: orgId }).count())
+
     return {
         find() {
             return OrganizationMembers.find({ organizationId: orgId }, { limit: 10 });

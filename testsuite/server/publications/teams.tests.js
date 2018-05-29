@@ -26,6 +26,8 @@ if (Meteor.isServer) {
         afterEach(function () {
             sandbox.restore();
             Teams.remove({})
+            Organizations.remove({})
+            OrganizationMembers.remove({})
         });
 
         it('SingleTeam', function (done) {
@@ -61,6 +63,9 @@ if (Meteor.isServer) {
             const org = TestData.fakeOrganization()
             const orgid = Organizations.insert(org)
 
+            const orgMember = TestData.fakeOrganizationMember({ organizationId: orgid, userId: userid })
+            const memberId = OrganizationMembers.insert(orgMember)
+
             for (let i = 0; i < 12; i += 1) {
                 const teamid = Teams.insert(TestData.fakeTeam({ organizationId: orgid, name: `test team ${i}` }))
                 TeamMembers.insert(TestData.fakeTeamMember({ teamId: teamid, userId: userid }))
@@ -90,6 +95,10 @@ if (Meteor.isServer) {
             // create an org
             const org = TestData.fakeOrganization()
             const orgid = Organizations.insert(org)
+
+            const orgMember = TestData.fakeOrganizationMember({ organizationId: orgid, userId: userid })
+            const memberId = OrganizationMembers.insert(orgMember)
+
 
             for (let i = 0; i < 10; i += 1) {
                 const teamid = Teams.insert(TestData.fakeTeam({ organizationId: orgid, name: `test team ${i}` }))
@@ -122,6 +131,9 @@ if (Meteor.isServer) {
             // create an org
             const org = TestData.fakeOrganization()
             const orgid = Organizations.insert(org)
+
+            const orgMember = TestData.fakeOrganizationMember({ organizationId: orgid, userId: userid })
+            const memberId = OrganizationMembers.insert(orgMember)
 
             for (let i = 0; i < 10; i += 1) {
                 const teamid = Teams.insert(TestData.fakeTeam({ organizationId: orgid, name: `test team ${i}` }))
@@ -157,6 +169,9 @@ if (Meteor.isServer) {
             const org = TestData.fakeOrganization({ admins: adminids })
             const orgid = Organizations.insert(org)
 
+            const orgMember = TestData.fakeOrganizationMember({ organizationId: orgid, userId: userid })
+            const memberId = OrganizationMembers.insert(orgMember)
+
             for (let i = 0; i < 10; i += 1) {
                 const teamid = Teams.insert(TestData.fakeTeam({ organizationId: orgid, name: `test team ${i}` }))
                 if (i < 5) {
@@ -190,6 +205,9 @@ if (Meteor.isServer) {
             // create an org
             const org = TestData.fakeOrganization({ admins: adminids })
             const orgid = Organizations.insert(org)
+
+            const orgMember = TestData.fakeOrganizationMember({ organizationId: orgid, userId: userid, isAdmin: true })
+            const memberId = OrganizationMembers.insert(orgMember)
 
             for (let i = 0; i < 5; i += 1) {
                 const teamid = Teams.insert(TestData.fakeTeam({ organizationId: orgid, name: `test team ${i}` }))

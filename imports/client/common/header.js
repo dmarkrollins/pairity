@@ -35,6 +35,18 @@ Template.header.helpers({
     },
     isAdmin() {
         return !Meteor.user() ? false : Meteor.user().username === 'admin'
+    },
+    orgId() {
+        if (Template.instance().isReady.get()) {
+            const info = Membership.findOne()
+            if (info) {
+                return info.organizationId
+            }
+        }
+        return ''
+    },
+    userName() {
+        return Meteor.user().username || Meteor.user().emails[0].address
     }
 })
 

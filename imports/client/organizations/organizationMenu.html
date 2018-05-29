@@ -2,10 +2,13 @@
 
     <div class="pure-g ">
         <div class="pure-u-1 sub-menu">
-            <a href="#" id="btnManage">Manage</a>
-            <a href="#" id="btnInvite">Invite</a>
-            <a href="#" id="btnRemove">Remove</a>
-            <a href="/organizations">Return</a>
+            <a href="#" id="menuManage">Manage</a>
+            <a href="#" id="menuMembers">Members</a>
+            <a href="#" id="menuInvite">Invite</a>
+            {{#if isAdmin}}
+                <a href="#" id="menuRemove">Remove</a>
+                <a href="/organizations" id="menuReturn">Return</a>
+            {{/if}}
         </div>
     </div>
 

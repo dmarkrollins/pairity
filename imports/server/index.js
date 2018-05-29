@@ -14,5 +14,8 @@ import './methods/method-addTeam'
 import './methods/method-updateTeam'
 import './methods/method-addOrganization'
 import './methods/method-setUserPreferences'
+import './methods/method-inviteOrganizationMember'
+import './methods/method-unInviteOrganizationMember'
+import './methods/method-userEnrollment'
 
 import './utils/startup'
