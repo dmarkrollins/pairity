@@ -18,7 +18,7 @@ chai.use(sinonChai);
 if (Meteor.isServer) {
     import '../../../imports/server/index'
 
-    describe('Remove Team Role Method', function () {
+    describe('Method - Remove Team Role', function () {
         let userId
         let sandbox
         let subject

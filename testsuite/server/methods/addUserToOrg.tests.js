@@ -19,7 +19,7 @@ chai.use(sinonChai);
 if (Meteor.isServer) {
     import '../../../imports/server/index'
 
-    describe('Add Organization Member Method', function () {
+    describe('Method - Add User to Org', function () {
         let userId
         let sandbox
         let subject
@@ -38,7 +38,7 @@ if (Meteor.isServer) {
         it('must be logged in', function () {
             const context = {};
             let msg = '';
-            
+
             try {
                 const resultId = subject.apply(context, TestData.fakeOrganizationMembers());
             } catch (error) {
@@ -106,13 +106,13 @@ if (Meteor.isServer) {
             let msg = '';
             const newId = Random.id()
             let resultId = ''
-            const fakeEntry = TestData.fakeOrganizationMembers()
+            const fakeEntry = TestData.fakeOrganizationMember()
             sandbox.stub(OrganizationMembers, 'findOne').returns(null)
             sandbox.stub(OrganizationMembers, 'insert').throws(TestData.fakeError())
             sandbox.stub(Logger, 'log')
 
             try {
-                resultId = subject.apply(context, fakeEntry);
+                resultId = subject.apply(context, [fakeEntry]);
             } catch (error) {
                 msg = error.reason;
             }

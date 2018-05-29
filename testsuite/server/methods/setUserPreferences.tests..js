@@ -18,7 +18,7 @@ chai.use(sinonChai);
 if (Meteor.isServer) {
     import '../../../imports/server/index'
 
-    describe('Set User Preferences Method', function () {
+    describe('Method - Set User Preferences', function () {
         let userId
         let sandbox
         let subject

@@ -1,0 +1,17 @@
+<template name='inviteItem'>
+
+    <div class="pure-g invite-item">
+        <div class="pure-u-1" style="height: 36px;">
+            
+            <a href="#" id="btnRemove" style="font-size: 1.25em; color: #990000;"><i class="fa fa-remove"></i></a>
+        
+            {{email}}
+        
+            {{#if data.isAdmin}}
+                <span class="pull-right" style="display: inline-block; margin-left: 12px; margin-top: 2px;"><i class="fa fa-check" style="color:rgb(19, 145, 48);"></i> Administrator</span>
+            {{/if}}
+        </div>   
+    </div>
+
+
+</template>

@@ -19,7 +19,7 @@ chai.use(sinonChai);
 if (Meteor.isServer) {
     import '../../../imports/server/index'
 
-    describe('Add Team Method', function () {
+    describe('Method - Add Team', function () {
         let userId
         let sandbox
         let subject

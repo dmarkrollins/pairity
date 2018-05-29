@@ -60,10 +60,6 @@ Schemas.Organizations = new SimpleSchema({
         denyInsert: true,
         optional: true
     },
-    admins: {
-        type: [String],
-        index: true
-    },
     name: {
         type: String,
         index: true,
@@ -94,6 +90,17 @@ Schemas.OrganizationMembers = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id,
         optional: false,
         index: true
+    },
+    status: {
+        type: String,
+        allowedValues: ['Pending', 'Active', 'InActive'],
+        defaultValue: 'Pending',
+        optional: true
+    },
+    isAdmin: {
+        type: Boolean,
+        defaultValue: false,
+        optional: true
     }
 })
 
@@ -148,14 +155,10 @@ Schemas.Teams = new SimpleSchema({
         type: [String],
         optional: true
     },
-    // 'technologies.$': String,
     roles: {
         type: [String],
         optional: true
     },
-    // 'roles.$': String
-    // admins: [String],
-    // members: [String]
     organizationId: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
@@ -208,6 +211,19 @@ Schemas.UserPreferences = new SimpleSchema({
     primaryRole: {
         type: String,
         allowedValues: ['Engineer', 'Product', 'Design']
+    }
+})
+
+Schemas.Membership = new SimpleSchema({
+    organizationId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id
+    },
+    orgName: {
+        type: String
+    },
+    isOrgAdmin: {
+        type: Boolean
     }
 })
 

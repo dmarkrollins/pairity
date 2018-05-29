@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
-import { Session } from 'meteor/session'
 import { Schemas } from './schemas'
 import { Errors } from './errors'
 
@@ -12,6 +11,11 @@ const Pairity = {
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
     Components: {},
+    MemberStatuses: {
+        MEMBER_PENDING: 'Pending',
+        MEMBER_ACTIVE: 'Active',
+        MEMBER_INACTIVE: 'InActive'
+    },
     PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 }
 
@@ -38,14 +42,15 @@ const Organizations = new Mongo.Collection('organizations')
 const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
+const Membership = new Mongo.Collection('membership') // custom collection
 
-// UserPrefs is a special case
-const UserPreferences = new Meteor.Collection(Pairity.UserPreferences);
+const UserPreferences = new Meteor.Collection(Pairity.UserPreferences)
 
 Teams.attachSchema(Schemas.Teams)
 TeamMembers.attachSchema(Schemas.TeamMembers)
 Organizations.attachSchema(Schemas.Organizations)
 OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
+Membership.attachSchema(Schemas.Membership)
 
 const IsTeamAdmin = (team, id) => team.createdBy === id
 
@@ -54,5 +59,13 @@ const RegisterComponent = (name, component) => {
 }
 
 module.exports = {
-    Pairity, Organizations, OrganizationMembers, Teams, TeamMembers, UserPreferences, RegisterComponent, IsTeamAdmin
+    Pairity,
+    Organizations,
+    OrganizationMembers,
+    Teams,
+    TeamMembers,
+    UserPreferences,
+    RegisterComponent,
+    IsTeamAdmin,
+    Membership
 }

@@ -135,14 +135,13 @@ body {
 .dropdown {
     position: relative;
     display: inline-block;
-    
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
-    left: -100px;
+    left: -150px;
     top: 35px;
     background-color: #f1f1f1;
     min-width: 160px;
@@ -223,6 +222,15 @@ a:hover {
     margin: 30px auto 0px auto;
 }
 
+.empty-list-left {
+    max-width: 500px; 
+    font-weight: bold; 
+    color: #dcdcdc;
+    font-size: 2em;
+    margin: 30px auto 0px auto;
+    text-align: left;
+}
+
 .auto-margin {
     margin: 0px auto 0px auto;
     padding: 12px;
@@ -233,15 +241,16 @@ a:hover {
     text-align: center; 
     color: #990000; 
     font-size: .8em;
-    height: 24px;
+    max-height: 24px;
     vertical-align: middle;
     margin: 7px 0px 7px 7px;
 }
 
 .bolded-link {
     font-weight: bold;
-    text-decoration: underline;
+    text-decoration: none !important;
     font-size: 1.05em;
+    cursor: not-allowed;
 }
 
 label, label.pure-form, label.pure-form-horizontal {
@@ -289,7 +298,7 @@ label, label.pure-form, label.pure-form-horizontal {
     display: none;
 }
 
-.team-menu {
+.sub-menu {
     margin-top: 12px;
     margin-bottom: 12px;
     line-height: 32px;
@@ -299,11 +308,20 @@ a {
     color: #3C86A8;
 }
 
-.team-menu a {
+.sub-menu a {
     padding: 12px;
     display: inline;
     color: #3C86A8;
     text-decoration: underline;
+}
+
+.sub-menu a .highlighted {
+    padding: 12px;
+    display: inline;
+    color: #3C86A8;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: not-allowed;
 }
 
 div.technology-item {

@@ -36,11 +36,6 @@ describe('Schemas', () => {
             expect(orgSchema.modifiedAt.optional).to.be.true
         })
 
-        it('should have a valid admins field', () => {
-            expect(orgSchema.admins.type.definitions[0].type).to.equal(Array)
-            expect(orgSchema.admins.index).to.be.true
-        })
-
         it('should have a valid name field', () => {
             expect(orgSchema.name.type.definitions[0].type).to.equal(String)
             expect(orgSchema.name.index).to.be.true

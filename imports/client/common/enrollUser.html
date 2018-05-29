@@ -1,0 +1,44 @@
+<template name="enrollUser">
+
+        <div class="fullPage">
+            <div class="centerForm">
+                <div class="pure-g">
+                    <div class="pure-u-1">
+                        <img id="logoImage" src="/pairity-logo.png" alt="" height="38" /><span style="font-size: 3.25em; margin-left: 12px; color: #565656;">Pairity</span>
+                    </div>
+                    <div class="pure-u-1" style="margin-top: 0px;">
+                        <span id="tagLine" style="color: #1D5A9B; font-weight: bold; font-size: .95em;">Celebrating the Power of Pairing!</span>
+                    </div>
+                    <div class="pure-u-1" >
+                        <div style="margin: auto; max-width: 300px;">
+                            <h3>Welcome to Pairity</h3>
+                            <p>
+                                We're excited you're here! 
+                            </p>
+                            <p>
+                                Create a unique username and password to finish setting up your account.  
+                            </p>
+                            <p style="font-size: .8em;">
+                                Note: Passwords must be at least 8 characters long and contain uppercase and lowercase letters, and numbers. So for example <i>FakePW99</i>.
+                            </p>
+                        </div>
+                    </div>
+                    <form id="enrollForm" class="pure-form pure-form-stacked" style="margin-top: 12px; max-width: 300px;">
+                        <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px;">
+                            <input id="userName" type='text' class="dark" placeholder='Your Pairity User Name' >
+                        </div>
+                        <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px;">
+                            <input id="password" type='password' class="dark" placeholder='Your Pairity Password'>
+                        </div>
+                        <div class="pure-u-1-1" style="padding-left: 12px; padding-right: 12px; margin-bottom: 7px;">
+                            <span id="errorMessage" class="errorMessage">{{errMessage}}</span>
+                        </div>
+                        <div class="pure-u-1-1">
+                            <button id="btnEnroll" type="submit" class="button-primary pure-button" style="float: right;"><i class="fa fa-angle-double-right"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </template>

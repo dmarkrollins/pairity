@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
-import { Pairity } from '../../lib/pairity'
-
+import { FlowRouter } from 'meteor/kadira:flow-router'
+import { $ } from 'meteor/jquery'
 import { Toast } from '../../client/common/toast'
-import { UserPreferences } from '../../../imports/lib/pairity'
+import { Pairity, UserPreferences } from '../../../imports/lib/pairity'
 
 Template.userPreferences.onCreated(function () {
     const self = this
@@ -30,7 +30,7 @@ Template.userPreferences.helpers({
     },
     engineerChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'engineer') {
                 return 'checked'
             }
@@ -38,7 +38,7 @@ Template.userPreferences.helpers({
     },
     designChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'design') {
                 return 'checked'
             }
@@ -46,11 +46,14 @@ Template.userPreferences.helpers({
     },
     productChecked() {
         const p = UserPreferences.findOne()
-        if (p) {
+        if (p.userPreferences) {
             if (p.userPreferences.primaryRole === 'product') {
                 return 'checked'
             }
         }
+    },
+    isReady() {
+        return FlowRouter.subsReady()
     }
 })
 
@@ -85,11 +88,11 @@ Template.userPreferences.events({
             instance.passwordResetErrorMessage.set('Please enter a valid password')
             return
         }
-        var resetPasswordForm = $('#resetPasswordForm'),
-            passwordField = resetPasswordForm.find('#newPassword'),
-            password = passwordField.val(),
-            confirmPasswordField = resetPasswordForm.find('#confirmPassword'),
-            confirmPassword = confirmPasswordField.val()
+        const resetPasswordForm = $('#resetPasswordForm')
+        const passwordField = resetPasswordForm.find('#newPassword')
+        const password = passwordField.val()
+        const confirmPasswordField = resetPasswordForm.find('#confirmPassword')
+        const confirmPassword = confirmPasswordField.val()
 
         Meteor.call('resetUserPassword', password, function (err, response) {
             if (err) {
@@ -106,12 +109,12 @@ Template.userPreferences.events({
         instance.passwordResetErrorMessage.set('')
         instance.passwordInvalidFormatErrorMessage.set('')
 
-        var resetPasswordForm = $('#resetPasswordForm'),
-            password = resetPasswordForm.find('#newPassword').val(),
-            confirmPassword = resetPasswordForm.find('#confirmPassword').val()
+        const resetPasswordForm = $('#resetPasswordForm')
+        const password = resetPasswordForm.find('#newPassword').val()
+        const confirmPassword = resetPasswordForm.find('#confirmPassword').val()
 
         function isNotEmpty(str) {
-            return str !== null && str !== undefined && str !== ""
+            return str !== null && str !== undefined && str !== ''
         }
 
         if (isNotEmpty(password)) {
