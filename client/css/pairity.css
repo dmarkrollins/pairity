@@ -352,3 +352,23 @@ legend {
     font-weight: bold;
     color: #888 !important;
 }
+
+.icon-green {
+    font-size: 1.25em;
+    color: green;
+}
+
+.icon-red {
+    font-size: 1.25em;
+    color: darkred;
+}
+
+.icon-gray {
+    font-size: 1.25em;
+    color: #999;
+}
+
+.icon-black {
+    font-size: 1.25em;
+    color:#444;
+}

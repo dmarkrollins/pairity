@@ -1,0 +1,30 @@
+<template name="teamMembers">
+
+        {{> header title=teamName }}
+        
+        {{> teamMenu selectedItem="itemMembers" }}
+
+
+        <div class="pure-g container" >
+
+            <div class="pure-u-1">
+                <label>Current Members</label>
+
+                <div style="margin: 12px 0px 12px 0px;">
+                    <div style="font-size: .7em; display: inline-block; width: 40px; text-align: center; margin-right: 21px">Remove</div>
+                    <div style="font-size: .7em; display: inline-block; width: 40px; text-align: center; margin-right: 21px">Admin</div>
+                </div>
+
+                {{#if noMembers}}
+                    <div class="empty-list">
+                        No Members found!
+                    </div> 
+                {{else}}
+                    {{#each invitees}}
+                        {{> memberItem currentItem}}
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+
+</template>

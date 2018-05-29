@@ -9,4 +9,8 @@ import './teamMenu.js'
 import './manageTeam.html'
 import './manageTeam.js'
 import './teamSubItems.html'
+import './teamMembers.html'
+import './teamMembers.js'
+import './memberItem.html'
+import './memberItem.js'
 
