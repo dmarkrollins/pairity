@@ -1,0 +1,32 @@
+<template name="inviteTeamMembers">
+
+    {{> header title=teamName showSearch="true" searchValue='Search by username or email address'}}
+
+    {{#if Template.subscriptionsReady}}
+        {{#if hasTeams}}
+            
+            {{#each team}}
+                {{> teamListItem}}
+            {{/each}}
+
+            {{#if hasMoreTeams}}
+                <div class="pure-u-1">
+                    <a id="btnMore" class="button-default pure-button" alt="">Get More...</a>
+                </div>
+            {{/if}}
+        
+        {{else}}
+            <div class="empty-list">
+                No Teams found!
+            </div>
+            {{#if isOrgManager}}
+                <div style="text-align: center; margin-top: 12px; margin-left: auto; margin-right: auto;">
+                    Why don't you get started by <a href="/teams/new" alt="">creating</a> one now?
+                </div>
+            {{/if}}
+        {{/if}}
+    {{else}}
+        {{>spinner}}
+    {{/if}}
+
+</template>
