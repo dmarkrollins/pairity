@@ -82,14 +82,22 @@ Schemas.OrganizationMembers = new SimpleSchema({
     organizationId: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-        optional: false,
-        index: true
+        optional: false
     },
     userId: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
+        optional: false
+    },
+    username: {
+        type: String,
         optional: false,
-        index: true
+        defaultValue: ''
+    },
+    email: {
+        type: String,
+        optional: true,
+        defaultValue: ''
     },
     status: {
         type: String,

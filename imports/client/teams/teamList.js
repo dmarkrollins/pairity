@@ -15,7 +15,7 @@ Template.teamList.onCreated(function () {
         const subscription = self.subscribe('allTeams', search)
 
         if (subscription.ready()) {
-            self.loaded.set(Teams.find().count())
+            self.loaded.set(1)
         }
     })
 

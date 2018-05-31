@@ -16,6 +16,7 @@ const Pairity = {
         MEMBER_ACTIVE: 'Active',
         MEMBER_INACTIVE: 'InActive'
     },
+    MemberStatusArray: ['Pending', 'Active', 'InActive'],
     PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 }
 
