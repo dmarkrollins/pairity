@@ -54,7 +54,7 @@ Meteor.methods({
 
         const orgUserTeamMember = TeamMembers.findOne({ teamId: tid, userId: userOrgMember.userId })
 
-        if (!orgUserTeamMember) {
+        if (orgUserTeamMember) {
             throw Errors.create('custom', 'User is already a member of the team')
         }
 
