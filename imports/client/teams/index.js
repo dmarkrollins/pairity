@@ -13,4 +13,8 @@ import './teamMembers.html'
 import './teamMembers.js'
 import './memberItem.html'
 import './memberItem.js'
+import './orgMemberItem.html'
+import './orgMemberItem.js'
+import './inviteTeamMembers.html'
+import './inviteTeamMembers.js'
 

@@ -7,6 +7,11 @@
             <div class="dropdown pull-right" style="margin-top: 7px;">
                 <a href="#" class="dropbtn" style="margin-right: 0px; position: relative; top:4px;"><img id="btnOptions" src="/options.png" height="20" alt=""/></a>
                 <div class="dropdown-content">
+                    {{#if showSearch}}
+                        <div class="pure-hidden-md pure-hidden-lg pure-hidden-xl" style="white-space: nowrap;">
+                            <input id="searchBox" type="text" style="min-width: 100px; max-width: 100%; margin-top: 5px; margin-right: 7px; margin-left: 12px;" placeholder="Search" value="{{searchValue}}">
+                        </div> 
+                    {{/if}}
                     <a href="#" disabled><i class="fa fa-user" aria-hidden="true" style="color: #aaa;"></i>&nbsp;{{userName}}</a>
                     <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     <a id="btnTeams" href="/teams"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Teams</a>
@@ -27,7 +32,7 @@
                 </div>
             </div>
             {{#if showSearch}}
-                <input id="searchBox" type="text" class="pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="Search" value="{{searchValue}}">
+                <input id="searchBox" type="text" class="pure-hidden-xs pure-hidden-sm pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="Search" value="{{searchValue}}">
             {{/if}}
         </div>
     </div>

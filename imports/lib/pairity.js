@@ -8,6 +8,7 @@ const Pairity = {
     defaultLimit: 10,
     PageTitleKey: 'page-title',
     TeamSearchKey: 'team-search',
+    OrgMemberSearchKey: 'org-member-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
     Components: {},

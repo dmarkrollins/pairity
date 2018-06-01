@@ -1,12 +1,31 @@
 <template name="inviteTeamMembers">
 
-    {{> header title=teamName showSearch="true" searchValue='Search by username or email address'}}
+    {{> header title=teamName showSearch="true"}}
+
+
 
     {{#if Template.subscriptionsReady}}
-        {{#if hasTeams}}
-            
-            {{#each team}}
-                {{> teamListItem}}
+
+        {{> teamMenu selectedItem="itemInvite" }}
+
+        {{#if hasMembers}}
+        <div class="container">
+
+            <div class="pure-g" style="margin-bottom: 21px;">
+                <div class="pure-u-1" style="font-size: .7em; color: #777;">
+                    <span style="margin-right: 21px;"><i class="fa fa-plus-circle icon-blue"></i>&nbsp;Add Member</span>
+                    <span style="margin-right: 21px;"><i class="fa fa-check icon-gray"></i>&nbsp;Existing Team Member</span>
+                </div>
+            </div>
+
+            <div class="pure-g">
+                <div class="pure-u-1" style="font-size: 1.4em; color: #777; margin-bottom: 21px;">
+                    Manage Team Members
+                </div>
+            </div>
+
+            {{#each members}}
+                {{> orgMemberItem currentItem}}
             {{/each}}
 
             {{#if hasMoreMembers}}
@@ -14,16 +33,12 @@
                     <a id="btnMore" class="button-default pure-button" alt="">Get More...</a>
                 </div>
             {{/if}}
+        </div>
         
         {{else}}
             <div class="empty-list">
-                No Teams found!
+                No <em style="color: #ccc;">{{orgName}}</em> Members found!
             </div>
-            {{#if isOrgManager}}
-                <div style="text-align: center; margin-top: 12px; margin-left: auto; margin-right: auto;">
-                    Why don't you get started by <a href="/teams/new" alt="">creating</a> one now?
-                </div>
-            {{/if}}
         {{/if}}
     {{else}}
         {{>spinner}}

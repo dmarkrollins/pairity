@@ -58,7 +58,8 @@ Meteor.publish('organizationMembers', function (search) {
 
     return OrganizationMembers.find(
         {
-            _id: { $in: orgIds },
+            organizationId: { $in: orgIds },
+            status: Pairity.MemberStatuses.MEMBER_ACTIVE,
             username: { $regex: searchVal, $options: 'i' }
         },
         {

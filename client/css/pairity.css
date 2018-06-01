@@ -368,7 +368,16 @@ legend {
     color: #999;
 }
 
+.icon-blue {
+    color: #3E94B4;
+    font-size: 1.25em;
+}
+
 .icon-black {
     font-size: 1.25em;
     color:#444;
+}
+
+.min-row-height {
+    min-height: 36px;
 }

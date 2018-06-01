@@ -116,6 +116,7 @@ FlowRouter.route('/teams/new', {
 FlowRouter.route('/teams/manage/:id', {
     subscriptions: function (params) {
         this.register('singleteam', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {
@@ -127,9 +128,10 @@ FlowRouter.route('/teams/manage/:id', {
     name: 'manage-team'
 })
 
-FlowRouter.route('/teams/members/:teamId', {
+FlowRouter.route('/teams/members/:id', {
     subscriptions: function (params) {
-        this.register('teams', Meteor.subscribe('singleTeam', params.teamId))
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {
@@ -141,10 +143,10 @@ FlowRouter.route('/teams/members/:teamId', {
     name: 'manage-team'
 })
 
-FlowRouter.route('/teams/members/invite/:teamId', {
+FlowRouter.route('/teams/members/invite/:id', {
     subscriptions: function (params) {
-        this.register('teams', Meteor.subscribe('singleTeam', params.teamId))
-        this.register('teammembers', Meteor.subscribe('teamMembers', params.teamId))
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {

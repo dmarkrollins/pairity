@@ -1,0 +1,40 @@
+/* pure-hidden-xs */
+@media screen and (max-width:35.438em) {
+    .pure-visible-sm{display:none !important}
+    .pure-visible-md{display:none !important}
+    .pure-visible-lg{display:none !important}
+    .pure-visible-xl{display:none !important}
+    .pure-hidden-xs{display:none !important}
+}
+/* pure-hidden-sm */
+@media screen and (min-width:35.5em) and (max-width:47.938em) {
+    .pure-visible-xs{display:none !important}
+    .pure-visible-md{display:none !important}
+    .pure-visible-lg{display:none !important}
+    .pure-visible-xl{display:none !important}
+    .pure-hidden-sm{display:none !important}
+}
+/* pure-hidden-md */
+@media screen and (min-width:48em) and (max-width:63.938em) {
+    .pure-visible-xs{display:none !important}
+    .pure-visible-sm{display:none !important}
+    .pure-visible-lg{display:none !important}
+    .pure-visible-xl{display:none !important}
+    .pure-hidden-md{display:none !important}
+}
+/* pure-hidden-lg */
+@media screen and (min-width:64em) and (max-width:79.938em) {
+    .pure-visible-xs{display:none !important}
+    .pure-visible-sm{display:none !important}
+    .pure-visible-md{display:none !important}
+    .pure-visible-xl{display:none !important}
+    .pure-hidden-lg{display:none !important}
+}
+/* pure-hidden-xl */
+@media screen and (min-width:80em) {
+    .pure-visible-xs{display:none !important}
+    .pure-visible-sm{display:none !important}
+    .pure-visible-md{display:none !important}
+    .pure-visible-lg{display:none !important}
+    .pure-hidden-xl{display:none !important}
+}
