@@ -12,7 +12,12 @@ Template.newTeam.onCreated(function () {
             if (err) {
                 Toast.showError(err.reason)
             } else {
-                Meteor.call('addUserToTeam', this.state.memberSelected, function (error, response1) {
+                Meteor.call('addUserToTeam', {
+                    userId: this.state.memberSelected,
+                    teamId: id,
+                    isAdmin: true,
+                    organizationId: 0
+                }, function (error, response1) {
                     if (error) {
                         Toast.showError(error.reason)
                         // rollback the addTEam transaction if we were not able to add the admin user
