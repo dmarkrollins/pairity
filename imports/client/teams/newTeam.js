@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { Pairity, Membership } from '../../lib/pairity'
+import { OrganizationMembers } from '../../lib/schemas'
 import { Toast } from '../../../imports/client/common/toast'
 
 Template.newTeam.onCreated(function () {
@@ -12,6 +13,15 @@ Template.newTeam.onCreated(function () {
             if (err) {
                 Toast.showError(err.reason)
             } else {
+                let user
+                if (this.state.memberSelected) {
+                    user = OrganizationMembers.findOne({ _id: this.state.memberSelected })
+                    if (!user) {
+                        Toast.showError('User not found in organization!')
+                        return
+                    }
+                }
+                // TODO: waiting for Dave's code to finish this up
                 Meteor.call('addUserToTeam', {
                     userId: this.state.memberSelected,
                     teamId: id,
