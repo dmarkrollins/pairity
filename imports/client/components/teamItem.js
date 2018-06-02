@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Meteor from 'meteor/meteor'
+import { OrganizationMembers, TeamMembers } from '../../lib/schemas'
+import { Toast } from '../common/toast'
 
 class TeamItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             team: Object.assign({}, this.props.team),
-            errorMessage: ''
+            errorMessage: '',
+            memberSelected: null
         };
         this.saveClick = this.saveClick.bind(this)
         this.cancelClick = this.cancelClick.bind(this)
@@ -19,6 +23,10 @@ class TeamItem extends React.Component {
         const { team } = this.state
         team.name = event.target.value.toProperCase()
         this.setState({ team })
+    }
+
+    handleMemberSelectorChange(event) {
+        this.state.memberSelected = event.target.value
     }
 
     handleDescChange(event) {
@@ -34,7 +42,7 @@ class TeamItem extends React.Component {
             errorMessage = 'Team name and description required!'
             this.setState({ errorMessage })
         } else {
-            this.props.handleSave(this.state.team)
+            this.props.handleSave(this.state.team, this.state.memberSelected)
         }
     }
 
@@ -60,6 +68,11 @@ class TeamItem extends React.Component {
                         placeholder="A unique name"
                         value={this.state.team.name}
                         onChange={this.handleNameChange}
+                    />
+                    <label>Team Administrator</label>
+                    <select
+                        id="memberSelector"
+                        onChange={this.handleMemberSelectorChange}
                     />
                     <label>Description</label>
                     <textarea

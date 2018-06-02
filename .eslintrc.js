@@ -19,6 +19,7 @@ module.exports = {
     ],
     "rules": {
         "no-extend-native": "off",
+        "linebreak-style": "off",
         "comma-dangle": "off",
         "no-unused-expressions": "off",
         "func-names": "off",

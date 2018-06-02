@@ -8,11 +8,23 @@ Template.newTeam.onCreated(function () {
     const self = this
 
     self.CreateTeam = (team) => {
-        Meteor.call('addTeam', team, function (err, response) {
+        const id = Meteor.call('addTeam', team, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
-                FlowRouter.go('/teams')
+                Meteor.call('addUserToTeam', this.state.memberSelected, function (error, response1) {
+                    if (error) {
+                        Toast.showError(error.reason)
+                        // rollback the addTEam transaction if we were not able to add the admin user
+                        Meteor.call('removeTeam', id, function (remErr, response2) {
+                            if (remErr) {
+                                Toast.showError(remErr.reason)
+                            }
+                        })
+                    } else {
+                        FlowRouter.go('/teams')
+                    }
+                })
             }
         })
     }
@@ -21,7 +33,7 @@ Template.newTeam.onCreated(function () {
 Template.newTeam.helpers({
     saveHandler() {
         const instance = Template.instance();
-        return function (team) {
+        return function (team, adminMemberId) {
             instance.CreateTeam(team)
         }
     },
