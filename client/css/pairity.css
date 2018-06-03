@@ -79,7 +79,7 @@ body {
 .button-error:hover,
 .button-warning:hover,
 .button-secondary:hover {
-    filter: brightness(95%);
+    filter: brightness(90%);
     color: #fff;
 }
 
@@ -117,7 +117,7 @@ body {
 }
 
 .pull-right {
-    float: right;
+    float: right !important;
 }
 
 .pull-left {
@@ -387,4 +387,10 @@ legend {
 
 .min-row-height {
     min-height: 36px;
+}
+
+.sub-title {
+    font-size: 1.4em; 
+    color: #777; 
+    margin-bottom: 21px;
 }
