@@ -20,6 +20,8 @@ Meteor.methods({
             throw Errors.create('custom', 'User name already exists try something different.')
         }
 
+        const user = Meteor.users.findOne({ _id: this.userId })
+
         const member = OrganizationMembers.findOne({ userId: this.userId })
 
         if (!member) {
@@ -33,7 +35,9 @@ Meteor.methods({
                 },
                 {
                     $set: {
-                        status: Pairity.MemberStatuses.MEMBER_ACTIVE
+                        status: Pairity.MemberStatuses.MEMBER_ACTIVE,
+                        username: name,
+                        email: user.email[0].address
                     }
                 }
             )

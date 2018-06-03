@@ -13,7 +13,7 @@ FlowRouter.route('/', {
             BlazeLayout.render('landingLayout', { content: 'signIn' });
         }
     },
-    name: 'signIn'
+    name: 'sign-in'
 });
 
 FlowRouter.route('/enroll/:token', {
@@ -23,7 +23,7 @@ FlowRouter.route('/enroll/:token', {
         }
         BlazeLayout.render('landingLayout', { content: 'enrollUser' });
     },
-    name: 'EnrollUser'
+    name: 'enroll-user'
 })
 
 FlowRouter.route('/signup', {
@@ -34,7 +34,7 @@ FlowRouter.route('/signup', {
             BlazeLayout.render('landingLayout', { content: 'newAccount' });
         }
     },
-    name: 'newAccount'
+    name: 'new-account'
 });
 
 FlowRouter.route('/organizations', {
@@ -59,7 +59,7 @@ FlowRouter.route('/organizations/new', {
             BlazeLayout.render('workLayout', { content: 'newOrganization' });
         }
     },
-    name: 'createorganization'
+    name: 'create-organization'
 })
 
 FlowRouter.route('/organizations/edit/:id', {
@@ -73,13 +73,13 @@ FlowRouter.route('/organizations/edit/:id', {
             BlazeLayout.render('workLayout', { content: 'editOrganization' });
         }
     },
-    name: 'createorganization'
+    name: 'create-organization'
 })
 
 FlowRouter.route('/organizations/invite/:id', {
     subscriptions: function (params) {
         this.register('singleorganization', Meteor.subscribe('singleOrg', params.id))
-        this.register('organizationmembers', Meteor.subscribe('organizationMembers', params.id))
+        this.register('organizationmembers', Meteor.subscribe('inviteMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {
@@ -88,7 +88,7 @@ FlowRouter.route('/organizations/invite/:id', {
             BlazeLayout.render('workLayout', { content: 'inviteOrgMembers' });
         }
     },
-    name: 'inviteorganizationmembers'
+    name: 'invite-organization-members'
 })
 
 FlowRouter.route('/teams', {
@@ -110,12 +110,13 @@ FlowRouter.route('/teams/new', {
             BlazeLayout.render('workLayout', { content: 'newTeam' });
         }
     },
-    name: 'createteam'
+    name: 'create-team'
 })
 
 FlowRouter.route('/teams/manage/:id', {
     subscriptions: function (params) {
         this.register('singleteam', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {
@@ -124,12 +125,13 @@ FlowRouter.route('/teams/manage/:id', {
             BlazeLayout.render('workLayout', { content: 'manageTeam' });
         }
     },
-    name: 'manageteam'
+    name: 'manage-team'
 })
 
-FlowRouter.route('/teams/members/:teamId', {
+FlowRouter.route('/teams/members/:id', {
     subscriptions: function (params) {
-        this.register('teams', Meteor.subscribe('singleTeam', params.teamId))
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {
@@ -138,7 +140,22 @@ FlowRouter.route('/teams/members/:teamId', {
             BlazeLayout.render('workLayout', { content: 'teamMembers' });
         }
     },
-    name: 'manageteam'
+    name: 'manage-team'
+})
+
+FlowRouter.route('/teams/members/invite/:id', {
+    subscriptions: function (params) {
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'inviteTeamMembers' });
+        }
+    },
+    name: 'invite-team-members'
 })
 
 FlowRouter.route('/preferences', {
@@ -152,6 +169,6 @@ FlowRouter.route('/preferences', {
             BlazeLayout.render('workLayout', { content: 'userPreferences' });
         }
     },
-    name: 'userPreferences'
+    name: 'user-preferences'
 })
 

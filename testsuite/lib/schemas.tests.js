@@ -56,14 +56,9 @@ describe('Schemas', () => {
             runMongoIdExpectations(orgSchema._id)
         })
 
-        it('should have a valide organizationId field', () => {
+        it('should have a valid organizationId field', () => {
             expect(orgSchema.organizationId.type.definitions[0].type).to.equal(String)
             expect(orgSchema.organizationId.optional).to.be.false
-            expect(orgSchema.organizationId.index).to.be.true
-        })
-
-        it('should have a valid userId field', () => {
-            expect(orgSchema.userId.index).to.be.true
         })
     })
 })

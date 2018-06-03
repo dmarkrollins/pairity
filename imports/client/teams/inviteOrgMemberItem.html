@@ -1,0 +1,15 @@
+<template name="inviteOrgMemberItem">
+
+    <div class="pure-u-1 min-row-height invite-org-team-member" style="white-space: nowrap; overflow-y: hidden;">
+
+        {{#if isTeamMember}}
+            <a id="btnRemove" href="#" style="margin-right: 12px;"><i class="fa fa-minus-circle icon-red"></i></a>
+        {{else}}
+            <a id="btnAdd" href="#" style="margin-right: 12px;"><i class="fa fa-plus-circle icon-blue"></i></a>
+        {{/if}}
+
+        <div class="invite-org-member-item" style="display: inline-block; position: relative; top: -2px;">{{invitee.username}} - {{invitee.email}}</div>
+        
+    </div>
+
+</template>

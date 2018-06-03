@@ -17,5 +17,7 @@ import './methods/method-setUserPreferences'
 import './methods/method-inviteOrganizationMember'
 import './methods/method-unInviteOrganizationMember'
 import './methods/method-userEnrollment'
+import './methods/method-teamMemberAdd'
+import './methods/method-teamMemberRemove'
 
 import './utils/startup'

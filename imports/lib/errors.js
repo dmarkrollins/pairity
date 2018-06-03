@@ -22,6 +22,7 @@ Errors.create = (key, value = 'Item') => {
     }
 
     const err = _.find(Errors.types, item => item.key === key)
+
     if (!err) {
         return new Meteor.Error('unknown', 'An unknown error occurred!')
     }

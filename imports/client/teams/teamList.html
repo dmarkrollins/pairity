@@ -1,6 +1,6 @@
 <template name="teamList">
 
-    {{> header title="Teams" showSearch="true" searchValue=searchVal}}
+    {{> header title="Teams" showSearch="true" searchValue=searchVal searchPlaceHolder='Search by team name'}}
 
     {{#if Template.subscriptionsReady}}
         {{#if hasTeams}}
@@ -10,9 +10,7 @@
             {{/each}}
 
             {{#if hasMoreTeams}}
-                <div class="pure-u-1">
-                    <a id="btnMore" class="button-default pure-button" alt="">Get More...</a>
-                </div>
+                {{> moreButton}}
             {{/if}}
         
         {{else}}

@@ -4,7 +4,7 @@ import { _ } from 'meteor/underscore'
 import { Pairity, Organizations, OrganizationMembers } from '../../../imports/lib/pairity'
 
 Meteor.publish('myMembership', function () {
-    if (!this.userId) {
+    if (!Meteor.userId()) {
         return null
     }
 

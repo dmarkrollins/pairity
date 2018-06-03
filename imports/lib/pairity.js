@@ -8,6 +8,7 @@ const Pairity = {
     defaultLimit: 10,
     PageTitleKey: 'page-title',
     TeamSearchKey: 'team-search',
+    OrgMemberSearchKey: 'org-member-search',
     UserPreferences: 'user-preferences',
     ToastTimeOut: 1750,
     Components: {},
@@ -16,7 +17,26 @@ const Pairity = {
         MEMBER_ACTIVE: 'Active',
         MEMBER_INACTIVE: 'InActive'
     },
-    PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    MemberStatusArray: ['Pending', 'Active', 'InActive'],
+    PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+    isSuperAdmin: (userid) => {
+        if (Meteor.isServer) {
+            if (userid) {
+                const user = Meteor.users.findOne(userid)
+                if (user) {
+                    if (user.username === 'admin') {
+                        return true
+                    }
+                }
+            }
+        } else {
+            if (Meteor.user()) {
+                return Meteor.user().username === 'admin'
+            }
+        }
+
+        return false
+    }
 }
 
 if (!String.prototype.toProperCase) {
