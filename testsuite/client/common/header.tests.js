@@ -58,9 +58,10 @@ if (Meteor.isClient) {
         })
 
         it('displays correctly with search', function () {
-            withRenderedTemplate('header', { title: 'fake-title', showSearch: true }, (el) => {
+            withRenderedTemplate('header', { title: 'fake-title', showSearch: true, searchPlaceHolder: 'Fake search' }, (el) => {
                 expect($(el).find('div#title')[0].innerHTML, 'title').to.equal('fake-title')
                 expect($(el).find('#searchBox'), 'search box').to.have.length(1)
+                expect($(el).find('#searchBox')[0].placeholder, 'placeholder').to.equal('Fake search')
             });
         })
 

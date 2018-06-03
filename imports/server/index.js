@@ -21,4 +21,3 @@ import './methods/method-teamMemberAdd'
 import './methods/method-teamMemberRemove'
 
 import './utils/startup'
-import './utils/utilities'

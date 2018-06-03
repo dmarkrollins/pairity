@@ -50,9 +50,7 @@ if (Meteor.isServer) {
         it('calls user update correctly', function () {
             const context = { userId: Random.id() }
             let msg = ''
-            const UserFunction = Meteor.users
-
-            sandbox.stub(UserFunction, 'update')
+            sandbox.stub(Meteor.users, 'update')
 
             try {
                 const resultId = subject.apply(context, ['fake-role']);
@@ -61,7 +59,7 @@ if (Meteor.isServer) {
             }
 
             expect(msg, 'no error').to.be.equal('');
-            expect(UserFunction.update).to.have.been.called
+            expect(Meteor.users.update).to.have.been.called
 
             const expected = {
                 $set: {
@@ -69,7 +67,7 @@ if (Meteor.isServer) {
                 }
             }
 
-            const params = UserFunction.update.args[0]
+            const params = Meteor.users.update.args[0]
 
             expect(params[1].$set.userPreferences.primaryRole).to.deep.equal('fake-role')
         })

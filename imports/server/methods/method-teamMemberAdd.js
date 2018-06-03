@@ -6,7 +6,6 @@ import { Pairity, OrganizationMembers, Teams, TeamMembers } from '../../../impor
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 import { Errors } from '../../lib/errors'
-import { isSuperAdmin } from '../utils/utilities'
 
 Meteor.methods({
     teamMemberAdd: function (tid, orgMemberId) {
@@ -20,23 +19,23 @@ Meteor.methods({
             throw Errors.create('not-found', 'Team')
         }
 
-        const contextOrgMember = OrganizationMembers.findOne({ userId: this.userId })
+        const contextOrgMember = OrganizationMembers.findOne({ userId: this.userId }) // call 1
 
         if (!contextOrgMember) {
             throw Errors.create('custom', 'You must be a member of the organization you are attempting to alter.')
         }
 
-        const userOrgMember = OrganizationMembers.findOne(orgMemberId)
+        const userOrgMember = OrganizationMembers.findOne(orgMemberId) // call 2
 
         if (!userOrgMember) {
             throw Errors.create('not-found', 'Organization Member')
         }
 
         if (userOrgMember.organizationId !== team.organizationId) {
-            throw Errors.create('custom', 'You must be a member of the organization that this team belongs to.')
+            throw Errors.create('custom', 'User must be a member of the organization that this team belongs to.')
         }
 
-        if (contextOrgMember.isAdmin !== true && !isSuperAdmin(this.userId)) {
+        if (contextOrgMember.isAdmin !== true && !Pairity.isSuperAdmin(this.userId)) {
             const teamMember = TeamMembers.findOne({ teamId: tid, userId: this.userId })
 
             let err = false
@@ -55,7 +54,7 @@ Meteor.methods({
         const orgUserTeamMember = TeamMembers.findOne({ teamId: tid, userId: userOrgMember.userId })
 
         if (orgUserTeamMember) {
-            throw Errors.create('custom', 'User is already a member of the team')
+            throw Errors.create('custom', 'User is already a member of the team!')
         }
 
         try {

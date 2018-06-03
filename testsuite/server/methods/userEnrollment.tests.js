@@ -88,6 +88,8 @@ if (Meteor.isServer) {
             sandbox.stub(Accounts, 'setUsername')
             sandbox.stub(OrganizationMembers, 'findOne').returns(TestData.fakeOrganizationMember({ isAdmin: true }))
 
+            sandbox.stub(Meteor.users, 'findOne').returns({ email: [{ address: 'fake-address' }] })
+
             try {
                 result = subject.apply(context, [userName]);
             } catch (error) {
@@ -104,6 +106,8 @@ if (Meteor.isServer) {
             let result;
             sandbox.stub(Accounts, 'setUsername')
             sandbox.stub(OrganizationMembers, 'findOne').returns(TestData.fakeOrganizationMember({ isAdmin: false }))
+
+            sandbox.stub(Meteor.users, 'findOne').returns({ email: [{ address: 'fake-address' }] })
 
             try {
                 result = subject.apply(context, [userName]);

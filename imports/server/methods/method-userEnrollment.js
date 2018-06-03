@@ -20,7 +20,7 @@ Meteor.methods({
             throw Errors.create('custom', 'User name already exists try something different.')
         }
 
-        const user = Meteor.users.find({ _id: this.userId })
+        const user = Meteor.users.findOne({ _id: this.userId })
 
         const member = OrganizationMembers.findOne({ userId: this.userId })
 

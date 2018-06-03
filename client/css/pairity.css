@@ -45,26 +45,32 @@ body {
 
 .button-default {
     background: #394F66; 
+    color: #fff;
 }
 
 .button-primary {
     background: #3E94B4; 
+    color: #fff;
 }
 
 .button-success {
     background: rgb(19, 145, 48); /* this is a green */
+    color: #fff;
 }
 
 .button-error {
     background: rgb(129, 23, 23); /* this is a maroon */
+    color: #fff;
 }
 
 .button-warning {
     background: rgb(175, 94, 18); /* this is an orange */
+    color: #fff;
 }
 
 .button-secondary {
     background: rgb(66, 184, 221); /* this is a light blue */
+    color: #fff;
 }
 
 .button-default:hover,
@@ -73,7 +79,8 @@ body {
 .button-error:hover,
 .button-warning:hover,
 .button-secondary:hover {
-    filter: brightness(90%);
+    filter: brightness(95%);
+    color: #fff;
 }
 
 .button-xsmall {

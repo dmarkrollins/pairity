@@ -91,7 +91,7 @@ Schemas.OrganizationMembers = new SimpleSchema({
     },
     username: {
         type: String,
-        optional: false,
+        optional: true,
         defaultValue: ''
     },
     email: {

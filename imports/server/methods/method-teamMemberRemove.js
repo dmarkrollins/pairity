@@ -6,7 +6,6 @@ import { Pairity, OrganizationMembers, Teams, TeamMembers } from '../../../impor
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 import { Errors } from '../../lib/errors'
-import { isSuperAdmin } from '../utils/utilities'
 
 Meteor.methods({
     teamMemberRemove: function (tid, orgMemberId) {
@@ -33,10 +32,10 @@ Meteor.methods({
         }
 
         if (userOrgMember.organizationId !== team.organizationId) {
-            throw Errors.create('custom', 'You must be a member of the organization that this team belongs to.')
+            throw Errors.create('custom', 'User must be a member of the organization that this team belongs to.')
         }
 
-        if (contextOrgMember.isAdmin !== true && !isSuperAdmin(this.userId)) {
+        if (contextOrgMember.isAdmin !== true && !Pairity.isSuperAdmin(this.userId)) {
             const teamMember = TeamMembers.findOne({ teamId: tid, userId: this.userId })
 
             let err = false

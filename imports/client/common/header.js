@@ -35,7 +35,7 @@ Template.header.helpers({
     },
     isAdmin() {
         if (Meteor.user()) {
-            return !Meteor.user() ? false : Meteor.user().username === 'admin'
+            return Pairity.isSuperAdmin()
         }
     },
     orgId() {
@@ -51,6 +51,9 @@ Template.header.helpers({
         if (Meteor.user()) {
             return Meteor.user().username || Meteor.user().emails[0].address
         }
+    },
+    placeholder() {
+        return this.searchPlaceHolder || 'Search'
     }
 })
 

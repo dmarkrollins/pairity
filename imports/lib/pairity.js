@@ -18,7 +18,25 @@ const Pairity = {
         MEMBER_INACTIVE: 'InActive'
     },
     MemberStatusArray: ['Pending', 'Active', 'InActive'],
-    PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+    isSuperAdmin: (userid) => {
+        if (Meteor.isServer) {
+            if (userid) {
+                const user = Meteor.users.findOne(userid)
+                if (user) {
+                    if (user.username === 'admin') {
+                        return true
+                    }
+                }
+            }
+        } else {
+            if (Meteor.user()) {
+                return Meteor.user().username === 'admin'
+            }
+        }
+
+        return false
+    }
 }
 
 if (!String.prototype.toProperCase) {

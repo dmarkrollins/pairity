@@ -15,7 +15,7 @@ Template.teamList.onCreated(function () {
         const subscription = self.subscribe('allTeams', search)
 
         if (subscription.ready()) {
-            self.loaded.set(1)
+            self.loaded.set(Teams.find().count())
         }
     })
 
@@ -47,12 +47,13 @@ Template.teamList.helpers({
 
 Template.teamList.events({
     'input #searchBox': _.debounce(function (event, instance) {
-        let search = Session.get(Pairity.TeamSearchKey) || { limit: Pairity.defaultLimit, name: '' }
-        if (!_.isObject(search)) {
-            search = { limit: Pairity.defaultLimit, name: '' }
-        }
+        const search = instance.getSearch() // start fresh
         search.name = event.target.value
-        search.limit = Pairity.defaultLimit
         Session.set(Pairity.TeamSearchKey, search)
-    }, 500)
+    }, 500),
+    'click btnMore': function (event, instance) {
+        const search = Session.get(Pairity.TeamSearchKey) || instance.getSearch()
+        search.limit += Pairity.defaultLimit
+        Session.set(Pairity.TeamSearchKey, search)
+    }
 })

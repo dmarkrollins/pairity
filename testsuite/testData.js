@@ -141,7 +141,9 @@ TestData.fakeOrganizationMembers = (parameters) => {
             organizationId: parms.organizationId || Random.id(),
             userId: parms.userId || Random.id(),
             status: parms.status || Pairity.MemberStatuses.MEMBER_PENDING,
-            isAdmin: !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
+            isAdmin: !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false,
+            username: faker.name.firstName(),
+            email: faker.internet.email()
         }
         const userItem = {
             _id: memberItem.userId,
@@ -176,6 +178,8 @@ TestData.fakeOrganizationMember = (parameters) => {
     doc.userId = parms.userId || Random.id()
     doc.status = parms.status || Pairity.MemberStatuses.MEMBER_PENDING
     doc.isAdmin = !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
+    doc.username = parms.username || faker.name.firstName()
+    doc.email = parms.email || faker.internet.email()
 
     return doc
 }

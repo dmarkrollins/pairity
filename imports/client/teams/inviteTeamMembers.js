@@ -22,13 +22,12 @@ Template.inviteTeamMembers.onCreated(function () {
         const subscription = self.subscribe('organizationMembers', search)
 
         if (subscription.ready()) {
-            self.loaded.set(1)
+            self.loaded.set(OrganizationMembers.find().count())
         }
     })
 
-
-    self.addMember = (id) => {
-        Meteor.call('teamMemberAdd', self.teamId, id, function (err, response) {
+    self.addMember = (orgMemberId) => {
+        Meteor.call('teamMemberAdd', self.teamId, orgMemberId, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
@@ -37,28 +36,31 @@ Template.inviteTeamMembers.onCreated(function () {
         })
     }
 
-    self.removeMember = (id) => {
-        Meteor.call('teamMemberAdd', self.teamId, id, function (err, response) {
+    self.removeMember = (orgMemberId) => {
+        Meteor.call('teamMemberRemove', self.teamId, orgMemberId, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
-                Toast.showSuccess(`Team member ${response} removed successfully!`)
+                Toast.showWarning(`Team member ${response} removed successfully!`)
             }
         })
+    }
+
+    self.isTeamMember = (userid) => {
+        const m = TeamMembers.findOne({ teamId: self.teamId, userId: userid })
+        if (m) {
+            return true
+        }
+        return false
     }
 })
 
 Template.inviteTeamMembers.helpers({
     members() {
-        if (Template.instance().loaded.get() === 1) {
-            return OrganizationMembers.find()
-        }
+        return OrganizationMembers.find({}, { sort: { username: 1 } })
     },
     hasMembers() {
-        return true
-        // if (Template.instance().loaded.get() === 1) {
-        //     return OrganizationMembers.find().count() > 0
-        // }
+        return Template.instance().loaded.get() > 0
     },
     teamName() {
         const t = Teams.findOne()
@@ -66,16 +68,10 @@ Template.inviteTeamMembers.helpers({
             return t.name
         }
     },
-    isTeamMember() {
-        const instance = Template.instance()
-        const m = TeamMembers.findOne({ teamId: instance.teamId, userId: this.userId })
-        if (m) {
-            return true
-        }
-        return false
-    },
     hasMoreMembers() {
-        return false
+        const instance = Template.instance()
+        const search = Session.get(Pairity.OrgMemberSearchKey) || instance.getSearch()
+        return instance.loaded.get() === search.limit
     },
     orgName() {
         const membership = Membership.findOne()
@@ -88,28 +84,34 @@ Template.inviteTeamMembers.helpers({
         const members = TeamMembers.find().fetch()
         return {
             data: this,
-            addTeamMember: function (id) {
-                instance.addMember(id)
+            addTeamMember: function (orgMemberId) {
+                instance.addMember(orgMemberId)
             },
-            removeTeamMember: function (id) {
-                instance.removeMember(id)
+            removeTeamMember: function (orgMemberId) {
+                instance.removeMember(orgMemberId)
             },
-            isTeamMember: function (id) {
-                const ids = _.pluck(members, 'userId')
-                return _.contains(ids, id)
+            isTeamMember: function (userId) {
+                return instance.isTeamMember(userId)
             }
         }
-    }
+    },
+    searchVal() {
+        const search = Session.get(Pairity.OrgMemberSearchKey)
+        if (search) {
+            return search.name || ''
+        }
+    },
 })
 
 Template.inviteTeamMembers.events({
     'input #searchBox': _.debounce(function (event, instance) {
-        let search = Session.get(Pairity.OrgMemberSearchKey) || { limit: Pairity.defaultLimit, name: '' }
-        if (!_.isObject(search)) {
-            search = { limit: Pairity.defaultLimit, name: '' }
-        }
+        const search = instance.getSearch() // start fresh
         search.name = event.target.value
-        search.limit = Pairity.defaultLimit
         Session.set(Pairity.OrgMemberSearchKey, search)
-    }, 500)
+    }, 500),
+    'click #btnMore': function (event, instance) {
+        const search = Session.get(Pairity.OrgMemberSearchKey) || instance.getSearch()
+        search.limit += Pairity.defaultLimit
+        Session.set(Pairity.OrgMemberSearchKey, search)
+    }
 })

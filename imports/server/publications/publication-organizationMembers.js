@@ -31,7 +31,7 @@ publishComposite('inviteMembers', function (orgId, limit) {
 })
 
 Meteor.publish('organizationMembers', function (search) {
-    if (!this.userId) {
+    if (!Meteor.userId()) {
         return null
     }
 

@@ -29,46 +29,71 @@ if (Meteor.isServer) {
             Meteor.users.remove({})
         });
 
-        it('OrganizationMembers published', function (done) {
+        it('OrganizationMembers published - non admin', function (done) {
+            const userStub = sandbox.stub(Meteor, 'users')
+            userStub.find = sandbox.stub().returns({ username: 'not-admin' })
+
             sandbox.stub(Meteor, 'userId').returns(Random.id())
 
             const orgId = Organizations.insert(TestData.fakeOrganization())
+            sandbox.stub(OrganizationMembers, 'findOne').returns({ organizationId: orgId })
 
-            const orgUsers = []
+            sandbox.stub(Organizations, 'find').returns([{ _id: orgId }])
 
             for (let i = 0; i < 5; i += 1) {
-                const id = Meteor.users.insert({
-                    createdAt: new Date(),
-                    username: `user${i}`,
-                    emails: [
-                        {
-                            address: `user${i}@fake.com`,
-                            verified: false
-                        }
-                    ],
-                    userPreferences: {
-                        primaryRole: 'product'
-                    }
+                const member = TestData.fakeOrganizationMember({
+                    organizationId: orgId,
+                    userId: Random.id(),
+                    status: i === 3 ? 'Pending' : 'Active',
+                    username: `user-name-${i}`
                 })
-                orgUsers.push(id)
-            }
-
-            orgUsers.forEach((id) => {
-                const member = TestData.fakeOrganizationMember({ organizationId: orgId, userId: id, status: 'Pending' })
                 OrganizationMembers.insert(member)
-            })
+            }
 
             const collector = new PublicationCollector()
 
-            collector.collect('organizationMembers', orgId, (collections) => {
+            collector.collect('organizationMembers', { limit: 10, name: '' }, (collections) => {
                 // console.log('The collections', JSON.stringify(collections, null, 4));
-                const { organizationMembers, users } = collections
+                const { organizationMembers } = collections
                 try {
-                    expect(organizationMembers).to.have.length(5)
-                    expect(organizationMembers[0].userId).to.equal(orgUsers[0])
-                    expect(users[0]._id).to.be.equal(orgUsers[0])
-                    expect(users[0].username).to.be.equal('user0')
-                    expect(users[0].emails[0].address).to.be.equal('user0@fake.com')
+                    expect(organizationMembers).to.have.length(4)
+                    expect(organizationMembers[0].username).to.equal('user-name-0')
+                    done();
+                } catch (err) {
+                    done(err)
+                }
+            });
+        })
+
+        it('OrganizationMembers published - admin', function (done) {
+            const userStub = sandbox.stub(Meteor, 'users')
+            userStub.find = sandbox.stub().returns({ username: 'admin' })
+
+            sandbox.stub(Meteor, 'userId').returns(Random.id())
+
+            const orgId = Organizations.insert(TestData.fakeOrganization())
+            sandbox.stub(OrganizationMembers, 'findOne').returns({ organizationId: orgId })
+
+            sandbox.stub(Organizations, 'find').returns([{ _id: orgId }])
+
+            for (let i = 0; i < 5; i += 1) {
+                const member = TestData.fakeOrganizationMember({
+                    organizationId: orgId,
+                    userId: Random.id(),
+                    status: i === 3 ? 'Pending' : 'Active',
+                    username: `user-name-${i}`
+                })
+                OrganizationMembers.insert(member)
+            }
+
+            const collector = new PublicationCollector()
+
+            collector.collect('organizationMembers', { limit: 10, name: '' }, (collections) => {
+                // console.log('The collections', JSON.stringify(collections, null, 4));
+                const { organizationMembers } = collections
+                try {
+                    expect(organizationMembers).to.have.length(4)
+                    expect(organizationMembers[0].username).to.equal('user-name-0')
                     done();
                 } catch (err) {
                     done(err)
