@@ -158,6 +158,22 @@ FlowRouter.route('/teams/members/invite/:id', {
     name: 'invite-team-members'
 })
 
+FlowRouter.route('/teams/pairs/:id', {
+    subscriptions: function (params) {
+        this.register('teams', Meteor.subscribe('singleTeam', params.id))
+        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
+    },
+    action: function () {
+        if (!Meteor.userId()) {
+            FlowRouter.go('/')
+        } else {
+            BlazeLayout.render('workLayout', { content: 'pairsAssign' });
+        }
+    },
+    name: 'invite-team-members'
+})
+
+
 FlowRouter.route('/preferences', {
     subscriptions: function (params) {
         this.register('preferences', Meteor.subscribe('myPrefs'))

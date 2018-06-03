@@ -14,16 +14,16 @@
                     {{/if}}
                     <a href="#" disabled><i class="fa fa-user" aria-hidden="true" style="color: #aaa;"></i>&nbsp;{{userName}}</a>
                     <hr style="width: 80%; border-top: #ddd 1px solid;"/>
-                    <a id="btnTeams" href="/teams"><i class="fa fa-cogs" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Teams</a>
-                    <a id="btnPreferences" href="/preferences"><i class="fa fa-cog" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
+                    <a id="btnPreferences" href="/preferences"><i class="fa fa-wrench" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Preferences</a>
                     <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     {{#if orgManager}}
-                        <a id="btnNewTeam" href="/teams/new"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
+                        <a id="btnNewTeam" href="/teams/new"><i class="fa fa-plus" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Team</a>
+                        <a id="btnTeams" href="/teams"><i class="fa fa-users" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Teams</a>
                         <a id="btnManageSpecificOrg" href="/organizations/edit/{{orgId}}"><i class="fa fa-sitemap" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Manage Organization</a>
                         <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     {{/if}}
                     {{#if isAdmin}}
-                        <a id="btnNewOrg" href="/organizations/new"><i class="fa fa-sitemap" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Organization</a>
+                        <a id="btnNewOrg" href="/organizations/new"><i class="fa fa-plus" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Create Organization</a>
                         <a id="btnManageOrg" href="/organizations"><i class="fa fa-sitemap" aria-hidden="true" style="color: #3E94B4;"></i>&nbsp;Manage Organizations</a>
                         <hr style="width: 80%; border-top: #ddd 1px solid;"/>
                     {{/if}}
