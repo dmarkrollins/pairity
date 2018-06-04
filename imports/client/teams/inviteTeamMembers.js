@@ -81,7 +81,6 @@ Template.inviteTeamMembers.helpers({
     },
     currentItem() {
         const instance = Template.instance()
-        const members = TeamMembers.find().fetch()
         return {
             data: this,
             addTeamMember: function (orgMemberId) {

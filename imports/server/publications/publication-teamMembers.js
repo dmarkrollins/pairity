@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor'
+import { publishComposite } from 'meteor/reywood:publish-composite'
+
 import { Pairity, TeamMembers } from '../../../imports/lib/pairity'
 
 TeamMembers._ensureIndex('organizationId', 1)
@@ -21,3 +23,19 @@ Meteor.publish('teamMembers', function (tid) {
         }
     )
 })
+
+publishComposite('assigmentMembers', function (tid, limit) {
+    const searchLimit = limit || Pairity.defaultLimit
+
+    return {
+        find() {
+            return TeamMembers.find({ teamId: tid });
+        },
+        children: [{
+            find(member) {
+                return Meteor.users.find({ _id: member.userId }, { fields: { username: 1, emails: 1, userPreferences: 1 } });
+            }
+        }]
+    }
+})
+
