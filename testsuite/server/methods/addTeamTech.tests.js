@@ -6,7 +6,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
 import moment from 'moment'
-import { Teams, TeamTech, IsTeamAdmin } from '../../../imports/lib/pairity'
+import { Teams, TeamTech, IsTeamAdmin, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Errors } from '../../../imports/lib/errors'
 
@@ -83,6 +83,7 @@ if (Meteor.isServer) {
             fakeTeam.technologies = []
             fakeTeam.technologies.push('fake-tech-name')
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
+            sandbox.stub(TeamMembers, 'findOne').returns(TestData.fakeTeamMember({ isAdmin: true }))
 
             try {
                 const resultId = subject.apply(context, [Random.id(), 'fake-tech-name']);
@@ -101,6 +102,7 @@ if (Meteor.isServer) {
             const fakeTeam = TestData.fakeTeam({ createdBy: userId })
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
             sandbox.stub(Teams, 'update').returns({ nModified: 1 })
+            sandbox.stub(TeamMembers, 'findOne').returns(TestData.fakeTeamMember({ isAdmin: true }))
 
             try {
                 result = subject.apply(context, [Random.id(), 'fake-tech-name']);
@@ -122,6 +124,7 @@ if (Meteor.isServer) {
             sandbox.stub(Teams, 'update').throws('fake-error')
             sandbox.stub(Logger, 'log')
             sandbox.spy(Errors, 'create')
+            sandbox.stub(TeamMembers, 'findOne').returns(TestData.fakeTeamMember({ isAdmin: true }))
 
             try {
                 resultId = subject.apply(context, [Random.id(), 'fake-tech-name']);

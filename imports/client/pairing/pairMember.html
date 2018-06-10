@@ -1,9 +1,10 @@
-<template name="pairMembers">
+<template name="pairMember">
 
-    <div class="pure-g">
-        <div class="pure-u-1">
-            <input type="checkbox" id="cbPresent" style="margin-right: 12px;" value="{{isPresent}}">
-            {{username}}
+    <div class="pure-g pair-member">
+        <div class="pure-u-1 {{isSelected}}" style="margin-top: 12px;">
+            <!-- <input type="checkbox" id="cbPresent" style="margin-right: 12px;" checked="{{isPresent}}"> -->
+            <label><input type="checkbox" id="cbPresent" checked="{{isPresent}}" class="{{isSelected}}"><span></span></label>
+            {{userInfo}}
         </div>
     </div>
 

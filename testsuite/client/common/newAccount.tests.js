@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base'
+import { Tracker } from 'meteor/tracker'
 import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';

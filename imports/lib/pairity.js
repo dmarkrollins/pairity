@@ -17,6 +17,14 @@ const Pairity = {
         MEMBER_ACTIVE: 'Active',
         MEMBER_INACTIVE: 'InActive'
     },
+    MemberRoles: {
+        ENGINEER: 'Engineer',
+        PRODUCT: 'Product',
+        DESIGN: 'Design'
+    },
+    AmplifiedKeys: {
+        ROLE_FILTER: 'roleFilter'
+    },
     MemberStatusArray: ['Pending', 'Active', 'InActive'],
     PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
     isSuperAdmin: (userid) => {
@@ -72,7 +80,20 @@ Organizations.attachSchema(Schemas.Organizations)
 OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
 Membership.attachSchema(Schemas.Membership)
 
-const IsTeamAdmin = (team, id) => team.createdBy === id
+
+const IsTeamAdmin = (team, uid) => {
+    if (!Meteor.isServer) {
+        throw Meteor.Error('isTeamAdmin function not available in client!')
+    }
+
+    const member = TeamMembers.findOne({ teamId: team._id, userId: uid })
+
+    if (member) {
+        return member.isAdmin
+    }
+
+    return Pairity.isSuperAdmin(uid)
+}
 
 const RegisterComponent = (name, component) => {
     Pairity.Components[name] = component

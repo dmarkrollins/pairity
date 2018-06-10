@@ -8,7 +8,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
 import moment from 'moment'
-import { Teams } from '../../../imports/lib/pairity'
+import { Teams, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 
 import { TestData } from '../../testData'
@@ -81,13 +81,14 @@ if (Meteor.isServer) {
         })
 
         it('inserts new team correctly - stubbed', function () {
-            const context = { userId: userId };
+            const context = { userId };
             let msg = '';
             const newId = Random.id()
             let resultId = ''
             const fakeTeam = TestData.fakeTeam()
             sandbox.stub(Teams, 'findOne').returns(null)
             sandbox.stub(Teams, 'insert').returns(newId)
+            sandbox.stub(TeamMembers, 'insert')
 
             try {
                 resultId = subject.apply(context, [fakeTeam]);
@@ -96,10 +97,20 @@ if (Meteor.isServer) {
             }
 
             expect(resultId).to.equal(newId)
-
+            expect(Teams.insert).to.have.been.called
             const params = Teams.insert.args[0][0]
             expect(params.name).to.equal(fakeTeam.name)
             expect(params.description).to.equal(fakeTeam.description)
+            expect(params.organizationId).to.equal(fakeTeam.organizationId)
+
+            expect(TeamMembers.insert, 'team members insert').to.have.been.called
+            const memberParams = TeamMembers.insert.args[0][0]
+
+            expect(memberParams.organizationId).to.equal(fakeTeam.organizationId)
+            expect(memberParams.teamId).to.equal(newId)
+            expect(memberParams.userId).to.equal(userId)
+            expect(memberParams.isAdmin).to.be.true
+            expect(memberParams.isPresent).to.be.true
         })
 
         it('handles insert error correctly', function () {

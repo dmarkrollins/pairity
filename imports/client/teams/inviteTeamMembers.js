@@ -55,6 +55,12 @@ Template.inviteTeamMembers.onCreated(function () {
     }
 })
 
+Template.inviteTeamMembers.onRendered(function (){
+    setTimeout(function(){
+        $('#searchBox').focus()
+    }, 1000)
+})
+
 Template.inviteTeamMembers.helpers({
     members() {
         return OrganizationMembers.find({}, { sort: { username: 1 } })
@@ -99,7 +105,7 @@ Template.inviteTeamMembers.helpers({
         if (search) {
             return search.name || ''
         }
-    },
+    }
 })
 
 Template.inviteTeamMembers.events({
@@ -107,10 +113,16 @@ Template.inviteTeamMembers.events({
         const search = instance.getSearch() // start fresh
         search.name = event.target.value
         Session.set(Pairity.OrgMemberSearchKey, search)
+        setTimeout(function(){
+            $('#searchBox').focus()
+        }, 1000)
     }, 500),
     'click #btnMore': function (event, instance) {
         const search = Session.get(Pairity.OrgMemberSearchKey) || instance.getSearch()
         search.limit += Pairity.defaultLimit
         Session.set(Pairity.OrgMemberSearchKey, search)
+        setTimeout(function(){
+            $('#searchBox').focus()
+        }, 1000)
     }
 })

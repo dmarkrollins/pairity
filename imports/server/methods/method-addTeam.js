@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { SimpleSchema } from 'simpl-schema'
-import { Teams } from '../../../imports/lib/pairity'
+import { Teams, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 
@@ -41,6 +41,27 @@ Meteor.methods({
                     }
                 }
             )
+
+            TeamMembers.insert(
+                {
+                    organizationId: doc.organizationId,
+                    teamId: id,
+                    userId: this.userId,
+                    isAdmin: true,
+                    isPresent: true
+                },
+                {
+                    extendAutoValueContext:
+                    {
+                        isInsert: true,
+                        isUpdate: false,
+                        isUpsert: false,
+                        isFromTrustedCode: true,
+                        userId: this.userId
+                    }
+                }
+            )
+
             return id
         } catch (err) {
             if (err.sanitizedError) {

@@ -17,4 +17,5 @@ import './inviteOrgMemberItem.html'
 import './inviteOrgMemberItem.js'
 import './inviteTeamMembers.html'
 import './inviteTeamMembers.js'
+import './teamDash.html'
 
