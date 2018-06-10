@@ -15,19 +15,21 @@
                     <div class="pure-g">
         
                         <div class="pure-u-xs-1 pure-u-sm-1  pure-u-md-1-2 pure-u-lg-1-3 pure-u-xl-1-3">
+                            <div class="sub-title" style="margin-bottom: 7px;">Member Filter</div>
                             <span style="white-space: nowrap; margin-right: 12px; display: inline-block;">
-                                <input type="checkbox" id="cbEngineering" value="">&nbsp;<label for="engineering">Engineering</label>
+                                <label><input type="checkbox" id="cbEngineering" checked="{{engineeringChecked}}"><span>Engineer</span></label>
                             </span>
                             <span style="white-space: nowrap; margin-right: 12px; display: inline-block;">
-                                <input type="checkbox" id="cbProduct" value="">&nbsp;<label for="subscribeNews">Product</label>
+                                    <label><input type="checkbox" id="cbProduct" checked="{{productChecked}}"><span>Product</span></label>
                             </span>
                             <span style="white-space: nowrap; display: inline-block; margin-top: 7px;">
-                                <input type="checkbox" id="cbDesign" value="">&nbsp;<label for="subscribeNews">Design</label>
+                                    <label><input type="checkbox" id="cbDesign" checked="{{designChecked}}"><span>Design</span></label>
                             </span>
+                            <br /><div style="width: 100%; display: inline-block; margin-top: 7px; padding-left: 7px; font-size: .8em; color: #aaa;">{{selectedText}}</div>
                         </div>
             
                         <div class="pure-hidden-xs pure-hidden-sm  pure-u-md-1-2 pure-u-lg-2-3 pure-u-xl-2-3" style="text-align: center;">
-                            <button id="btnGenerate" class="button-default pure-button"><i class="fa fa-cogs"></i>&nbsp;Generate Pairs</button>
+                            <button id="btnGenerate" class="button-primary pure-button {{generateDisabled}}"><i class="fa fa-cogs"></i>&nbsp;Generate Pairs</button>
                         </div>
             
                     </div>
@@ -35,8 +37,10 @@
                     <div class="pure-g" style="margin-top: 21px;">
                         <div class="pure-u-xs-1 pure-u-sm-1  pure-u-md-1-2 pure-u-lg-1-3 pure-u-xl-1-3" style="margin-bottom: 21px;">                            
                             <div class="pure-u-1 sub-title">Team Members</div>
-                            <div style="font-size: .7em;">Out</div>
-                            {{}}
+                            <div style="font-size: .7em;">Here</div>
+                            {{#each member}}
+                                {{> pairMember currentItem}}
+                            {{/each}}
                         </div>
             
                         <div class="pure-u-sm-1 pure-u-xs-1 pure-u-md-1-2 pure-u-lg-2-3 pure-u-xl-2-3">
@@ -44,7 +48,7 @@
                             <div class="pure-g">
 
                                 <div class="pure-u-xs-1 pure-u-sm-1 pure-hidden-md pure-hidden-lg pure-hidden-xl" style="margin-top: 12px; margin-bottom: 12px; text-align: center;" >
-                                    <button id="btnGenerate" class="button-default pure-button"><i class="fa fa-cogs"></i>&nbsp;Generate Pairs</button>
+                                    <button id="btnGenerate" class="button-primary pure-button {{generateDisabled}}"><i class="fa fa-cogs"></i>&nbsp;Generate Pairs</button>
                                 </div>
                 
                                 <div class="pure-u-xs-1 pure-u-sm-1-2  pure-u-md-1-2 pure-u-lg-1-2 pure-u-xl-1-2">

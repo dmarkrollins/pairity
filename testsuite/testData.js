@@ -184,4 +184,24 @@ TestData.fakeOrganizationMember = (parameters) => {
     return doc
 }
 
+TestData.fakeUser = (parameters) => {
+    let parms = {}
+
+    if (!_.isUndefined(parameters)) {
+        parms = parameters
+    }
+
+    const doc = {}
+
+    doc.username = parms.username || faker.internet.userName()
+    doc.emails = [
+        { address: parms.email || faker.internet.email() }
+    ]
+    doc.userPreferences = {
+        primaryRole: Pairity.MemberRoles.ENGINEER
+    }
+
+    return doc
+}
+
 module.exports = { TestData }

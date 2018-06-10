@@ -7,7 +7,7 @@
             <div class="dropdown pull-right" style="margin-top: 7px;">
                 <a href="#" class="dropbtn" style="margin-right: 0px; position: relative; top:4px;"><img id="btnOptions" src="/options.png" height="20" alt=""/></a>
                 <div class="dropdown-content">
-                    {{#if showSearch}}
+                    {{#if shouldShowSearch}}
                         <div class="pure-hidden-md pure-hidden-lg pure-hidden-xl" style="white-space: nowrap;">
                             <input id="searchBox" type="text" style="min-width: 100px; max-width: 100%; margin-top: 5px; margin-right: 7px; margin-left: 12px;" placeholder="{{placeholder}}" value="{{searchValue}}">
                         </div> 
@@ -31,7 +31,7 @@
                     <a id="btnLogout" href="#"><i class="fa fa-sign-out" aria-hidden="true" style="color: #990000;"></i>&nbsp;Logout</a>
                 </div>
             </div>
-            {{#if showSearch}}
+            {{#if shouldShowSearch}}
                 <input id="searchBox" type="text" class="pure-hidden-xs pure-hidden-sm pull-right" style="min-width: 100px; max-width: 250px; width: 60%; margin-top: 5px;" placeholder="{{placeholder}}" value="{{searchValue}}">
             {{/if}}
         </div>

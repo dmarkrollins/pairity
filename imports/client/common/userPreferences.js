@@ -31,15 +31,17 @@ Template.userPreferences.helpers({
     engineerChecked() {
         const p = UserPreferences.findOne()
         if (p.userPreferences) {
-            if (p.userPreferences.primaryRole === 'engineer') {
+            if (p.userPreferences.primaryRole === Pairity.MemberRoles.ENGINEER) {
                 return 'checked'
             }
+        } else {
+            return true // default everyone to an engineer until they say otherwise (to support pair assign ui)
         }
     },
     designChecked() {
         const p = UserPreferences.findOne()
         if (p.userPreferences) {
-            if (p.userPreferences.primaryRole === 'design') {
+            if (p.userPreferences.primaryRole === Pairity.MemberRoles.DESIGN) {
                 return 'checked'
             }
         }
@@ -47,7 +49,7 @@ Template.userPreferences.helpers({
     productChecked() {
         const p = UserPreferences.findOne()
         if (p.userPreferences) {
-            if (p.userPreferences.primaryRole === 'product') {
+            if (p.userPreferences.primaryRole === Pairity.MemberRoles.PRODUCT) {
                 return 'checked'
             }
         }

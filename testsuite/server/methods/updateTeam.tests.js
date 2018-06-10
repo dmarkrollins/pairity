@@ -8,7 +8,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
 import moment from 'moment'
-import { Teams } from '../../../imports/lib/pairity'
+import { Teams, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 
 import { TestData } from '../../testData'
@@ -88,6 +88,7 @@ if (Meteor.isServer) {
             fakeTeam.createdBy = userId
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
             sandbox.stub(Teams, 'update').returns({ nModified: 1 })
+            sandbox.stub(TeamMembers, 'findOne').returns(TestData.fakeTeamMember({ isAdmin: true }))
 
             try {
                 resultId = subject.apply(context, [fakeTeam]);
@@ -114,6 +115,7 @@ if (Meteor.isServer) {
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
             sandbox.stub(Teams, 'update').throws(TestData.fakeError())
             sandbox.stub(Logger, 'log')
+            sandbox.stub(TeamMembers, 'findOne').returns(TestData.fakeTeamMember({ isAdmin: true }))
 
             try {
                 resultId = subject.apply(context, [fakeTeam]);

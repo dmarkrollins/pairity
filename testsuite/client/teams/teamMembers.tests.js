@@ -52,7 +52,7 @@ if (Meteor.isClient) {
             sandbox.stub(Teams, 'findOne').returns(fakeTeam)
 
             withRenderedTemplate('teamMembers', null, (el) => {
-                expect($(el).find('div.pure-u-1 label')[0].innerText).to.equal('Current Members')
+                expect($(el).find('div.sub-title')[0].innerText).to.equal('Current Members')
                 expect($(el).find('div#title')[0].innerText).to.equal(fakeTeam.name)
             });
         })

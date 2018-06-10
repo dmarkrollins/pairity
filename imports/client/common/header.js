@@ -22,7 +22,10 @@ Template.header.onCreated(function () {
 
 Template.header.helpers({
     search() {
-        return _.isUndefined(this.showSearch) ? false : this.showSearch === true
+        return _.isUndefined(this.showSearch) ? false : this.showSearch === 'true'
+    },
+    shouldShowSearch() {
+        return this.showSearch === 'true'
     },
     orgManager() {
         if (Template.instance().isReady.get()) {
