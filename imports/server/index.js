@@ -22,3 +22,5 @@ import './methods/method-teamMemberRemove'
 import './methods/method-toggleMemberPresence'
 
 import './utils/startup'
+
+import './exposures/index'

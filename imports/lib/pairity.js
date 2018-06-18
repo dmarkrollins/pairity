@@ -71,6 +71,7 @@ const OrganizationMembers = new Mongo.Collection('organizationMembers')
 const Teams = new Mongo.Collection('teams')
 const TeamMembers = new Mongo.Collection('teamMembers')
 const Membership = new Mongo.Collection('membership') // custom collection
+const PairHistory = new Mongo.Collection('pairhistory')
 
 const UserPreferences = new Meteor.Collection(Pairity.UserPreferences)
 
@@ -79,7 +80,7 @@ TeamMembers.attachSchema(Schemas.TeamMembers)
 Organizations.attachSchema(Schemas.Organizations)
 OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
 Membership.attachSchema(Schemas.Membership)
-
+PairHistory.attachSchema(Schemas.PairHistory)
 
 const IsTeamAdmin = (team, uid) => {
     if (!Meteor.isServer) {
@@ -108,5 +109,6 @@ module.exports = {
     UserPreferences,
     RegisterComponent,
     IsTeamAdmin,
-    Membership
+    Membership,
+    PairHistory
 }

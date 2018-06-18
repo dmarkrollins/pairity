@@ -212,6 +212,11 @@ Schemas.TeamMembers = new SimpleSchema({
         type: Boolean,
         optional: true,
         defaultValue: true
+    },
+    isGuest: {
+        type: Boolean,
+        optional: true,
+        defaultValue: false
     }
 })
 
@@ -235,4 +240,50 @@ Schemas.Membership = new SimpleSchema({
     }
 })
 
-module.exports = { Schemas };
+Schemas.PairHistoryItem = new SimpleSchema({
+    memberOne: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: false
+    },
+    memberTwo: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    memberThree: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    }
+})
+
+Schemas.PairHistory = new SimpleSchema({
+    _id: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
+    },
+    teamId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        index: true
+    },
+    pairedAt: {
+        type: Date,
+        autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+            this.unset()
+        },
+        denyUpdate: true,
+        optional: true,
+        index: true
+    },
+    pairs: {
+        type: [Schemas.PairHistoryItem]
+    }
+})
+
+module.exports = { Schemas }
