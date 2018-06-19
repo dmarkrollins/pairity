@@ -21,6 +21,6 @@ import './methods/method-teamMemberAdd'
 import './methods/method-teamMemberRemove'
 import './methods/method-toggleMemberPresence'
 
-import './utils/startup'
+import './utils/index'
 
 import './exposures/index'
