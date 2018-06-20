@@ -1,9 +1,7 @@
 import { Meteor } from 'meteor/meteor'
-import { SimpleSchema } from 'simpl-schema'
 import { _ } from 'meteor/underscore'
 
-import { Pairity, Teams, TeamTech, IsTeamAdmin } from '../../../imports/lib/pairity'
-import { Schemas } from '../../../imports/lib/schemas'
+import { Teams, IsTeamAdmin } from '../../../imports/lib/pairity'
 import { Errors } from '../../../imports/lib/errors'
 import { Logger } from '../../../imports/lib/logger'
 

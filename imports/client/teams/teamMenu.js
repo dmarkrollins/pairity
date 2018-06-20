@@ -20,8 +20,8 @@ Template.teamMenu.helpers({
     },
     isTeamAdmin() {
         const t = FlowRouter.getParam('id')
-        const team = Teams.findOne()
-        const tm = TeamMembers.findOne({ userId: Meteor.userId(), teamId: t._id })
+        // const team = Teams.findOne()
+        const tm = TeamMembers.findOne({ userId: Meteor.userId(), teamId: t })
         const membership = Membership.findOne()
         if (membership) {
             if (membership.isOrgAdmin === true) return true
