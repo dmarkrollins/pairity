@@ -13,11 +13,11 @@ const buildPairs = (array1, array2) => {
     const pairs = []
     for (let i = 0; i < array1[0].length; i += 1) {
         const pairItem = {}
-        pairItem.memberOne = array1[i].userId
+        pairItem.memberOne = array1[i]
         if (array2.length > i) {
-            pairItem.memberTwo = array2[i].userId
+            pairItem.memberTwo = array2[i]
         } else {
-            pairItem.memberTwo = null
+            pairItem.memberTwo = null // 1 is solo
         }
         pairs.push(pairItem)
     }
