@@ -20,6 +20,7 @@ import './methods/method-userEnrollment'
 import './methods/method-teamMemberAdd'
 import './methods/method-teamMemberRemove'
 import './methods/method-toggleMemberPresence'
+import './methods/method-generateTeamPairs'
 
 import './utils/index'
 

@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import { createQuery } from 'meteor/cultofcoders:grapher'
 import { _ } from 'lodash'
-import { PairHistory, Teams, IsTeamAdmin } from '../../lib/pairity'
+import { PairHistory, Teams, IsTeamAdmin, TeamMembers } from '../../lib/pairity'
 import { Errors } from '../../lib/errors'
 import { Logger } from '../../lib/logger'
+import '../../lib/index'
 
 // //////////////////////////////////////////
 // does not handle guest or mob scenarios
@@ -38,21 +39,20 @@ const presentMembersOnly = (ids, members) => {
 }
 
 Meteor.methods({
-    generatePairs: function (tid) {
+    generateTeamPairs: function (tid) {
         if (!this.userId) {
             throw Errors.create('not-logged-in')
         }
+
         const team = Teams.findOne(tid)
 
         if (!team) {
             throw Errors.create('not-found', 'Team')
         }
 
-        const members = createQuery({
-            teamMembersList: { teamId: tid },
-        }).fetch();
+        const members = createQuery({ teamMembersList: { teamId: tid } }).fetch();
 
-        if (!members) {
+        if (members.length === 0) {
             throw Errors.create('not-found', 'TeamMembers')
         }
 
@@ -124,5 +124,3 @@ Meteor.methods({
         }
     }
 })
-
-module.exports = { presentMembersOnly, buildPairs }
