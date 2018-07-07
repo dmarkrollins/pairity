@@ -1,13 +1,10 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
 import { Random } from 'meteor/random'
-import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
-import moment from 'moment'
 import { Teams, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 

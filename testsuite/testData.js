@@ -82,7 +82,7 @@ TestData.fakeTeamMember = (parameters) => {
     member.teamId = parms.teamId || Random.id()
     member.userId = parms.userId || Random.id()
     member.isAdmin = _.isUndefined(parms.isAdmin) ? false : parms.isAdmin
-    member.isPresent = _.isUndefined(parms.isPresent) ? false : parms.isPresent
+    member.isPresent = _.isUndefined(parms.isPresent) ? true : parms.isPresent
 
     return member
 }
@@ -193,6 +193,7 @@ TestData.fakeUser = (parameters) => {
 
     const doc = {}
 
+    doc._id = parms.userId || Random.id()
     doc.username = parms.username || faker.internet.userName()
     doc.emails = [
         { address: parms.email || faker.internet.email() }
