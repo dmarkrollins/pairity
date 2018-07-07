@@ -5,7 +5,6 @@ import { Random } from 'meteor/random'
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
-import moment from 'moment'
 import { Teams, TeamTech, IsTeamAdmin, TeamMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Errors } from '../../../imports/lib/errors'

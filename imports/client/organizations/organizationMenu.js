@@ -1,10 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
-import moment from 'moment'
 import { FlowRouter } from 'meteor/kadira:flow-router'
-import { ReactiveVar } from 'meteor/reactive-var'
 import { $ } from 'meteor/jquery'
-
 import { Toast } from '../../../imports/client/common/toast'
 import { Pairity, Organizations } from '../../lib/pairity'
 import { PairityModal } from '../common/pairityModal'

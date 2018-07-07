@@ -12,11 +12,11 @@ import '../../lib/index'
 
 const buildPairs = (array1, array2) => {
     const pairs = []
-    for (let i = 0; i < array1[0].length; i += 1) {
+    for (let i = 0; i < array1.length; i += 1) {
         const pairItem = {}
-        pairItem.memberOne = array1[i]
+        pairItem.memberOne = array1[i]._id
         if (array2.length > i) {
-            pairItem.memberTwo = array2[i]
+            pairItem.memberTwo = array2[i]._id
         } else {
             pairItem.memberTwo = null // 1 is solo
         }
@@ -28,10 +28,10 @@ const buildPairs = (array1, array2) => {
 const presentMembersOnly = (ids, members) => {
     const newArray = []
     ids.forEach((id) => {
-        const memberItem = _.find(members, member => member.userId === id)
+        const memberItem = _.find(members, member => member._id === id)
         if (memberItem) {
             if (memberItem.isPresent) {
-                newArray.push(id)
+                newArray.push(memberItem)
             }
         }
     })
@@ -65,23 +65,34 @@ Meteor.methods({
         let pairs = []
 
         if (history) {
-            pairs = { history }
+            pairs = history.pairs // eslint-disable-line
         }
 
-        if (pairs === []) {
+        if (pairs.length === 0) {
             // first pair ever
-            const presentMembers = _.reject(members, member => !member.isPresent) // remove not present members
+
+            const presentMembers = _.filter(members, member => member.isPresent === true) // remove not present members
+
             const splitMembers = _.chunk(presentMembers, 2) // split in half
 
             pairs = buildPairs(splitMembers[0], splitMembers[1])
         } else {
+            const { twitter, facebook } = history.pairs;
             // do round robin with present members
             const arrayOne = _.map(pairs, 'memberOne')
             const arrayTwo = _.map(pairs, 'memberTwo')
 
+            // console.log(arrayOne)
+            // console.log(arrayTwo)
+
             const items = arrayOne.concat(arrayTwo)
 
+            // console.log('concate items', items)
+            // console.log('the members', members)
+
             const cleanedItems = presentMembersOnly(items, members)
+
+            // console.log('cleaned', cleanedItems)
 
             const splitMembers = _.chunk(cleanedItems, 2)
 
@@ -89,6 +100,8 @@ Meteor.methods({
                 const elem = splitMembers[1].shift() // remove first item
                 splitMembers[1].push(elem) // tack it on the end
             }
+
+            // console.log('split members---------\n', splitMembers)
 
             pairs = buildPairs(splitMembers[0], splitMembers[1])
         }

@@ -5,8 +5,8 @@ import { Random } from 'meteor/random'
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai'
+import { _ } from 'meteor/underscore'
 import { Teams, PairHistory, TeamMembers, Organizations } from '../../../imports/lib/pairity'
-import { Logger } from '../../../imports/lib/logger'
 import { TestData } from '../../testData'
 
 const should = chai.should();
@@ -32,6 +32,7 @@ if (Meteor.isServer) {
             Teams.remove({})
             Organizations.remove({})
             TeamMembers.remove({})
+            Meteor.users.remove({})
             sandbox.restore()
         })
 
@@ -81,21 +82,140 @@ if (Meteor.isServer) {
         it('should be team admin', function () {
             const context = { userId };
             let msg = '';
+            const teamId = Random.id()
 
-            sandbox.stub(Teams, 'findOne').returns(TestData.fakeTeam({ userId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId }))
 
-            // add org
-            // add team (current user id is not an admin)
-            // add users
-            // add team members
+            sandbox.stub(Teams, 'findOne').returns(TestData.fakeTeam({ teamId, userId }))
+            sandbox.stub(Meteor.users, 'findOne').returns(TestData.fakeUser())
+            sandbox.stub(Organizations, 'findOne').returns(TestData.fakeOrganization({ userId }))
+
 
             try {
-                subject.apply(context, [Random.id()]);
+                subject.apply(context, [teamId]);
             } catch (error) {
                 msg = error.message;
             }
 
-            expect(msg, 'should throw no an admin').to.be.equal('Not adminç');
+            expect(msg, 'should throw no an admin').to.be.equal('You must be the team administrator to perform this action! [not-admin]');
+        })
+
+        it('generates pairs no history', function () {
+            const context = { userId };
+            let msg = '';
+            let response
+
+            Meteor.users.insert(TestData.fakeUser({ userId }))
+
+            const organizationId = Organizations.insert(TestData.fakeOrganization())
+
+            const teamId = Teams.insert(TestData.fakeTeam({ organizationId }))
+
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({
+                teamId,
+                organizationId,
+                userId,
+                isAdmin: true
+            }))
+
+            try {
+                response = subject.apply(context, [teamId]);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(msg, 'should not throw error').to.be.equal('');
+
+            expect(response.pairs, 'should have two pairs').to.have.length(2)
+        })
+
+        it('generates pairs with history', function () {
+            const context = { userId };
+            let msg = '';
+            let response1
+            let response2
+
+            Meteor.users.insert(TestData.fakeUser({ userId }))
+
+            const organizationId = Organizations.insert(TestData.fakeOrganization())
+
+            const teamId = Teams.insert(TestData.fakeTeam({ organizationId }))
+
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({
+                teamId,
+                organizationId,
+                userId,
+                isAdmin: true
+            }))
+
+            try {
+                response1 = subject.apply(context, [teamId]);
+                response2 = subject.apply(context, [teamId]);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(msg, 'should not throw error').to.be.equal('');
+
+            expect(response1.pairs, 'should have two pairs').to.have.length(2)
+            expect(response2.pairs, 'should have two pairs').to.have.length(2)
+
+            expect(response1.pairs[0]).to.not.equal(response2.pairs[0])
+            expect(response1.pairs[1]).to.not.equal(response2.pairs[1])
+
+            const ids = []
+
+            ids.push(response2.pairs[0].memberOne)
+            ids.push(response2.pairs[0].memberTwo)
+            ids.push(response2.pairs[1].memberOne)
+            ids.push(response2.pairs[1].memberTwo)
+
+            const members = TeamMembers.find({ teamId }).fetch()
+
+            const memberIds = _.pluck(members, '_id')
+
+            const result = _.isEmpty(_.difference(ids, memberIds)) && _.isEmpty(_.difference(memberIds, ids))
+
+            expect(result, 'all ids should be accounted for').to.be.true
+        })
+
+        it('generates pairs when people are missing - hedgehog (solo)', function () {
+            const context = { userId };
+            let msg = '';
+            let response1
+
+            Meteor.users.insert(TestData.fakeUser({ userId }))
+
+            const organizationId = Organizations.insert(TestData.fakeOrganization())
+
+            const teamId = Teams.insert(TestData.fakeTeam({ organizationId }))
+
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId, isPresent: false }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({ teamId, organizationId }))
+            TeamMembers.insert(TestData.fakeTeamMember({
+                teamId,
+                organizationId,
+                userId,
+                isAdmin: true
+            }))
+
+            try {
+                response1 = subject.apply(context, [teamId]);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(msg, 'should not throw error').to.be.equal('');
+
+            expect(response1.pairs, 'should have two pairs').to.have.length(2)
+            expect(response1.pairs[1].memberTwo).to.be.null
         })
     })
 }
