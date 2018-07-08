@@ -5,8 +5,6 @@ import { Random } from 'meteor/random'
 import { _ } from 'meteor/underscore'
 import { Pairity } from '../imports/lib/pairity'
 
-const faker = Meteor.isTest && require('faker') // eslint-disable-line global-require
-
 const TestData = {}
 
 TestData.fakeTeam = (parameters) => {
@@ -19,14 +17,15 @@ TestData.fakeTeam = (parameters) => {
     const team = {}
 
     team._id = parms._id || Random.id()
-    team.name = parms.name || faker.company.companyName()
-    team.description = parms.description || faker.lorem.sentences(3)
+    team.name = parms.name || 'fake-company-name'
+    team.description = parms.description || 'this is a fake sentence'
     team.createdAt = parms.createdAt || new Date()
     team.createdBy = parms.createdBy || Random.id()
     team.organizationId = parms.organizationId || Random.id()
 
     return team
 }
+
 
 TestData.fakeTeamTech = (parameters) => {
     let parms = {}
@@ -112,8 +111,8 @@ TestData.fakeOrganization = (parameters) => {
     if (parms.modifiedAt) {
         org.modifiedAt = parms.modifiedAt
     }
-    org.name = parms.name || faker.company.companyName()
-    org.description = parms.description || faker.lorem.sentences(3)
+    org.name = parms.name || 'fake-name'
+    org.description = parms.description || 'fake paragraph'
 
     return org
 }
@@ -142,8 +141,8 @@ TestData.fakeOrganizationMembers = (parameters) => {
             userId: parms.userId || Random.id(),
             status: parms.status || Pairity.MemberStatuses.MEMBER_PENDING,
             isAdmin: !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false,
-            username: faker.name.firstName(),
-            email: faker.internet.email()
+            username: 'fake-first-name',
+            email: 'fake-email@address.com'
         }
         const userItem = {
             _id: memberItem.userId,
@@ -178,8 +177,8 @@ TestData.fakeOrganizationMember = (parameters) => {
     doc.userId = parms.userId || Random.id()
     doc.status = parms.status || Pairity.MemberStatuses.MEMBER_PENDING
     doc.isAdmin = !_.isUndefined(parms.isAdmin) ? parms.isAdmin : false
-    doc.username = parms.username || faker.name.firstName()
-    doc.email = parms.email || faker.internet.email()
+    doc.username = parms.username || 'fake-first-name'
+    doc.email = parms.email || 'fake-email@address.com'
 
     return doc
 }
@@ -194,9 +193,9 @@ TestData.fakeUser = (parameters) => {
     const doc = {}
 
     doc._id = parms.userId || Random.id()
-    doc.username = parms.username || faker.internet.userName()
+    doc.username = parms.username || 'fake-name'
     doc.emails = [
-        { address: parms.email || faker.internet.email() }
+        { address: parms.email || 'fake-email@address.com' }
     ]
     doc.userPreferences = {
         primaryRole: Pairity.MemberRoles.ENGINEER

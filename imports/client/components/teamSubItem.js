@@ -1,6 +1,5 @@
 import { Random } from 'meteor/random'
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { _ } from 'meteor/underscore'
 
