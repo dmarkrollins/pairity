@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 
-class OrganizationItem extends React.Component {
+export default class OrganizationItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +45,11 @@ class OrganizationItem extends React.Component {
 
     cancelButton() {
         if (this.props.showCancel) {
-            return <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">Cancel</button>
+            return (
+                <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">
+                    Cancel
+                </button>
+            )
         }
     }
 
@@ -53,7 +57,9 @@ class OrganizationItem extends React.Component {
         return (
             <div className="pure-u-xs-1">
                 <form className="pure-form pure-form-stacked">
-                    <label>Organization Name</label>
+                    <label>
+                        Organization Name
+                    </label>
                     <input
                         id="orgName"
                         type="text"
@@ -61,7 +67,9 @@ class OrganizationItem extends React.Component {
                         value={this.state.org.name}
                         onChange={this.handleNameChange}
                     />
-                    <label>Description</label>
+                    <label>
+                        Description
+                    </label>
                     <textarea
                         id="orgDesc"
                         placeholder="Share what this organization is all about?"
@@ -69,9 +77,13 @@ class OrganizationItem extends React.Component {
                         onChange={this.handleDescChange}
                         value={this.state.org.description}
                     />
-                    <p className="errorMessage">{this.state.errorMessage}</p>
+                    <p className="errorMessage">
+                        {this.state.errorMessage}
+                    </p>
                     <div className="form-buttons">
-                        <button id="btnSave" type="submit" onClick={this.saveClick} className="button-primary pure-button">Save</button>
+                        <button id="btnSave" type="submit" onClick={this.saveClick} className="button-primary pure-button">
+                            Save
+                        </button>
                         {this.cancelButton()}
                     </div>
                 </form>
@@ -96,5 +108,3 @@ OrganizationItem.defaultProps = {
     rows: 7,
     showCancel: true
 }
-
-module.exports = OrganizationItem

@@ -3,8 +3,8 @@ import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { $ } from 'meteor/jquery'
-import { Toast } from '../../client/common/toast'
-import { Pairity, UserPreferences } from '../../../imports/lib/pairity'
+import { Toast } from './toast'
+import { Pairity, UserPreferences } from '../../lib/pairity'
 
 Template.userPreferences.onCreated(function () {
     const self = this

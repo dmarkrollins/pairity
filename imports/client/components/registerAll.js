@@ -1,9 +1,14 @@
 import { RegisterComponent } from '../../lib/pairity'
 
-// ----------------------------- Teams ------------------------------
-RegisterComponent('TeamItem', require('./teamItem'))
-RegisterComponent('TeamSubItem', require('./teamSubItem'))
-RegisterComponent('TeamSubListItem', require('./teamSubListItem'))
+import TeamItem from './teamItem'
+import TeamSubItem from './teamSubItem'
+import TeamSubListItem from './teamSubListItem'
+import OrganizationItem from './organizationItem'
 
 // ----------------------------- Teams ------------------------------
-RegisterComponent('OrganizationItem', require('./organizationItem'))
+RegisterComponent('TeamItem', TeamItem)
+RegisterComponent('TeamSubItem', TeamSubItem)
+RegisterComponent('TeamSubListItem', TeamSubListItem)
+
+// ----------------------------- Teams ------------------------------
+RegisterComponent('OrganizationItem', OrganizationItem)

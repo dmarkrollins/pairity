@@ -1,5 +1,5 @@
 import { $ } from 'meteor/jquery'
-import { Pairity } from '../../../imports/lib/pairity'
+import { Pairity } from '../../lib/pairity'
 
 import './toast.html'
 
@@ -28,4 +28,4 @@ Toast.showSuccess = (message, timeOut) => {
     showToast('success', message, timeOut)
 }
 
-module.exports = { Toast }
+export { Toast }

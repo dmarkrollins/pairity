@@ -5,18 +5,19 @@ module.exports = {
         "mocha",
         "underscore"
     ],
+    "extends": [
+        "airbnb", "plugin:meteor/recommended"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 7,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
         },
         "allowImportExportEverywhere": true
     },
-    "extends": [
-        "airbnb", "plugin:meteor/recommended"
-    ],
+    "plugins": ["meteor"],
     "rules": {
         "no-extend-native": "off",
         "comma-dangle": "off",
@@ -66,16 +67,19 @@ module.exports = {
         "no-return-assign": "off",
         "no-restricted-syntax": "off",
         "no-lonely-if": "off",
-        "react/no-string-refs": "warn",
-        "react/no-unused-state": "warn",
-        "react/no-unused-prop-types": "warn",
+        "react/no-string-refs": ["warn"],
+        "react/no-unused-state": ["warn"],
+        "react/no-unused-prop-types": ["warn"],
         "react/jsx-indent": "4",
         "react/jsx-indent-props": "4",
         "react/forbid-prop-types": "off",
         "react/jsx-boolean-value": ["off"],
+        "react/destructuring-assignment": ["off"],
+        "react/no-unused-state": ["off"],
         "react/jsx-no-comment-textnodes": ["off"],
         "react/jsx-filename-extension": [
-            1, {
+            1, 
+            {
                 "extensions": [".js", ".jsx"]
             }
         ],
@@ -91,6 +95,7 @@ module.exports = {
         "jsx-a11y/label-has-for": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/no-noninteractive-element-interactions": "off"
+
     },
     "settings": {
         "import/resolver": "meteor"

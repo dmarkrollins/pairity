@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { Schemas } from './schemas'
-import { Errors } from './errors'
 
 const Pairity = {
     defaultConfirmMsg: 'Are you sure?',
@@ -100,7 +99,7 @@ const RegisterComponent = (name, component) => {
     Pairity.Components[name] = component
 }
 
-module.exports = {
+export {
     Pairity,
     Organizations,
     OrganizationMembers,

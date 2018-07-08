@@ -44,7 +44,11 @@ class TeamItem extends React.Component {
 
     cancelButton() {
         if (this.props.showCancel) {
-            return <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">Cancel</button>
+            return (
+                <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">
+Cancel
+                </button>
+            )
         }
     }
 
@@ -52,7 +56,9 @@ class TeamItem extends React.Component {
         return (
             <div className="pure-u-xs-1">
                 <form className="pure-form pure-form-stacked">
-                    <label>Team Name</label>
+                    <label>
+Team Name
+                    </label>
                     <input
                         id="teamName"
                         type="text"
@@ -60,7 +66,9 @@ class TeamItem extends React.Component {
                         value={this.state.team.name}
                         onChange={this.handleNameChange}
                     />
-                    <label>Description</label>
+                    <label>
+Description
+                    </label>
                     <textarea
                         id="teamDesc"
                         placeholder="Share what your team is all about?"
@@ -68,9 +76,13 @@ class TeamItem extends React.Component {
                         onChange={this.handleDescChange}
                         value={this.state.team.description}
                     />
-                    <p className="errorMessage">{this.state.errorMessage}</p>
+                    <p className="errorMessage">
+                        {this.state.errorMessage}
+                    </p>
                     <div className="form-buttons">
-                        <button id="btnSave" type="submit" onClick={this.saveClick} className="button-primary pure-button">Save</button>
+                        <button id="btnSave" type="submit" onClick={this.saveClick} className="button-primary pure-button">
+Save
+                        </button>
                         {this.cancelButton()}
                     </div>
                 </form>
@@ -96,4 +108,4 @@ TeamItem.defaultProps = {
     showCancel: true
 }
 
-module.exports = TeamItem
+export default TeamItem

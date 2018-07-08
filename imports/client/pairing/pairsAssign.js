@@ -145,5 +145,8 @@ Template.pairsAssign.events({
     },
     'click #cbDesign': function (event, instance) {
         instance.setRole(event.target.checked, Pairity.MemberRoles.DESIGN)
+    },
+    'click #btnGenerate': function (event, instance) {
+
     }
 })

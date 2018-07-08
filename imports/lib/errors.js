@@ -30,4 +30,4 @@ Errors.create = (key, value = 'Item') => {
     return new Meteor.Error(err.key, err.message.format(value))
 }
 
-module.exports = { Errors }
+export { Errors }

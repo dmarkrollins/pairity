@@ -4,4 +4,4 @@ const Logger = {
     }
 }
 
-module.exports = { Logger }
+export { Logger }

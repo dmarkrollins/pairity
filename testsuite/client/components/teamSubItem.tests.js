@@ -2,7 +2,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import Adapter from 'enzyme-adapter-react-16';
-import { mount, shallow, simulate, configure } from 'enzyme';
+import {
+    mount, shallow, simulate, configure
+} from 'enzyme';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import chaiEnzyme from 'chai-enzyme';
@@ -46,7 +48,7 @@ if (Meteor.isClient) {
             />)
 
             expect(wrapper.find('div.pure-u-1 label'), 'label found').to.have.length(1)
-            expect(wrapper.find('div.pure-u-1 label').get(0).props.children.toString(), 'label value correct').to.equal('Fake Stuff, [,0,]')
+            expect(wrapper.find('div.pure-u-1 label').get(0).props.children.toString(), 'label value correct').to.contain('Fake Stuff')
             expect(wrapper.find('div.pure-u-1 a'), '2 buttons').to.have.length(2)
             expect(wrapper.find('div.pure-u-1 a#btnAdd'), 'add button found').to.have.length(1)
             expect(wrapper.find('div.pure-u-1 a#btnRemove'), 'remove button found').to.have.length(1)

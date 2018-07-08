@@ -286,4 +286,4 @@ Schemas.PairHistory = new SimpleSchema({
     }
 })
 
-module.exports = { Schemas }
+export { Schemas }

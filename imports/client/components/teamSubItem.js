@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { _ } from 'meteor/underscore'
 
-import { Pairity, Teams } from '../../../imports/lib/pairity'
+import { Pairity } from '../../lib/pairity'
 
 class TeamSubItem extends React.Component {
     constructor(props) {
@@ -64,14 +64,16 @@ class TeamSubItem extends React.Component {
         this.props.list.forEach((item) => {
             const className = item.value === this.state.selectedItem ? 'selected-item' : 'unselected-item'
             const selected = item.value === this.state.selectedItem
-            const newItem = (<Pairity.Components.TeamSubListItem
-                handleSelected={this.handleItemSelected}
-                label={item.label}
-                value={item.value}
-                key={Random.id()}
-                selected={selected}
-                className={className}
-            />)
+            const newItem = (
+                <Pairity.Components.TeamSubListItem
+                    handleSelected={this.handleItemSelected}
+                    label={item.label}
+                    value={item.value}
+                    key={Random.id()}
+                    selected={selected}
+                    className={className}
+                />
+            )
             items.push(newItem)
         })
         return items
@@ -113,7 +115,11 @@ class TeamSubItem extends React.Component {
             <div className="pure-g">
                 <div className="pure-u-1">
                     <div style={{ width: '100%', maxWidth: '500px' }}>
-                        <label>{this.props.label} [{this.props.list.length}]</label>
+                        <label>
+                            {this.props.label}
+                            {' '}
+                            {this.props.list.length}
+                        </label>
                         <div style={{
                             display: 'inline-block',
                             float: 'right',
@@ -123,13 +129,13 @@ class TeamSubItem extends React.Component {
                             <a id="btnAdd" href="#" onClick={this.handleItemAdd}>
                                 <i className="fa fa-plus-circle" style={{ fontSize: '1.5em', color: '#659BB9', marginRight: '21px' }} />
                             </a>
-                            <a id="btnRemove" href="#" onClick={this.handleItemRemove} className={this.removeClass()} >
+                            <a id="btnRemove" href="#" onClick={this.handleItemRemove} className={this.removeClass()}>
                                 <i className="fa fa-minus-circle" style={this.removeStyle()} />
                             </a>
                         </div>
                     </div>
                     <div>
-                        <div className={this.addItemClass()} style={{ marginBottom: '7px' }} >
+                        <div className={this.addItemClass()} style={{ marginBottom: '7px' }}>
                             <input ref="newItemInput" onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
                         </div>
                         <div className="item-box">
@@ -149,4 +155,4 @@ TeamSubItem.propTypes = {
     label: PropTypes.string.isRequired
 }
 
-module.exports = TeamSubItem
+export default TeamSubItem

@@ -1,6 +1,4 @@
 /* global moment */
-
-import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
 import { _ } from 'meteor/underscore'
 import { Pairity } from '../imports/lib/pairity'
@@ -134,8 +132,7 @@ TestData.fakeOrganizationMembers = (parameters) => {
     }
 
     for (let i = 0; i < parms.count; i += 1) {
-        const memberItem =
-        {
+        const memberItem = {
             _id: Random.id(),
             organizationId: parms.organizationId || Random.id(),
             userId: parms.userId || Random.id(),
@@ -204,4 +201,4 @@ TestData.fakeUser = (parameters) => {
     return doc
 }
 
-module.exports = { TestData }
+export { TestData }

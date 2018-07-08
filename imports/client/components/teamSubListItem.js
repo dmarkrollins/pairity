@@ -46,4 +46,4 @@ TeamSubListItem.defaultProps = {
     selected: false
 }
 
-module.exports = TeamSubListItem
+export default TeamSubListItem
