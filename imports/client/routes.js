@@ -5,7 +5,7 @@ import { Pairity } from '../lib/pairity'
 
 BlazeLayout.setRoot('#flow-container');
 
-FlowRouter.route('/', {
+FlowRouter.route('/signin', {
     action: function () {
         if (Meteor.userId()) {
             FlowRouter.go('/teams')
@@ -202,4 +202,3 @@ FlowRouter.route('/preferences', {
     },
     name: 'user-preferences'
 })
-

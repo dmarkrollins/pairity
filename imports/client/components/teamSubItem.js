@@ -29,7 +29,7 @@ class TeamSubItem extends React.Component {
         this.setState({ showAddItem })
 
         if (showAddItem === true) {
-            const input = this.refs.newItemInput
+            const input = this.newItemInputRef
 
             setTimeout(function () {
                 input.focus()
@@ -111,6 +111,7 @@ class TeamSubItem extends React.Component {
     }
 
     render() {
+        let myRef = el => this.newItemInputRef = el;
         return (
             <div className="pure-g">
                 <div className="pure-u-1">
@@ -136,7 +137,7 @@ class TeamSubItem extends React.Component {
                     </div>
                     <div>
                         <div className={this.addItemClass()} style={{ marginBottom: '7px' }}>
-                            <input ref="newItemInput" onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
+                            <input ref={(ref) => { this.newItemInputRef = ref }} onKeyPress={this.saveItem} onChange={this.itemChange} value={this.state.textValue} type="text" placeholder="Enter new item, press enter" style={{ width: '100%', maxWidth: '500px' }} />
                         </div>
                         <div className="item-box">
                             {this.subItems()}

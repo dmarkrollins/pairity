@@ -2,9 +2,7 @@ body {
     color: #565656;
 }
 
-.fullPage {
-    position: absolute;
-    top: 0;
+.fullLandingPage {
     width: 100%;
     height: 100%;
     height: 100vh;
@@ -31,7 +29,6 @@ body {
     -ms-transform: translate(-50%, -50%);
 }
 
-.button-tertiary,
 .button-default,
 .button-primary,
 .button-success,
@@ -74,12 +71,6 @@ body {
     color: #fff;
 }
 
-.button-tertiary {
-    background: rgb(135, 143, 145); /* this is a light blue */
-    color: #fff;
-}
-
-.button-tertiary:hover,
 .button-default:hover,
 .button-primary:hover,
 .button-success:hover,

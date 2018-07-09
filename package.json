@@ -12,6 +12,7 @@
     "@babel/core": "^7.0.0-beta.52",
     "@babel/runtime": "^7.0.0-beta.52",
     "bcrypt": "^2.0.1",
+    "connect-route": "^0.1.5",
     "install": "^0.12.1",
     "meteor-node-stubs": "^0.3.3",
     "moment": "^2.22.2",

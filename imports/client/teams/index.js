@@ -18,4 +18,4 @@ import './inviteOrgMemberItem.js'
 import './inviteTeamMembers.html'
 import './inviteTeamMembers.js'
 import './teamDash.html'
-
+import './teamDash'

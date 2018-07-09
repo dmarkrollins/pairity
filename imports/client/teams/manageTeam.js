@@ -2,8 +2,10 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 
-import { Pairity, Teams, TeamRoles, TeamTech } from '../../../imports/lib/pairity'
-import { Toast } from '../../../imports/client/common/toast'
+import {
+    Pairity, Teams
+} from '../../lib/pairity'
+import { Toast } from '../common/toast'
 
 Template.manageTeam.onCreated(function () {
     const self = this
@@ -146,4 +148,3 @@ Template.manageTeam.helpers({
         return techArray
     }
 })
-
