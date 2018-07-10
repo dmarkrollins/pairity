@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
-import { Pairity, Membership } from '../../lib/pairity'
+import { Pairity, OrganizationMembers, Membership } from '../../lib/pairity'
 import { Toast } from '../../../imports/client/common/toast'
 
 Template.newTeam.onCreated(function () {
     const self = this
 
-    self.CreateTeam = (team) => {
-        Meteor.call('addTeam', team, function (err, response) {
+    self.CreateTeam = (team, teamAdmin) => {
+        Meteor.call('addTeam', team, teamAdmin, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
@@ -21,8 +21,9 @@ Template.newTeam.onCreated(function () {
 Template.newTeam.helpers({
     saveHandler() {
         const instance = Template.instance();
-        return function (team) {
-            instance.CreateTeam(team)
+
+        return function (team, teamAdmin) {
+            instance.CreateTeam(team, teamAdmin)
         }
     },
     cancelHandler() {
@@ -38,5 +39,8 @@ Template.newTeam.helpers({
         if (memship) {
             return { organizationId: memship.organizationId }
         }
+    },
+    orgMembers() {
+        return OrganizationMembers.find({ isAdmin: true }).fetch();
     }
 })

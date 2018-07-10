@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { Session } from 'meteor/session'
 import { FlowRouter } from 'meteor/kadira:flow-router'
+import { $ } from 'meteor/jquery'
 import { _ } from 'meteor/underscore'
 import { Toast } from '../../client/common/toast'
 
@@ -55,8 +56,8 @@ Template.inviteTeamMembers.onCreated(function () {
     }
 })
 
-Template.inviteTeamMembers.onRendered(function (){
-    setTimeout(function(){
+Template.inviteTeamMembers.onRendered(function () {
+    setTimeout(function () {
         $('#searchBox').focus()
     }, 1000)
 })
@@ -113,7 +114,7 @@ Template.inviteTeamMembers.events({
         const search = instance.getSearch() // start fresh
         search.name = event.target.value
         Session.set(Pairity.OrgMemberSearchKey, search)
-        setTimeout(function(){
+        setTimeout(function () {
             $('#searchBox').focus()
         }, 1000)
     }, 500),
@@ -121,7 +122,7 @@ Template.inviteTeamMembers.events({
         const search = Session.get(Pairity.OrgMemberSearchKey) || instance.getSearch()
         search.limit += Pairity.defaultLimit
         Session.set(Pairity.OrgMemberSearchKey, search)
-        setTimeout(function(){
+        setTimeout(function () {
             $('#searchBox').focus()
         }, 1000)
     }

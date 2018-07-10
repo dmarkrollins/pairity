@@ -35,11 +35,12 @@ Meteor.publish('organizationMembers', function (search) {
         return null
     }
 
+    search = search || {}
+
     const searchVal = search.name || ''
     const searchLimit = search.limit || Pairity.defaultLimit
 
     const orgMember = OrganizationMembers.findOne({ userId: this.userId })
-
     const user = Meteor.users.find({ _id: this.userId })
 
     if (!orgMember && user.username !== 'admin') {
@@ -47,7 +48,6 @@ Meteor.publish('organizationMembers', function (search) {
     }
 
     const orgIds = []
-
     if (user.username === 'admin') {
         // all orgs
         orgIds.push(_.pluck(Organizations.find().fetch(), '_id'))

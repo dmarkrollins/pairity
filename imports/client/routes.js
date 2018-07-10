@@ -118,6 +118,9 @@ FlowRouter.route('/teams/dash/:id', {
 })
 
 FlowRouter.route('/teams/new', {
+    subscriptions: function (params) {
+        this.register('organizationMembers', Meteor.subscribe('organizationMembers'))
+    },
     action: function () {
         if (!Meteor.userId()) {
             FlowRouter.go('/')

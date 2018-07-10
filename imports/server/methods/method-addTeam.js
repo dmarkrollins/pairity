@@ -1,17 +1,20 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { SimpleSchema } from 'simpl-schema'
-import { Teams, TeamMembers } from '../../../imports/lib/pairity'
+import { Teams, TeamMembers, Membership, OrganizationMembers } from '../../../imports/lib/pairity'
 import { Logger } from '../../../imports/lib/logger'
 import { Schemas } from '../../../imports/lib/schemas'
 
 Meteor.methods({
-    addTeam: function (doc) {
+    addTeam: function (doc, teamAdmin) {
         if (!this.userId) {
             throw new Meteor.Error('not-logged-in', 'You must be authenticated to perform this action!')
         }
 
         const context = Schemas.Teams.newContext()
+
+        const membership = OrganizationMembers.findOne({ userId: this.userId })
+        doc.organizationId = membership.organizationId
 
         if (!context.validate(doc)) {
             throw new Meteor.Error('invalid-document', 'Document provided is invalid!')
@@ -46,22 +49,21 @@ Meteor.methods({
                 {
                     organizationId: doc.organizationId,
                     teamId: id,
-                    userId: this.userId,
+                    userId: teamAdmin,
                     isAdmin: true,
                     isPresent: true
                 },
                 {
                     extendAutoValueContext:
-                    {
-                        isInsert: true,
-                        isUpdate: false,
-                        isUpsert: false,
-                        isFromTrustedCode: true,
-                        userId: this.userId
-                    }
+                        {
+                            isInsert: true,
+                            isUpdate: false,
+                            isUpsert: false,
+                            isFromTrustedCode: true,
+                            userId: this.userId
+                        }
                 }
             )
-
             return id
         } catch (err) {
             if (err.sanitizedError) {
