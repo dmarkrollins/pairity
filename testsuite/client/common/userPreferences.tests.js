@@ -8,8 +8,9 @@ import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import { withRenderedTemplate } from '../../clientTestHelpers';
+import { UserPreferences, Pairity } from '../../../imports/lib/pairity'
 
-import TestData from '../../testData.js'
+import { TestData } from '../../testData.js'
 
 const should = chai.should();
 
@@ -74,8 +75,29 @@ if (Meteor.isClient) {
                     expect(Meteor.call).to.have.been.called
 
                     const parms = Meteor.call.args[0]
-                    expect(parms[1]).to.equal('engineer')
+                    expect(parms[1]).to.equal(Pairity.MemberRoles.ENGINEER)
                 });
+            })
+
+            it('displays saved role correctly - engineer', function () {
+                sandbox.stub(UserPreferences, 'findOne').returns(TestData.fakeUser({ primaryRole: Pairity.MemberRoles.ENGINEER }))
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    expect($(el).find('input#engineer:checked'), 'engineering should be checked').to.have.length(1)
+                })
+            })
+
+            it('displays saved role correctly - designer', function () {
+                sandbox.stub(UserPreferences, 'findOne').returns(TestData.fakeUser({ primaryRole: Pairity.MemberRoles.DESIGN }))
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    expect($(el).find('input#design:checked'), 'design should be checked').to.have.length(1)
+                })
+            })
+
+            it('displays saved role correctly - product', function () {
+                sandbox.stub(UserPreferences, 'findOne').returns(TestData.fakeUser({ primaryRole: Pairity.MemberRoles.PRODUCT }))
+                withRenderedTemplate('userPreferences', null, (el) => {
+                    expect($(el).find('input#product:checked'), 'product should be checked').to.have.length(1)
+                })
             })
         })
 

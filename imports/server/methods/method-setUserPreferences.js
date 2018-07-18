@@ -3,10 +3,12 @@ import { Accounts } from 'meteor/accounts-base'
 import { SimpleSchema } from 'simpl-schema'
 import { _ } from 'meteor/underscore'
 
-import { Pairity, Teams, TeamTech, IsTeamAdmin } from '../../../imports/lib/pairity'
-// import { Schemas } from '../../../imports/lib/schemas'
-import { Errors } from '../../../imports/lib/errors'
-import { Logger } from '../../../imports/lib/logger'
+import {
+    Pairity, Teams, IsTeamAdmin
+} from '../../lib/pairity'
+
+import { Errors } from '../../lib/errors'
+import { Logger } from '../../lib/logger'
 
 Meteor.methods({
     setUserPreferences: function (role) {

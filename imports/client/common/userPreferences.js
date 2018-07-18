@@ -35,7 +35,7 @@ Template.userPreferences.helpers({
                 return 'checked'
             }
         } else {
-            return true // default everyone to an engineer until they say otherwise (to support pair assign ui)
+            return 'checked' // default everyone to an engineer until they say otherwise (to support pair assign ui)
         }
     },
     designChecked() {
