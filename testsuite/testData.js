@@ -133,7 +133,7 @@ TestData.fakeOrganizationMembers = (parameters) => {
 
     for (let i = 0; i < parms.count; i += 1) {
         const memberItem = {
-            _id: Random.id(),
+            _id: parms.userId || Random.id(),
             organizationId: parms.organizationId || Random.id(),
             userId: parms.userId || Random.id(),
             status: parms.status || Pairity.MemberStatuses.MEMBER_PENDING,

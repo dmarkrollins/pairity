@@ -1,9 +1,7 @@
 import { Meteor } from 'meteor/meteor'
-import { check } from 'meteor/check'
-import { SimpleSchema } from 'simpl-schema'
-import { Teams, TeamMembers, Membership, OrganizationMembers } from '../../../imports/lib/pairity'
-import { Logger } from '../../../imports/lib/logger'
-import { Schemas } from '../../../imports/lib/schemas'
+import { Teams, TeamMembers, OrganizationMembers } from '../../lib/pairity'
+import { Logger } from '../../lib/logger'
+import { Schemas } from '../../lib/schemas'
 
 Meteor.methods({
     addTeam: function (doc, teamAdmin) {
@@ -14,6 +12,7 @@ Meteor.methods({
         const context = Schemas.Teams.newContext()
 
         const membership = OrganizationMembers.findOne({ userId: this.userId })
+
         doc.organizationId = membership.organizationId
 
         if (!context.validate(doc)) {
@@ -45,25 +44,20 @@ Meteor.methods({
                 }
             )
 
-            TeamMembers.insert(
-                {
-                    organizationId: doc.organizationId,
-                    teamId: id,
-                    userId: teamAdmin,
-                    isAdmin: true,
-                    isPresent: true
-                },
-                {
-                    extendAutoValueContext:
-                        {
-                            isInsert: true,
-                            isUpdate: false,
-                            isUpsert: false,
-                            isFromTrustedCode: true,
-                            userId: this.userId
-                        }
+            Meteor.call('teamMemberAdd', {
+                organizationId: doc.organizationId,
+                teamId: id,
+                userId: teamAdmin,
+                isAdmin: true,
+                isPresent: true
+            }, function (err, response) {
+                if (err) {
+                    throw new Meteor.Error('insert-failed', err.sanitizedError.reason)
+                } else {
+                    Logger.log('Team insert failed', this.userId, err)
+                    throw new Meteor.Error('insert-failed', 'Team not created - please try again later!')
                 }
-            )
+            })
             return id
         } catch (err) {
             if (err.sanitizedError) {

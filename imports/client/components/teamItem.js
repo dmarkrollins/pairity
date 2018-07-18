@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Meteor from 'meteor/meteor'
-import { Pairity, OrganizationMembers, TeamMembers } from '../../lib/pairity'
-import { Toast } from '../common/toast'
 
 class TeamItem extends React.Component {
     constructor(props) {
@@ -68,9 +65,7 @@ Cancel
         return (
             <div className="pure-u-xs-1">
                 <form className="pure-form pure-form-stacked">
-                    <label>
-Team Name
-                    </label>
+                    <label>Team Name</label>
                     <input
                         id="teamName"
                         type="text"

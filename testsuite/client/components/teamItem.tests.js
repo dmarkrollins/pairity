@@ -42,10 +42,12 @@ if (Meteor.isClient) {
             const wrapper = mount(<Pairity.Components.TeamItem
                 handleSave={isSaved}
                 handleCancel={isCancelled}
+                orgMembers={TestData.fakeOrganizationMembers().organizationMembers}
             />)
 
             expect(wrapper.find('#teamName'), 'team name found').to.have.length(1)
             expect(wrapper.find('#teamDesc'), 'team desc found').to.have.length(1)
+            expect(wrapper.find('#memberSelector'), 'team admin found').to.have.length(1)
             expect(wrapper.find('p.errorMessage'), 'err message found').to.have.length(1)
             expect(wrapper.find('button'), 'should have 2 buttons').to.have.length(2)
         })
@@ -57,6 +59,7 @@ if (Meteor.isClient) {
                 handleSave={isSaved}
                 handleCancel={isCancelled}
                 team={fakeTeam}
+                orgMembers={TestData.fakeOrganizationMembers().organizationMembers}
             />)
 
             expect(wrapper.find('#teamName').get(0).props.value).to.equal('fake team name')
@@ -80,6 +83,7 @@ if (Meteor.isClient) {
                 handleSave={isSaved}
                 handleCancel={isCancelled}
                 team={fakeTeam}
+                orgMembers={TestData.fakeOrganizationMembers().organizationMembers}
             />)
 
             wrapper.find('button.button-primary').simulate('click')
@@ -101,6 +105,7 @@ if (Meteor.isClient) {
                 handleSave={isSaved}
                 handleCancel={isCancelled}
                 team={fakeTeam}
+                orgMembers={TestData.fakeOrganizationMembers().organizationMembers}
             />)
 
             wrapper.find('button.button-default').simulate('click')

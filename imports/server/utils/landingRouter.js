@@ -1,10 +1,11 @@
 /* global WebApp Assets */
-import fs from 'fs'
+import { Meteor } from 'meteor/meteor'
 import crypto from 'crypto'
 import connectRoute from 'connect-route'
 
 // WebApp.connectHandlers.use('/', function (req, res, next) {
 WebApp.connectHandlers.use(connectRoute(function (router) {
+    if (Meteor.isTest) return
     router.get('/', function (req, res, next) {
         const buf = Assets.getText('index.html')
 

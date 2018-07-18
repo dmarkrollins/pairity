@@ -91,6 +91,7 @@ module.exports = {
             }
         ],
         "react/jsx-closing-bracket-location": "off",
+        "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/label-has-for": "off",
