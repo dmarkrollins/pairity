@@ -195,7 +195,7 @@ TestData.fakeUser = (parameters) => {
         { address: parms.email || 'fake-email@address.com' }
     ]
     doc.userPreferences = {
-        primaryRole: Pairity.MemberRoles.ENGINEER
+        primaryRole: parms.primaryRole || Pairity.MemberRoles.ENGINEER
     }
 
     return doc
