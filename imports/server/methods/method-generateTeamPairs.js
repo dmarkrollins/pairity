@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { createQuery } from 'meteor/cultofcoders:grapher'
 import { _ } from 'lodash'
-import { PairHistory, Teams, IsTeamAdmin, TeamMembers } from '../../lib/pairity'
+
+import { PairHistory, Teams, TeamMembers } from '../../lib/pairity'
 import { Errors } from '../../lib/errors'
 import { Logger } from '../../lib/logger'
 import '../../lib/index'
@@ -41,23 +42,36 @@ const presentMembersOnly = (ids, members) => {
 Meteor.methods({
     generateTeamPairs: function (tid) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in')
+            Errors.throw('not-logged-in')
         }
 
         const team = Teams.findOne(tid)
 
         if (!team) {
-            throw Errors.create('not-found', 'Team')
+            Errors.throw('not-found', 'Team')
         }
 
-        const members = createQuery({ teamMembersList: { teamId: tid } }).fetch();
+        const members = createQuery({ teamMembersListQuery: { teamId: tid } }).fetch();
 
         if (members.length === 0) {
-            throw Errors.create('not-found', 'TeamMembers')
+            Errors.throw('not-found', 'TeamMembers')
         }
 
-        if (!IsTeamAdmin(team, this.userId)) {
-            throw Errors.create('not-admin')
+        let isAdmin = false
+
+        const member = TeamMembers.findOne({ userId: this.userId })
+
+        if (member) {
+            isAdmin = member.isAdmin // eslint-disable-line
+        } else {
+            const user = Meteor.users.findOne(this.userId)
+            if (user) {
+                isAdmin = (user.username === 'admin')
+            }
+        }
+
+        if (!isAdmin) {
+            Errors.throw('not-admin')
         }
 
         const history = PairHistory.findOne({ teamId: tid }, { sort: { pairedAt: -1 } })
@@ -71,7 +85,7 @@ Meteor.methods({
         if (pairs.length === 0) {
             // first pair ever
 
-            const presentMembers = _.filter(members, member => member.isPresent === true) // remove not present members
+            const presentMembers = _.filter(members, memberItem => memberItem.isPresent === true) // remove not present members
 
             const splitMembers = _.chunk(presentMembers, 2) // split in half
 
@@ -129,10 +143,10 @@ Meteor.methods({
         } catch (err) {
             if (err.sanitizedError) {
                 Logger.log('PairHistory insert failed', this.userId, err.sanitizedError.reason)
-                throw new Meteor.Error('insert-failed', err.sanitizedError.reason)
+                Error.throw('custom', err.sanitizedError.reason)
             } else {
                 Logger.log('PairHistory insert failed', this.userId, err)
-                throw new Meteor.Error('insert-failed', 'Pairs could not be generated - please try again later!')
+                Errors.throw('insert-failed', 'Pairs')
             }
         }
     }

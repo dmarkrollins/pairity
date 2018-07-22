@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 
-import { PairHistory } from '../../lib/pairity'
+import { PairHistory } from '../pairity'
 
 export default PairHistory.createQuery('pairHistoryQuery', {
     $filter({ filters, options, params }) {

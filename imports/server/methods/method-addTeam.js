@@ -44,20 +44,6 @@ Meteor.methods({
                 }
             )
 
-            Meteor.call('teamMemberAdd', {
-                organizationId: doc.organizationId,
-                teamId: id,
-                userId: teamAdmin,
-                isAdmin: true,
-                isPresent: true
-            }, function (err, response) {
-                if (err) {
-                    throw new Meteor.Error('insert-failed', err.sanitizedError.reason)
-                } else {
-                    Logger.log('Team insert failed', this.userId, err)
-                    throw new Meteor.Error('insert-failed', 'Team not created - please try again later!')
-                }
-            })
             return id
         } catch (err) {
             if (err.sanitizedError) {

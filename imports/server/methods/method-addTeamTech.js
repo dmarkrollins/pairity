@@ -1,30 +1,43 @@
 import { Meteor } from 'meteor/meteor'
 import { _ } from 'meteor/underscore'
 
-import { Teams, IsTeamAdmin } from '../../../imports/lib/pairity'
-import { Errors } from '../../../imports/lib/errors'
-import { Logger } from '../../../imports/lib/logger'
+import { Teams, TeamMembers } from '../../lib/pairity'
+import { Errors } from '../../lib/errors'
+import { Logger } from '../../lib/logger'
 
 Meteor.methods({
     addTeamTech: function (teamId, techName) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in')
+            Errors.throw('not-logged-in')
         }
 
         const t = Teams.findOne(teamId)
 
         if (!t) {
-            throw Errors.create('not-found', 'Team')
+            Errors.throw('not-found', 'Team')
         }
 
-        if (!IsTeamAdmin(t, this.userId)) {
-            throw Errors.create('not-admin')
+        let isAdmin = false
+
+        const member = TeamMembers.findOne({ userId: this.userId })
+
+        if (member) {
+            isAdmin = member.isAdmin // eslint-disable-line
+        } else {
+            const user = Meteor.users.findOne(this.userId)
+            if (user) {
+                isAdmin = (user.username === 'admin')
+            }
+        }
+
+        if (!isAdmin) {
+            Errors.throw('not-admin')
         }
 
         if (t.technologies) {
             const foundTech = _.find(t.technologies, item => item === techName)
             if (foundTech) {
-                throw Errors.create('duplicate-found', 'Technology')
+                Errors.throw('duplicate-found', 'Technology')
             }
         } else {
             t.technologies = []
@@ -56,10 +69,10 @@ Meteor.methods({
             return result
         } catch (err) {
             if (err.sanitizedError) {
-                throw Errors.create('custom', err.sanitizedError.reason)
+                Errors.throw('custom', err.sanitizedError.reason)
             } else {
                 Logger.log('Technology insert failed', this.userId, err)
-                throw Errors.create('insert-failed', 'Technology')
+                Errors.throw('insert-failed', 'Technology')
             }
         }
     }

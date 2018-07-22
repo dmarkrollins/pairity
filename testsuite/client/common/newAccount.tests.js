@@ -34,13 +34,13 @@ if (Meteor.isClient) {
 
         it('displays correctly', function () {
             withRenderedTemplate('newAccount', null, (el) => {
-                expect($(el).find('#userName')).to.have.length(1)
-                expect($(el).find('#emailAddress')).to.have.length(1)
-                expect($(el).find('#password')).to.have.length(1)
-                expect($(el).find('#confirmPassword')).to.have.length(1)
-                expect($(el).find('#btnCancel')).to.have.length(1)
-                expect($(el).find('#btnSignUp')).to.have.length(1)
-                expect($(el).find('span.errorMessage')).to.have.length(1)
+                expect($(el).find('#userName'), 'user name').to.have.length(1)
+                expect($(el).find('#emailAddress'), 'email').to.have.length(1)
+                expect($(el).find('#password'), 'password').to.have.length(1)
+                expect($(el).find('#confirmPassword'), 'confirm pw').to.have.length(1)
+                expect($(el).find('#btnCancel'), 'cancel btn').to.have.length(1)
+                expect($(el).find('#btnSignUp'), 'signup button').to.have.length(1)
+                expect($(el).find('span.errorMessage'), 'error message').to.have.length(1)
                 expect($(el).find('img#logoImage'), 'logo').to.have.length(1)
             });
         })

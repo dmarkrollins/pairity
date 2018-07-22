@@ -1,13 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
-import { ReactiveVar } from 'meteor/reactive-var'
 import { Session } from 'meteor/session'
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { _ } from 'meteor/underscore'
-
-import { Pairity, Teams } from '../../lib/pairity'
-import { Toast } from '../common/toast'
-import { AmplifiedSession } from '../common/amplify'
+import { Pairity } from '../../lib/pairity'
 
 Template.pairMember.helpers({
     isPresent() {
@@ -20,7 +15,7 @@ Template.pairMember.helpers({
         }
     },
     isSelected() {
-        const roles = AmplifiedSession.get(Pairity.AmplifiedKeys.ROLE_FILTER)
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         const user = Meteor.users.findOne(this.data.userId)
         if (user) {
             let myRole
@@ -34,7 +29,7 @@ Template.pairMember.helpers({
         return false
     },
     isDisabled() {
-        const roles = AmplifiedSession.get(Pairity.AmplifiedKeys.ROLE_FILTER)
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         const user = Meteor.users.findOne(this.data.userId)
         if (user) {
             let myRole

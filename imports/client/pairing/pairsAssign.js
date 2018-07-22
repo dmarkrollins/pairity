@@ -4,13 +4,13 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { Session } from 'meteor/session'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { _ } from 'meteor/underscore'
-import { $ } from 'meteor/jquery'
+
 import { Pairity, Teams, TeamMembers } from '../../lib/pairity'
 import { Toast } from '../common/toast'
-import { AmplifiedSession } from '../common/amplify'
 
 Template.pairsAssign.onCreated(function () {
     const self = this
+    self.selectedTeamId = FlowRouter.getParam('id')
     self.needMoreThan1 = new ReactiveVar(true)
     self.selectCount = new ReactiveVar(0)
     self.setPresence = (teamMemberId, here) => {
@@ -22,7 +22,7 @@ Template.pairsAssign.onCreated(function () {
     }
 
     self.setRole = (checked, role) => {
-        let roles = AmplifiedSession.get(Pairity.AmplifiedKeys.ROLE_FILTER)
+        let roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         if (!roles) {
             roles = []
         }
@@ -32,13 +32,13 @@ Template.pairsAssign.onCreated(function () {
         } else {
             roles = _.reject(roles, item => item === role)
         }
-        AmplifiedSession.set(Pairity.AmplifiedKeys.ROLE_FILTER, roles)
+        Session.setPersistent(Pairity.AmplifiedKeys.ROLE_FILTER, roles)
     }
 
     self.membersAreSelected = () => {
         let retval = 'pure-button-disabled'
-        const roles = AmplifiedSession.get(Pairity.AmplifiedKeys.ROLE_FILTER)
-        const members = TeamMembers.find().fetch()
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
+        const members = TeamMembers.find({ teamId: self.selectedTeamId }).fetch()
         if (roles) {
             if (members.length > 0) {
                 let readyCount = 0
@@ -73,13 +73,13 @@ Template.pairsAssign.onCreated(function () {
 
 Template.pairsAssign.helpers({
     teamName() {
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (t) {
             return t.name
         }
     },
     member() {
-        return TeamMembers.find()
+        return TeamMembers.find({ teamId: Template.instance().selectedTeamId })
     },
     currentItem() {
         const instance = Template.instance()
@@ -95,21 +95,21 @@ Template.pairsAssign.helpers({
         }
     },
     engineeringChecked() {
-        const roles = AmplifiedSession.get('roleFilter')
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         if (roles) {
             return _.contains(roles, Pairity.MemberRoles.ENGINEER)
         }
         return false
     },
     designChecked() {
-        const roles = AmplifiedSession.get('roleFilter')
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         if (roles) {
             return _.contains(roles, Pairity.MemberRoles.DESIGN)
         }
         return false
     },
     productChecked() {
-        const roles = AmplifiedSession.get('roleFilter')
+        const roles = Session.get(Pairity.AmplifiedKeys.ROLE_FILTER)
         if (roles) {
             return _.contains(roles, Pairity.MemberRoles.PRODUCT)
         }

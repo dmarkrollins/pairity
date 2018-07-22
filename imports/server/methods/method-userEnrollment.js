@@ -1,23 +1,20 @@
 import { Meteor } from 'meteor/meteor'
-import { check } from 'meteor/check'
-import { SimpleSchema } from 'simpl-schema'
 import { Accounts } from 'meteor/accounts-base'
-import { Pairity, OrganizationMembers } from '../../../imports/lib/pairity'
-import { Logger } from '../../../imports/lib/logger'
-import { Schemas } from '../../../imports/lib/schemas'
-import { Errors } from '../../../imports/lib/errors'
+import { Pairity, OrganizationMembers } from '../../lib/pairity'
+import { Logger } from '../../lib/logger'
+import { Errors } from '../../lib/errors'
 
 Meteor.methods({
     userEnrollment: function (name) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in') // should not be logged in at this point
+            Errors.throw('not-logged-in') // should not be logged in at this point
         }
 
         try {
             Accounts.setUsername(this.userId, name)
         } catch (err) {
             Logger.log(err)
-            throw Errors.create('custom', 'User name already exists try something different.')
+            Errors.throw('custom', 'User name already exists try something different.')
         }
 
         const user = Meteor.users.findOne({ _id: this.userId })
@@ -25,7 +22,7 @@ Meteor.methods({
         const member = OrganizationMembers.findOne({ userId: this.userId })
 
         if (!member) {
-            throw Errors.create('not-found', 'Membership')
+            Errors.throw('not-found', 'Membership')
         }
 
         try {
@@ -50,10 +47,10 @@ Meteor.methods({
         } catch (err) {
             if (err.sanitizedError) {
                 Logger.log('Enrollment failed', this.userId, err.sanitizedError.reason)
-                throw new Meteor.Error('update-failed', err.sanitizedError.reason)
+                Errors.throw('custom', err.sanitizedError.reason)
             } else {
                 Logger.log('Enrollment failed', this.userId, err)
-                throw new Meteor.Error('update-failed', 'User not added to organization - please try again later!')
+                Errors.throw('update-failed', 'Organization')
             }
         }
     }

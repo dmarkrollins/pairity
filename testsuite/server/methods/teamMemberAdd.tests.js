@@ -50,7 +50,7 @@ if (Meteor.isServer) {
                 msg = error.message;
             }
 
-            expect(msg, 'should throw not logged in').to.be.equal('You must be authenticated to perform this action! [not-logged-in]');
+            expect(msg, 'should throw not logged in').to.be.equal('You must be logged in to perform this action! [not-logged-in]');
         })
 
         it('team must exist', function () {

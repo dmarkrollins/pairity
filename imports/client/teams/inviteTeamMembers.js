@@ -5,7 +5,7 @@ import { Session } from 'meteor/session'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { $ } from 'meteor/jquery'
 import { _ } from 'meteor/underscore'
-import { Toast } from '../../client/common/toast'
+import { Toast } from '../common/toast'
 
 import { Pairity, Teams, TeamMembers, Organizations, OrganizationMembers, Membership } from '../../lib/pairity'
 
@@ -13,7 +13,7 @@ Template.inviteTeamMembers.onCreated(function () {
     const self = this
 
     self.loaded = new ReactiveVar(0)
-    self.teamId = FlowRouter.getParam('id')
+    self.selectedTeamId = FlowRouter.getParam('id')
 
     self.getSearch = () => ({ limit: Pairity.defaultLimit, name: '' })
 
@@ -28,7 +28,7 @@ Template.inviteTeamMembers.onCreated(function () {
     })
 
     self.addMember = (orgMemberId) => {
-        Meteor.call('teamMemberAdd', self.teamId, orgMemberId, function (err, response) {
+        Meteor.call('teamMemberAdd', self.selectedTeamId, orgMemberId, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
@@ -38,7 +38,7 @@ Template.inviteTeamMembers.onCreated(function () {
     }
 
     self.removeMember = (orgMemberId) => {
-        Meteor.call('teamMemberRemove', self.teamId, orgMemberId, function (err, response) {
+        Meteor.call('teamMemberRemove', self.selectedTeamId, orgMemberId, function (err, response) {
             if (err) {
                 Toast.showError(err.reason)
             } else {
@@ -48,7 +48,7 @@ Template.inviteTeamMembers.onCreated(function () {
     }
 
     self.isTeamMember = (userid) => {
-        const m = TeamMembers.findOne({ teamId: self.teamId, userId: userid })
+        const m = TeamMembers.findOne({ teamId: self.selectedTeamId, userId: userid })
         if (m) {
             return true
         }
@@ -70,7 +70,7 @@ Template.inviteTeamMembers.helpers({
         return Template.instance().loaded.get() > 0
     },
     teamName() {
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (t) {
             return t.name
         }

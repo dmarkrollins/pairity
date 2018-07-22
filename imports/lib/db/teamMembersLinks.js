@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { Teams, Organizations, TeamMembers } from '../../lib/pairity'
+import { Teams, Organizations, TeamMembers } from '../pairity'
 
 TeamMembers.addLinks({
     team: {

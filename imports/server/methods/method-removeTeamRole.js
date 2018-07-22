@@ -1,34 +1,47 @@
 import { Meteor } from 'meteor/meteor'
 import { SimpleSchema } from 'simpl-schema'
 import { _ } from 'meteor/underscore'
-import { Pairity, Teams, TeamRoles, IsTeamAdmin } from '../../../imports/lib/pairity'
-import { Schemas } from '../../../imports/lib/schemas'
-import { Errors } from '../../../imports/lib/errors'
-import { Logger } from '../../../imports/lib/logger'
+import { Teams, TeamMembers } from '../../lib/pairity'
+import { Schemas } from '../../lib/schemas'
+import { Errors } from '../../lib/errors'
+import { Logger } from '../../lib/logger'
 
 Meteor.methods({
     removeTeamRole: function (teamId, roleName) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in')
+            Errors.throw('not-logged-in')
         }
 
         const t = Teams.findOne(teamId)
 
         if (!t) {
-            throw Errors.create('not-found', 'Team')
+            Errors.throw('not-found', 'Team')
         }
 
-        if (!IsTeamAdmin(t, this.userId)) {
-            throw Errors.create('not-admin')
+        let isAdmin = false
+
+        const member = TeamMembers.findOne({ userId: this.userId })
+
+        if (member) {
+            isAdmin = member.isAdmin // eslint-disable-line
+        } else {
+            const user = Meteor.users.findOne(this.userId)
+            if (user) {
+                isAdmin = (user.username === 'admin')
+            }
+        }
+
+        if (!isAdmin) {
+            Errors.throw('not-admin')
         }
 
         if (t.roles) {
             const foundRole = _.find(t.roles, item => item === roleName)
             if (!foundRole) {
-                throw Errors.create('not-found', 'Role')
+                Errors.throw('not-found', 'Role')
             }
         } else {
-            throw Errors.create('not-found', 'Role')
+            Errors.throw('not-found', 'Role')
         }
 
         t.roles = _.filter(t.roles, item => item !== roleName)
@@ -57,10 +70,10 @@ Meteor.methods({
             return result.nModified
         } catch (err) {
             if (err.sanitizedError) {
-                throw Errors.create('custom', err.sanitizedError.reason)
+                Errors.throw('custom', err.sanitizedError.reason)
             } else {
                 Logger.log('TeamRoles delete failed', this.userId, err)
-                throw Errors.create('delete-failed', 'Role')
+                Errors.throw('delete-failed', 'Role')
             }
         }
     }

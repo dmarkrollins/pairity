@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { SimpleSchema } from 'simpl-schema'
-import { Organizations } from '../../../imports/lib/pairity'
-import { Logger } from '../../../imports/lib/logger'
-import { Schemas } from '../../../imports/lib/schemas'
+import { Organizations } from '../../lib/pairity'
+import { Logger } from '../../lib/logger'
+import { Schemas } from '../../lib/schemas'
 
 Meteor.methods({
     addOrganization: function (doc) {

@@ -56,6 +56,7 @@ module.exports = {
             }
         ],
         "semi": "off",
+        "object-curly-newline": "off",
         "no-trailing-spaces": "error",
         "class-methods-use-this": "off",
         "meteor/no-session": "off",

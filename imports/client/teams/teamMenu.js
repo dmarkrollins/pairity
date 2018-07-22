@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { $ } from 'meteor/jquery'
 import { FlowRouter } from 'meteor/kadira:flow-router'
+import { Session } from 'meteor/session'
 
-import { Teams, TeamMembers, Membership } from '../../lib/pairity'
+import { Pairity, IsTeamAdmin } from '../../lib/pairity'
 
 Template.teamMenu.onRendered(function () {
     if (this.data.selectedItem) {
@@ -13,22 +14,10 @@ Template.teamMenu.onRendered(function () {
 
 Template.teamMenu.helpers({
     teamId() {
-        const t = Teams.findOne()
-        if (t) {
-            return t._id
-        }
+        return Session.get(Pairity.SELECTED_TEAM)
     },
-    isTeamAdmin() {
-        const t = FlowRouter.getParam('id')
-        // const team = Teams.findOne()
-        const tm = TeamMembers.findOne({ userId: Meteor.userId(), teamId: t })
-        const membership = Membership.findOne()
-        if (membership) {
-            if (membership.isOrgAdmin === true) return true
-        }
-        if (tm) {
-            if (tm.isAdmin === true) return true
-        }
-        return false
+    teamAdmin() {
+        const id = FlowRouter.getParam('id')
+        return IsTeamAdmin({ _id: id }, Meteor.userId())
     }
 })

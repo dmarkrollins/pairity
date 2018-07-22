@@ -21,6 +21,8 @@ import './methods/method-teamMemberAdd'
 import './methods/method-teamMemberRemove'
 import './methods/method-toggleMemberPresence'
 import './methods/method-generateTeamPairs'
+import './methods/method-isTeamAdmin'
+import './methods/method-isSuperAdmin'
 
 import './utils/index'
 

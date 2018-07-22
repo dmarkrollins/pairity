@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { publishComposite } from 'meteor/reywood:publish-composite'
 
-import { Pairity, TeamMembers } from '../../../imports/lib/pairity'
+import { Pairity, TeamMembers } from '../../lib/pairity'
 
 TeamMembers._ensureIndex('organizationId', 1)
 TeamMembers._ensureIndex('teamId', 1)
@@ -38,4 +38,3 @@ publishComposite('assigmentMembers', function (tid, limit) {
         }]
     }
 })
-

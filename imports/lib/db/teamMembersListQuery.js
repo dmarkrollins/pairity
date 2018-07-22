@@ -1,6 +1,6 @@
-import { TeamMembers } from '../../lib/pairity'
+import { TeamMembers } from '../pairity'
 
-export default TeamMembers.createQuery('teamMembersList', {
+export default TeamMembers.createQuery('teamMembersListQuery', {
     $filter({ filters, options, params }) {
         filters.teamId = params.teamId
     },

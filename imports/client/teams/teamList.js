@@ -51,7 +51,7 @@ Template.teamList.events({
         search.name = event.target.value
         Session.set(Pairity.TeamSearchKey, search)
     }, 500),
-    'click btnMore': function (event, instance) {
+    'click #btnMore': function (event, instance) {
         const search = Session.get(Pairity.TeamSearchKey) || instance.getSearch()
         search.limit += Pairity.defaultLimit
         Session.set(Pairity.TeamSearchKey, search)

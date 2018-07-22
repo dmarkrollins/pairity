@@ -26,24 +26,18 @@ const Pairity = {
     },
     MemberStatusArray: ['Pending', 'Active', 'InActive'],
     PasswordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-    isSuperAdmin: (userid) => {
-        if (Meteor.isServer) {
-            if (userid) {
-                const user = Meteor.users.findOne(userid)
-                if (user) {
-                    if (user.username === 'admin') {
-                        return true
-                    }
+    isSuperAdmin: async () => {
+        const response = await new Promise((resolve) => {
+            Meteor.call('isSuperAdmin', null, function (err, result) {
+                if (err) {
+                    resolve(false)
                 }
-            }
-        } else {
-            if (Meteor.user()) {
-                return Meteor.user().username === 'admin'
-            }
-        }
-
-        return false
-    }
+                resolve(result)
+            })
+        })
+        return response
+    },
+    SELECTED_TEAM: 'selected-team'
 }
 
 if (!String.prototype.toProperCase) {
@@ -81,18 +75,17 @@ OrganizationMembers.attachSchema(Schemas.OrganizationMembers)
 Membership.attachSchema(Schemas.Membership)
 PairHistory.attachSchema(Schemas.PairHistory)
 
-const IsTeamAdmin = (team, uid) => {
-    if (!Meteor.isServer) {
-        throw Meteor.Error('isTeamAdmin function not available in client!')
-    }
 
-    const member = TeamMembers.findOne({ teamId: team._id, userId: uid })
-
-    if (member) {
-        return member.isAdmin
-    }
-
-    return Pairity.isSuperAdmin(uid)
+const IsTeamAdmin = async (team, uid) => {
+    const response = await new Promise((resolve) => {
+        Meteor.call('isTeamAdmin', team._id, uid, function (err, result) {
+            if (err) {
+                resolve(false)
+            }
+            resolve(result)
+        })
+    })
+    return response
 }
 
 const RegisterComponent = (name, component) => {

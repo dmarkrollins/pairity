@@ -1,31 +1,29 @@
 import { Meteor } from 'meteor/meteor'
-import { check } from 'meteor/check'
-import { SimpleSchema } from 'simpl-schema'
-import { Teams, IsTeamAdmin } from '../../../imports/lib/pairity'
-import { Logger } from '../../../imports/lib/logger'
-import { Schemas } from '../../../imports/lib/schemas'
-import { Errors } from '../../../imports/lib/errors'
+import { Teams, IsTeamAdmin } from '../../lib/pairity'
+import { Logger } from '../../lib/logger'
+import { Schemas } from '../../lib/schemas'
+import { Errors } from '../../lib/errors'
 
 Meteor.methods({
     updateTeam: function (doc) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in')
+            Errors.throw('not-logged-in')
         }
 
         const context = Schemas.Teams.newContext()
 
         if (!context.validate(doc)) {
-            throw Errors.create('invalid-format', 'Team')
+            Errors.throw('invalid-format', 'Team')
         }
 
         const t = Teams.findOne(doc._id)
 
         if (!t) {
-            throw Errors.create('not-found', 'Team')
+            Errors.throw('not-found', 'Team')
         }
 
         if (!IsTeamAdmin(t, this.userId)) {
-            throw Errors.create('not-admin')
+            Errors.throw('not-admin')
         }
 
         try {
@@ -54,9 +52,9 @@ Meteor.methods({
         } catch (err) {
             Logger.log('Team update failed', this.userId, err)
             if (err.sanitizedError) {
-                throw Errors.create('custom', err.sanitizedError.reason)
+                Errors.throw('custom', err.sanitizedError.reason)
             } else {
-                throw Errors.create('update-failed', 'Team')
+                Errors.throw('update-failed', 'Team')
             }
         }
     }

@@ -47,7 +47,6 @@ if (Meteor.isClient) {
 
             expect(wrapper.find('#teamName'), 'team name found').to.have.length(1)
             expect(wrapper.find('#teamDesc'), 'team desc found').to.have.length(1)
-            expect(wrapper.find('#memberSelector'), 'team admin found').to.have.length(1)
             expect(wrapper.find('p.errorMessage'), 'err message found').to.have.length(1)
             expect(wrapper.find('button'), 'should have 2 buttons').to.have.length(2)
         })

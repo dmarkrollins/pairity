@@ -4,7 +4,7 @@
         <div class="pure-u-1 sub-menu">
             <a href="/teams/dash/{{teamId}}" id="itemDash">Dash Board</a>
             <a href="/teams/members/{{teamId}}" id="itemMembers">Members</a>
-            {{#if isTeamAdmin}}
+            {{#if teamAdmin}}
                 <a href="/teams/manage/{{teamId}}" id="itemManage">Manage</a>
                 <a href="/teams/members/invite/{{teamId}}" id="itemInvite">Invite</a>
                 <a href="/teams/pairs/{{teamId}}" id="itemPairs">Pairs</a>

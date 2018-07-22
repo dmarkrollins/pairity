@@ -2,13 +2,14 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 
-import {
-    Pairity, Teams
-} from '../../lib/pairity'
+import TeamMembersListQuery from '../../lib/db/teamMembersListQuery'
+import { Pairity, Teams, TeamMembers } from '../../lib/pairity'
 import { Toast } from '../common/toast'
 
 Template.manageTeam.onCreated(function () {
     const self = this
+
+    self.selectedTeamId = FlowRouter.getParam('id')
 
     self.SaveTeam = (team) => {
         Meteor.call('updateTeam', team, function (err, response) {
@@ -47,21 +48,32 @@ Template.manageTeam.onCreated(function () {
             }
         })
     }
+
+    const teamId = FlowRouter.getParam('id');
+
+    self.memberQuery = TeamMembersListQuery.clone({ teamId });
+    self.membersHandle = self.memberQuery.subscribe()
 })
 
 Template.manageTeam.helpers({
     teamName() {
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (t) {
             return t.name
         }
     },
+    teamMembers() {
+        return Template.instance().memberQuery.fetch()
+    },
+    isReady() {
+        return FlowRouter.subsReady() && Template.instance().membersHandle.ready()
+    },
     selectedTeam() {
-        return Teams.findOne()
+        return Teams.findOne(Template.instance().selectedTeamId)
     },
     saveHandler() {
         const instance = Template.instance();
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (!t) return
         return function (team) {
             instance.SaveTeam(team)
@@ -74,7 +86,7 @@ Template.manageTeam.helpers({
     },
     roleSaveHandler() {
         const instance = Template.instance()
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (!t) return
         return function (item) {
             instance.SaveRole(t._id, item)
@@ -82,7 +94,7 @@ Template.manageTeam.helpers({
     },
     roleRemoveHandler() {
         const instance = Template.instance();
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (!t) return
         return function (item) {
             instance.RemoveRole(t._id, item)
@@ -90,7 +102,7 @@ Template.manageTeam.helpers({
     },
     techSaveHandler() {
         const instance = Template.instance();
-        const t = Teams.findOne()
+        const t = Teams.findOne(Template.instance().selectedTeamId)
         if (!t) return
         return function (item) {
             instance.SaveTech(t._id, item)
@@ -115,9 +127,6 @@ Template.manageTeam.helpers({
     },
     teamSubItem() {
         return Pairity.Components.TeamSubItem
-    },
-    isReady() {
-        return FlowRouter.subsReady()
     },
     rolesList() {
         const t = Teams.findOne()

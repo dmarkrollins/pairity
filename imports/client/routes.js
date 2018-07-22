@@ -133,7 +133,6 @@ FlowRouter.route('/teams/new', {
 FlowRouter.route('/teams/manage/:id', {
     subscriptions: function (params) {
         this.register('singleteam', Meteor.subscribe('singleTeam', params.id))
-        this.register('teammembers', Meteor.subscribe('teamMembers', params.id))
     },
     action: function () {
         if (!Meteor.userId()) {

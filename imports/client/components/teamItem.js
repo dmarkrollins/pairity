@@ -12,14 +12,7 @@ class TeamItem extends React.Component {
         this.saveClick = this.saveClick.bind(this)
         this.cancelClick = this.cancelClick.bind(this)
         this.handleNameChange = this.handleNameChange.bind(this)
-        this.handleMemberSelectorChange = this.handleMemberSelectorChange.bind(this)
         this.handleDescChange = this.handleDescChange.bind(this)
-    }
-
-    handleMemberSelectorChange(event) {
-        let { teamAdmin } = this.state
-        teamAdmin = event.target.value
-        this.setState({ teamAdmin })
     }
 
     handleNameChange(event) {
@@ -54,8 +47,12 @@ class TeamItem extends React.Component {
     cancelButton() {
         if (this.props.showCancel) {
             return (
-                <button id="btnCancel" type="button" onClick={this.cancelClick} className="button-default pure-button">
-Cancel
+                <button
+                    id="btnCancel"
+                    type="button"
+                    onClick={this.cancelClick}
+                    className="button-default pure-button">
+                    Cancel
                 </button>
             )
         }
@@ -73,13 +70,6 @@ Cancel
                         value={this.state.team.name}
                         onChange={this.handleNameChange}
                     />
-                    <label>Team Administrator</label>
-                    <select
-                        id="memberSelector"
-                        onChange={this.handleMemberSelectorChange}>
-                        <option value="">Select</option>
-                        {this.props.orgMembers.map(m => <option value={m.userId} key={m._id}>{m.username}</option> )}
-                    </select>
                     <label>Description</label>
                     <textarea
                         id="teamDesc"
@@ -105,7 +95,6 @@ TeamItem.propTypes = {
     handleSave: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
     team: PropTypes.object,
-    orgMembers: PropTypes.array.isRequired,
     rows: PropTypes.number,
     showCancel: PropTypes.bool
 }

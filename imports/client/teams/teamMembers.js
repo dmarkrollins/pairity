@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { Template } from 'meteor/templating'
 
 import { Pairity, Teams, TeamMembers } from '../../lib/pairity'
-import { Toast } from '../../client/common/toast'
+import { Toast } from '../common/toast'
 
 Template.teamMembers.onCreated(function () {
     const self = this

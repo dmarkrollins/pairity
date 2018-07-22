@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random'
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import { Pairity } from '../../imports/lib/pairity'
@@ -11,9 +12,12 @@ describe('isSuperAdmin', function () {
     let userId;
     let sandbox
     let users
+    let subject
 
     beforeEach(function () {
         sandbox = sinon.createSandbox()
+        subject = Meteor.server.method_handlers.isSuperAdmin;
+        userId = Random.id()
     })
 
     afterEach(function () {
@@ -21,54 +25,55 @@ describe('isSuperAdmin', function () {
     });
 
     if (Meteor.isServer) {
-        it('should be false if user not found', function () {
-            sandbox.stub(Meteor.users, 'findOne').returns(null)
+        it('should be false if user not found', async function () {
+            const context = { userId: null }
 
-            const retval = Pairity.isSuperAdmin('fake-id')
+            // sandbox.stub(Meteor.users, 'findOne').returns({ username: 'admin' })
 
-            expect(retval).to.be.false
+            let msg
+            let result
+
+            try {
+                result = subject.apply(context);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(result).to.be.false
         })
 
-        it('should be false if user not admin', function () {
+        it('should be false if user not admin', async function () {
+            const context = { userId }
+
             sandbox.stub(Meteor.users, 'findOne').returns({ username: 'not-admin' })
 
-            const retval = Pairity.isSuperAdmin('fake-id')
+            let msg
+            let result
 
-            expect(retval).to.be.false
+            try {
+                result = subject.apply(context);
+            } catch (error) {
+                msg = error.message;
+            }
+
+            expect(result).to.be.false
         })
 
         it('should be true if user is admin', function () {
+            const context = { userId }
+
             sandbox.stub(Meteor.users, 'findOne').returns({ username: 'admin' })
 
-            const retval = Pairity.isSuperAdmin('fake-id')
+            let msg
+            let result
 
-            expect(retval).to.be.true
-        })
-    }
+            try {
+                result = subject.apply(context);
+            } catch (error) {
+                msg = error.message;
+            }
 
-    if (Meteor.isClient) {
-        it('should be false if user is not set', function () {
-            sandbox.stub(Meteor, 'user').returns(null)
-
-            const retval = Pairity.isSuperAdmin('fake-id')
-
-            expect(retval).to.be.false
-        })
-
-        it('should be false if user is not admin', function () {
-            sandbox.stub(Meteor, 'user').returns({ username: 'not-admin' })
-
-            const retval = Pairity.isSuperAdmin('fake-id')
-
-            expect(retval).to.be.false
-        })
-
-        it('should be true if user is admin', function () {
-            sandbox.stub(Meteor, 'user').returns({ username: 'admin' })
-
-            const retval = Pairity.isSuperAdmin('fake-id')
-
-            expect(retval).to.be.true
+            expect(result).to.be.true
         })
     }
 })

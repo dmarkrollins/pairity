@@ -87,7 +87,7 @@ if (Meteor.isServer) {
             sandbox.stub(Teams, 'insert').returns(newId)
             sandbox.stub(OrganizationMembers, 'findOne').returns(TestData.fakeOrganizationMembers({ userId: userId }).organizationMembers[0])
             sandbox.stub(Meteor, 'call').yields(userId)
-            
+
             resultId = subject.apply(context, [{
                 name: 'fake-team-name',
                 description: 'fake team description',
@@ -96,23 +96,10 @@ if (Meteor.isServer) {
 
             expect(resultId).to.equal(newId)
 
-            expect(Meteor.call).to.have.been.called
-            expect(Meteor.call).to.have.been.calledWith('teamMemberAdd', 'testuser')
-
-            // const params = Teams.insert.args[0][0]
-
-            // expect(params.name).to.equal(fakeTeam.name)
-            // expect(params.description).to.equal(fakeTeam.description)
-            // expect(params.organizationId).to.equal(fakeTeam.organizationId)
-
-            // expect(TeamMembers.insert, 'team members insert').to.have.been.called
-            // const memberParams = TeamMembers.insert.args[0][0]
-
-            // expect(memberParams.organizationId).to.equal(fakeTeam.organizationId)
-            // expect(memberParams.teamId).to.equal(newId)
-            // expect(memberParams.userId).to.equal(userId)
-            // expect(memberParams.isAdmin).to.be.true
-            // expect(memberParams.isPresent).to.be.true
+            const args = Teams.insert.args[0][0]
+            args.name = 'fake-new-team'
+            args.description = 'fake team description'
+            args.organizationId = 'fake-org-id'
         })
 
         it('handles insert error correctly', function () {

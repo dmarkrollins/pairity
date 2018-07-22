@@ -3,15 +3,15 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker'
-import { Accounts } from 'meteor/accounts-base'
 import { Random } from 'meteor/random'
+import { Session } from 'meteor/session'
+import { FlowRouter } from 'meteor/kadira:flow-router'
 import { $ } from 'meteor/jquery';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import StubCollections from 'meteor/hwillson:stub-collections'
 import { withRenderedTemplate } from '../../clientTestHelpers';
-import { Pairity, Teams, TeamMembers, Organizations } from '../../../imports/lib/pairity'
-import { AmplifiedSession } from '../../../imports/client/common/amplify'
+import { Teams, TeamMembers } from '../../../imports/lib/pairity'
 
 import { TestData } from '../../testData'
 
@@ -61,11 +61,14 @@ if (Meteor.isClient) {
 
 
         it('displays default view correctly', function () {
+            const id = Random.id()
+            sandbox.stub(FlowRouter, 'getParam').returns(id)
+
             for (let i = 0; i < 5; i += 1) {
-                TeamMembers.insert(TestData.fakeTeamMember({ isPresent: true }))
+                TeamMembers.insert(TestData.fakeTeamMember({ teamId: id, isPresent: true }))
             }
 
-            sandbox.stub(AmplifiedSession, 'get').returns(['Engineer'])
+            sandbox.stub(Session, 'get').returns(['Engineer'])
             sandbox.stub(Meteor.users, 'findOne').returns(fakeUser)
 
             withRenderedTemplate('pairsAssign', null, (el) => {
@@ -75,18 +78,19 @@ if (Meteor.isClient) {
                 expect($(el).find('#cbDesign'), 'design filter cb').to.have.length(1)
                 expect($(el).find('#btnGenerate'), 'gen button').to.have.length(1)
                 expect($(el).find('div.pair-member'), 'should have members').to.have.length(5)
-
-
                 expect($(el).find('#btnGenerate.pure-button-disabled'), 'disabled gen button').to.have.length(0)
             });
         })
 
         it('displays default view correctly - no one is present', function () {
+            const id = Random.id()
+            sandbox.stub(FlowRouter, 'getParam').returns(id)
+
             for (let i = 0; i < 5; i += 1) {
-                TeamMembers.insert(TestData.fakeTeamMember({ isPresent: false }))
+                TeamMembers.insert(TestData.fakeTeamMember({ teamId: id, isPresent: false }))
             }
 
-            sandbox.stub(AmplifiedSession, 'get').returns(['Engineer'])
+            sandbox.stub(Session, 'get').returns(['Engineer'])
             sandbox.stub(Meteor.users, 'findOne').returns(fakeUser)
 
             withRenderedTemplate('pairsAssign', null, (el) => {
@@ -96,11 +100,14 @@ if (Meteor.isClient) {
         })
 
         it('displays default view correctly - nobody with role selected', function () {
+            const id = Random.id()
+            sandbox.stub(FlowRouter, 'getParam').returns(id)
+
             for (let i = 0; i < 5; i += 1) {
-                TeamMembers.insert(TestData.fakeTeamMember({ isPresent: false }))
+                TeamMembers.insert(TestData.fakeTeamMember({ teamId: id, isPresent: false }))
             }
 
-            sandbox.stub(AmplifiedSession, 'get').returns(['Design'])
+            sandbox.stub(Session, 'get').returns(['Design'])
             sandbox.stub(Meteor.users, 'findOne').returns(fakeUser)
 
             withRenderedTemplate('pairsAssign', null, (el) => {
@@ -111,15 +118,17 @@ if (Meteor.isClient) {
 
         it('calls toggler when present user made not present', function () {
             let firstId
+            const tid = Random.id()
+            sandbox.stub(FlowRouter, 'getParam').returns(tid)
 
             for (let i = 0; i < 5; i += 1) {
-                const id = TeamMembers.insert(TestData.fakeTeamMember({ isPresent: true }))
+                const id = TeamMembers.insert(TestData.fakeTeamMember({ teamId: tid, isPresent: true }))
                 if (i === 0) {
                     firstId = id
                 }
             }
 
-            sandbox.stub(AmplifiedSession, 'get').returns(['Design'])
+            sandbox.stub(Session, 'get').returns(['Design'])
             sandbox.stub(Meteor.users, 'findOne').returns(fakeUser)
 
             withRenderedTemplate('pairsAssign', null, (el) => {
@@ -134,15 +143,17 @@ if (Meteor.isClient) {
 
         it('calls toggler when not present user made present', function () {
             let firstId
+            const tid = Random.id()
+            sandbox.stub(FlowRouter, 'getParam').returns(tid)
 
             for (let i = 0; i < 5; i += 1) {
-                const id = TeamMembers.insert(TestData.fakeTeamMember({ isPresent: false }))
+                const id = TeamMembers.insert(TestData.fakeTeamMember({ teamId: tid, isPresent: false }))
                 if (i === 0) {
                     firstId = id
                 }
             }
 
-            sandbox.stub(AmplifiedSession, 'get').returns(['Design'])
+            sandbox.stub(Session, 'get').returns(['Design'])
             sandbox.stub(Meteor.users, 'findOne').returns(fakeUser)
 
             withRenderedTemplate('pairsAssign', null, (el) => {

@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor'
-import PairHistoryQuery from '../../lib/db/pairHistoryQuery'
-import { Errors } from '../../lib/errors'
 import { Teams } from '../../lib/pairity'
+import { Errors } from '../../lib/errors'
+import TeamMembersListQuery from '../../lib/db/teamMembersListQuery'
 
-PairHistoryQuery.expose({
+TeamMembersListQuery.expose({
     firewall(userId, params) {
         if (!userId) {
-            Errors.throw('not-allowed')
+            Errors.throw('not-logged-in')
         }
 
         const t = Teams.findOne(params.teamId)

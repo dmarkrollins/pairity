@@ -33,6 +33,6 @@ johanbrook:publication-collector
 hwillson:stub-collections
 email@1.2.3
 reywood:publish-composite
-mrt:session-amplify
 cultofcoders:grapher
 underscore@1.0.10
+cultofcoders:persistent-session

@@ -1,31 +1,44 @@
 import { Meteor } from 'meteor/meteor'
-import { SimpleSchema } from 'simpl-schema'
 import { _ } from 'meteor/underscore'
-import { Pairity, Teams, IsTeamAdmin, TeamMembers } from '../../../imports/lib/pairity'
-import { Errors } from '../../../imports/lib/errors'
-import { Logger } from '../../../imports/lib/logger'
+import { Teams, TeamMembers } from '../../lib/pairity'
+import { Errors } from '../../lib/errors'
+import { Logger } from '../../lib/logger'
 
 Meteor.methods({
     toggleMemberPresence: function (teamMemberId, here) {
         if (!this.userId) {
-            throw Errors.create('not-logged-in')
+            Errors.throw('not-logged-in')
         }
 
         const tm = TeamMembers.findOne(teamMemberId)
 
         if (!tm) {
-            throw Errors.create('not-found', 'TeamMember')
+            Errors.throw('not-found', 'TeamMember')
         }
 
         const t = Teams.findOne(tm.teamId)
 
         if (!t) {
-            throw Errors.create('not-found', 'Team')
+            Errors.throw('not-found', 'Team')
         }
 
-        if (!IsTeamAdmin(t, this.userId)) {
-            throw Errors.create('not-admin')
+        let isAdmin = false
+
+        const member = TeamMembers.findOne({ userId: this.userId })
+
+        if (member) {
+            isAdmin = member.isAdmin // eslint-disable-line
+        } else {
+            const user = Meteor.users.findOne(this.userId)
+            if (user) {
+                isAdmin = (user.username === 'admin')
+            }
         }
+
+        if (!isAdmin) {
+            Errors.throw('not-admin')
+        }
+
 
         if (!_.isBoolean(here)) {
             here = true
@@ -54,10 +67,10 @@ Meteor.methods({
             )
         } catch (err) {
             if (err.sanitizedError) {
-                throw Errors.create('custom', err.sanitizedError.reason)
+                Errors.throw('custom', err.sanitizedError.reason)
             } else {
                 Logger.log('Toggle Team Member presence failed', this.userId, err)
-                throw Errors.create('custom', 'We could not set Team Member presence - try again later!')
+                Errors.throw('custom', 'We could not set Team Member presence - try again later!')
             }
         }
     }

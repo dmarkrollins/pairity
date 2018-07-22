@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { _ } from 'meteor/underscore'
 
-import { Pairity, Organizations, OrganizationMembers } from '../../../imports/lib/pairity'
+import { Pairity, Organizations, OrganizationMembers } from '../../lib/pairity'
 
 Meteor.publish('myMembership', function () {
     if (!Meteor.userId()) {
